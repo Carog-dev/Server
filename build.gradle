@@ -52,6 +52,12 @@ tasks.named('test') {
 jib {
     from {
         image = "amazoncorretto:21-alpine-jdk"
+        platforms {
+            platform {
+                architecture = "arm64"
+                os = "linux"
+            }
+        }
     }
     to {
         image = "ghcr.io/carog-dev/server"
