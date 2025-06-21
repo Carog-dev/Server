@@ -54,9 +54,8 @@ jib {
         image = "amazoncorretto:21-alpine-jdk"
     }
     to {
-        // intellij Sync Gradle Changes 동작 시 앞에 ""를 추가하여 오류 해소
-        image = "" + System.getenv("CONTAINER_PATH")
-        tags = ["latest", project.version as String]
+        image = "ghcr.io/carog-dev/server"
+        tags = ["latest"]
         auth {
             // intellij Sync Gradle Changes 동작 시 앞에 ""를 추가하여 오류 해소
             username = "" + System.getenv("CONTAINER_USER_NAME")
@@ -103,6 +102,7 @@ jib {
 
                 // 빠른 난수 생성
                 "-Djava.security.egd=file:/dev/./urandom",
+
                 "-Dspring.profiles.active=" + System.getenv("SPRING_PROFILES_ACTIVE"),
                 "-Djwt.secret=" + System.getenv("JWT_SECRET"),
                 "-Djasypt.encryptor.password=" + System.getenv("JASYPT_ENCRYPTOR_PASSWORD")

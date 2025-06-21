@@ -5,6 +5,10 @@ on:
       - dev
       - main
 
+env:
+  CONTAINER_USER_NAME: ${{ github.actor }}
+  CONTAINER_PASSWORD: ${{ secrets.CONTAINER_TOKEN }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -12,9 +16,6 @@ jobs:
     env:
       SPRING_PROFILES_ACTIVE: local
 #      SPRING_PROFILES_ACTIVE: ${{ github.ref_name }}
-      CONTAINER_PATH: ghcr.io/${{ github.repository }}
-      CONTAINER_USER_NAME: ${{ github.actor }}
-      CONTAINER_PASSWORD: ${{ secrets.CONTAINER_TOKEN }}
       JWT_SECRET: ${{ secrets.JWT_SECRET }}
       JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
 
@@ -48,33 +49,32 @@ jobs:
         run: ./gradlew jib --no-daemon
         env:
           JAVA_TOOL_OPTIONS: -Dspring.profiles.active=${{ env.SPRING_PROFILES_ACTIVE }} -Djwt.secret=${{ env.JWT_SECRET }} -Djasypt.encryptor.password=${{ env.JASYPT_ENCRYPTOR_PASSWORD }}
-          JIB_TO_IMAGE: ghcr.io/${{ github.repository }}:${{ github.sha }}
 
   deploy:
-    runs-on: self-hosted
+    needs: build
 
-    needs: [ build ]
+    runs-on: self-hosted
 
     env:
       CONTAINER_NAME: carog-${{ github.ref_name }}
-      IMAGE_PATH: ghcr.io/${{ github.repository }}:latest
-      PORT: 8030
+      IMAGE_PATH: ghcr.io/carog-dev/server:latest
 
     steps:
       # GitHub Container Registry 로그인
       - name: Login GitHub Container Registry
         uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ env.CONTAINER_USER_NAME }}
+          password: ${{ env.CONTAINER_PASSWORD }}
 
       # latest 이미지 Pull
-      - name: Pull Docker Image
-        run: docker pull ${{ env.IMAGE_PATH }}
-
       # 기존 컨테이너 Stop and remove
-      - name: Stop and Remove Existing Container
-        run: |
-          docker stop ${{ env.CONTAINER_NAME }} || true
-          docker rm -f ${{ env.CONTAINER_NAME }} || true
-
       # Docker Container 실행
-      - name: Run Docker Container
-        run: docker run -d -p ${{ env.PORT }}:${{ env.PORT }} --restart unless-stopped --name ${{ env.CONTAINER_NAME }} ${{ env.IMAGE_PATH }}
+      - name: Deploy Docker Container
+        run: |
+          docker pull ${{ env.IMAGE_PATH }};
+          docker stop ${{ env.CONTAINER_NAME }} || true;
+          docker rm -f ${{ env.CONTAINER_NAME }} || true;
+          docker system prune -f;
+          docker run -d -p 8030:8030 --restart unless-stopped --name ${{ env.CONTAINER_NAME }} ${{ env.IMAGE_PATH }};
