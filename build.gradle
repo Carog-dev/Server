@@ -51,7 +51,7 @@ tasks.named('test') {
 
 jib {
     from {
-        image = "amazoncorretto:21-alpine-jdk"
+        image = "amazoncorretto:21"
         platforms {
             platform {
                 architecture = "arm64"
