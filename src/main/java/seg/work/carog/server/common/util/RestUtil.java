@@ -30,7 +30,7 @@ public class RestUtil {
             }
         } catch (Exception e) {
             log.error("RestUtil : convertObjectToString method error", e);
-            return "error";
+            return "convertObjectToString error";
         }
     }
 }

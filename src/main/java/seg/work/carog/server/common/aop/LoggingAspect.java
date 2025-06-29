@@ -15,38 +15,31 @@ public class LoggingAspect {
 
     @Around(
             ("(execution(* seg.work.carog.server.*.controller..*Controller.*(..))"
-                    + " || execution(* seg.work.carog.server.*.*.controller..*Controller.*(..))"
                     + " || execution(* seg.work.carog.server.*.service..*Service.*(..))"
-                    + " || execution(* seg.work.carog.server.*.*.service..*Service.*(..))"
                     + " || execution(* seg.work.carog.server.*.mapper..*Mapper.*(..))"
-                    + " || execution(* seg.work.carog.server.*.*.mapper..*Mapper.*(..))"
                     + " || execution(* seg.work.carog.server.*.repository..*Repository.*(..)))"
-                    + " || execution(* seg.work.carog.server.*.*.repository..*Repository.*(..)))"
             )
     )
     public Object logging(ProceedingJoinPoint pjp) throws Throwable {
-        String type;
         String classNm = pjp.getSignature().getDeclaringTypeName();
         String methodNm = pjp.getSignature().getName();
 
+        Object result = pjp.proceed();
+        Object res = result;
+        if (result instanceof ResponseEntity<?>) {
+            res = ((ResponseEntity<?>) result).getBody();
+        }
+
         if (classNm.contains("Controller")) {
-            type = "Controller";
+            log.info("Controller : '{}.{}()', Data={}", classNm, methodNm, RestUtil.convertObjectToString(res));
         } else if (classNm.contains("Service")) {
-            type = "Service";
+            log.info("Service : '{}.{}()', Data={}", classNm, methodNm, RestUtil.convertObjectToString(res));
         } else if (classNm.contains("Repository")) {
-            type = "Repository";
+            log.info("Repository : '{}.{}()', Data={}", classNm, methodNm, RestUtil.convertObjectToString(res));
         } else if (classNm.contains("Mapper")) {
-            type = "Mapper";
-        } else {
-            type = "Etc";
+            log.info("Mapper : '{}.{}()', Data={}", classNm, methodNm, RestUtil.convertObjectToString(res));
         }
 
-        Object res = pjp.proceed();
-        if (pjp.proceed() instanceof ResponseEntity<?>) {
-            res = ((ResponseEntity<?>) pjp.proceed()).getBody();
-        }
-
-        log.info("{} : '{}.{}()', Data={}", type, classNm, methodNm, RestUtil.convertObjectToString(res));
-        return pjp.proceed();
+        return result;
     }
 }
