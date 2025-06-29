@@ -5,6 +5,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -12,16 +13,19 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import seg.work.carog.server.common.util.JwtUtil;
+import seg.work.carog.server.config.jwt.JwtAuthenticationFilter;
 import seg.work.carog.server.user.dto.UserInfoDTO;
 import seg.work.carog.server.user.entity.UserInfoEntity;
 import seg.work.carog.server.user.repository.UserInfoRepository;
@@ -32,27 +36,32 @@ import seg.work.carog.server.user.repository.UserInfoRepository;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final UserInfoRepository userInfoRepository;
     private final JwtUtil jwtUtil;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .formLogin(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
+                                "/",
                                 "/oauth2/**",
-                                "/login/**"
+                                "/login/**",
+                                "/error"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
-                .oauth2Login(oauth2 ->
-                        oauth2
-                                .successHandler(successHandler())
-                                .failureHandler(failureHandler())
-                                .userInfoEndpoint(endpoint -> endpoint.userService(oauth2UserService()))
+                .oauth2Login(oauth2 -> oauth2
+                        .successHandler(successHandler())
+                        .failureHandler(failureHandler())
+                        .userInfoEndpoint(endpoint -> endpoint.userService(oauth2UserService()))
                 )
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
         ;
 
         return http.build();
@@ -95,9 +104,8 @@ public class SecurityConfig {
                         .name(name)
                         .build();
 
-                UserInfoEntity userInfoEntity = userInfoRepository.findByOauthId(oauthId).orElse(new UserInfoEntity(userInfoDTO));
-                userInfoRepository.save(userInfoEntity);
-
+                Optional<UserInfoEntity> optionalUserInfoEntity = userInfoRepository.findByOauthId(userInfoDTO.getOauthId());
+                userInfoRepository.save(optionalUserInfoEntity.orElseGet(() -> new UserInfoEntity(userInfoDTO)));
                 return oauth2User;
             }
         };
@@ -108,17 +116,16 @@ public class SecurityConfig {
         return (request, response, authentication) -> {
             OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
             String oauthId = oauth2User.getAttribute("id").toString();
-            String jwt = jwtUtil.generateToken(oauthId);
+            String accessToken = jwtUtil.generateToken(oauthId);
 
-            Cookie cookie = new Cookie("access token", jwt);
-            cookie.setHttpOnly(true);
-            cookie.setSecure(false);
-            cookie.setPath("/");
-            cookie.setMaxAge(60 * 60);
-            response.addCookie(cookie);
+            Cookie accessTokenCookie = new Cookie("accessToken", accessToken);
+            accessTokenCookie.setHttpOnly(true);
+            accessTokenCookie.setSecure(true);
+            accessTokenCookie.setPath("/");
+            accessTokenCookie.setMaxAge((int) (jwtUtil.parserToken(accessToken).getExpiration().getTime() / 1000));
+            response.addCookie(accessTokenCookie);
 
-            // React 앱의 콜백 URL
-            response.sendRedirect("http://localhost:3003/callback");
+            response.sendRedirect("http://localhost:3003");
         };
     }
 

@@ -6,4 +6,5 @@ import seg.work.carog.server.user.entity.UserInfoEntity;
 
 public interface UserInfoRepository extends JpaRepository<UserInfoEntity, Long> {
     Optional<UserInfoEntity> findByOauthId(String oauthId);
+    Optional<UserInfoEntity> findByEmail(String email);
 }
