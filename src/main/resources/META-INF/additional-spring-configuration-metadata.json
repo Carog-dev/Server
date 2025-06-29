@@ -1,8 +1,0 @@
-{
-  "properties": [
-    {
-      "name": "jwt.secret",
-      "type": "java.lang.String",
-      "description": "256비트 이상의 안전한 키 권장. JWT 서명에 사용."
-  }
-] }
