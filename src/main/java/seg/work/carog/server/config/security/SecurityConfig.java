@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -119,13 +121,22 @@ public class SecurityConfig {
             String oauthId = oauth2User.getAttribute("id").toString();
             String accessToken = jwtUtil.generateToken(oauthId);
 
-            Cookie accessTokenCookie = new Cookie("accessToken", accessToken);
-            accessTokenCookie.setHttpOnly(true);
-            accessTokenCookie.setSecure(true);
-            accessTokenCookie.setPath("/");
-            accessTokenCookie.setMaxAge((int) (jwtUtil.parserToken(accessToken).getExpiration().getTime() / 1000));
-            response.addCookie(accessTokenCookie);
+//            Cookie accessTokenCookie = new Cookie("accessToken", accessToken);
+//            accessTokenCookie.setHttpOnly(true);
+//            accessTokenCookie.setSecure(true);
+//            accessTokenCookie.setPath("/");
+//            accessTokenCookie.setMaxAge((int) (jwtUtil.parserToken(accessToken).getExpiration().getTime() / 1000));
+//            response.addCookie(accessTokenCookie);
 
+            ResponseCookie cookie = ResponseCookie.from("accessToken", accessToken)
+                    .httpOnly(true)
+                    .secure(false)
+                    .path("/")
+                    .maxAge((int) (jwtUtil.parserToken(accessToken).getExpiration().getTime() / 1000))
+                    .sameSite("None")
+                    .build();
+
+            response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
             response.sendRedirect("http://localhost:3003/login");
         };
     }
