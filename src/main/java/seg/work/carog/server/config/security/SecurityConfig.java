@@ -44,6 +44,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .formLogin(AbstractHttpConfigurer::disable)
+                .httpBasic(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -125,7 +126,7 @@ public class SecurityConfig {
             accessTokenCookie.setMaxAge((int) (jwtUtil.parserToken(accessToken).getExpiration().getTime() / 1000));
             response.addCookie(accessTokenCookie);
 
-            response.sendRedirect("http://localhost:3003");
+            response.sendRedirect("http://localhost:3003/login");
         };
     }
 
