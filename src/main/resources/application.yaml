@@ -1,0 +1,127 @@
+server:
+  port: 8030
+  error:
+    whitelabel:
+      enabled: false
+  compression:
+    enabled: true
+  http2:
+    enabled: true
+  servlet:
+    encoding:
+      force-response: true
+
+spring:
+  application:
+    name: carog-server
+  profiles:
+    default: local
+
+  datasource:
+    read:
+      jdbc-url: ENC(tgiwRMHX12WFmnMvYtINOMIMbvu2CjzbJSTyIglgKDozIaO4TU1uqpmZicO60MXp/x+I6PECQxTpbHmcKl25dNxXT6IyLp5ddwTmT4EZXUK3wemMx3LWQyAXUDT3rLiZc8CL4WiblR+xI7cNdk+X1Sz2O97sZzndjZRs6YSq+OCChB/FBQlCcCp6uMuwYwSo)
+      username: ENC(w0o6vFFJg9jWmfkoKVdUR11NhiLRlPoQ34wOZXJyfO40Vxaa8lOdndjo6nvtJ9Yn)
+      password: ENC(MT3FpTIE+yORc/CZ0tdapPwv1vFX+d1Y56yUohrO7jPUje+2pDXQgJqod8RKCPqR)
+      minimum-idle: 5
+      maximum-pool-size: 10
+      connection-test-query: SELECT 1
+      pool-name: READ-POOL-CAROG
+      driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    write:
+      jdbc-url: ENC(OSfQn5fPwuFVXhL59QRgyNDMymUJXpXZYgFngiTmnTRpg+6VaU3S18tj/rGkktTlIbRQWG9fUJ1uApzdO3Yh3+6mraNCVP0m4Wmt8wY/2ASS6aEsXE6iTcPt5ETQl9xcdmyTRQIu0xJhEVf3/sDA9cD9bhFUGKC7T7LNW9WWQzrvcv3A29azodDRh+j2/njx)
+      username: ENC(K1hM9KNlWGO3qVvrThLUZ+kX17tuneUXGL87sEkYQ8vqXWKoB88TaRDss0u4Yr0W)
+      password: ENC(s/Pat+EmR8Rh5AeTNB2s84GzTp/KcYN4j6kKi5P0jqV2cONzzjceGFyWQL9mPXSH)
+      minimum-idle: 5
+      maximum-pool-size: 10
+      connection-test-query: SELECT 1
+      pool-name: WRITE-POOL-CAROG
+      driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    open-in-view: false
+    generate-ddl: false
+    properties:
+      hibernate:
+        naming:
+          implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+          physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        format_sql: true
+        jdbc:
+          batch_size: 100
+          order_inserts: true
+          order_updates: true
+          time_zone: Asia/Seoul
+
+  data:
+    redis:
+      username: ENC(IMYEwU5/lTq8GOlK/qVPlp/s3mGt86kB0nONcuamqkwxY3nYukjiMebBmrVK51im)
+      password: ENC(Ghv2hJmAH+U/Ckl1WThDjmGwze9HraZjCnXx0VHoF1/8PuiQVqyrcSucao+aHA2m)
+      database: ENC(iQhtR1nvi/+zoAM/2BNTIwuOjyf1toy/Es8VcEPs3hV1RvqLIYzKtuSaD0LF98/X)
+      lettuce:
+        pool:
+          min-idle: 3
+          max-idle: 10
+          max-active: 10
+      sentinel:
+        master: ENC(ioEeFFsJ9A/u9O0uUfYME9f3q9Fr5oJMjRU+ExJ2dD0CtwO0S7DlWEVIWaSbmpxw)
+        nodes:
+          - ENC(7vF1lWPiNdBsZ19RwRiSXllAOh/+RaktsHqPySM7EvIBBkhXw96doFrw+hbzJzCvrR+We1Q+9RiM/F/tKv/5hg==)
+          - ENC(SGrOoVE3kAQAGKHKEWsVokQ7O4Hxw3Su3I8blp1OSL5bsDiG75gfXa2Re0LHbZuf6Lr5rUpWuKpSM6YYIrRO9g==)
+          - ENC(YsekhDC3Ooa30L83WYc86K7irNSiqr/i+Tmtd73lJgWIWyklP95/d5PWPAn1tFGJOZBXDVCIcxg7zbxEmFIC+A==)
+        username: ENC(Vxs0tGrrfBBb0+HS8sGPfPDqd+glg20mNLWT/tR9MbqU/XaWrexKStGCQQJJXGnk)
+        password: ENC(Oa4RaJZn2irycXlnXjcPITdu0nHpUnNRIUliyc5s8GLqIvl5ZmP4SQA/DwqZdlQI)
+
+  output:
+    ansi:
+      enabled: always
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+  mail:
+    sender:
+      noreply: noreply@carog.com
+      notice: notice@carog.com
+    host: ENC(PNKlqQhq2Lhk8UDjYe1S+YzkvUY9YNSZLfWTh4jEo/bh5x12feK/u9d1a6q0AwvuGyBIwrvaUiseFDAG1kqxtVyILsKm0ckLfCTGPWEuQuo=)
+    port: ENC(nzn3GhbPixvIYW9S49/jb+HTzn0uWz02lfkaMUy5MRl434xsYmasQhsXwMZP0w6x)
+    username: ENC(H+/+mhnsA376SO83EJrwlmvG9Rit4k/20dVuo2eSCC2JZNkMIS5mBXWdvGtogv8AWBCLM3RMeCRsGOXqi4r/FUBvAUlpRlmDvyG48LWTmQ7DKtRxfZtRGMIxJMPmvzWrIZOAW/w/UrI9yKDr/QKqT3wgOxWXPR51E9R1eCgdFQjgLEbjg3iAODIYOtCfxXCbzmQyXTtCA2lqEq/V0IYUBrnt2oJpd/ykZuB+I9CIpydGRjCmEobV5EfGZxsgGZHt9bmhxUij4GYRok4xj1maFQ==)
+    password: ENC(nsE8wkY6EErpNYz8Us+3IgGSDxHDyHfNbFaPqYJ5O0jIwwYsg+y3zl9CAgflsSpwja60Yh5Onfw9cIYZe1tNmw==)
+    properties:
+      mail:
+        smtp:
+          auth: true
+          timeout: 5000
+          writetimeout: 5000
+          connectiontimeout: 5000
+          starttls:
+            enable: true
+            required: true
+
+kakao:
+  client-id: ENC(wHkPf2B26YUhQBeRPvk2M+RMzGgwnc88rfo+CkgzpgOSI8xKwREWBFdY48J2x0hVaPKaZTdsJle0d9ceH7Qux0ba7+5bg9yRUKTXPQXGELM=)
+  client-secret: ENC(8WP1oicNsu50O4EMIKdfs3wX4hbYpqBLcor0/Owi14QX6JTAskFNK3wo3QldDuWPpRiGzU+kRS8BVNk9lXRP+uo7k5y+j/lT0Tujpx3kgtI=)
+  redirect-uri: "http://localhost:3003/user/login/kakao"
+
+logging:
+  config: classpath:/logback/spring-logback.xml
+
+jasypt:
+  encryptor:
+    algorithm: PBEWITHHMACSHA512ANDAES_256
+    key-obtention-iterations: 10000
+    pool-size: 1
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prd
+
+kakao:
+  redirect-uri: "https://carog-api.seoeungi.work/user/login/kakao"
