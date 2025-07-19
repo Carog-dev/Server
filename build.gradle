@@ -1,0 +1,132 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.5.3'
+	id 'io.spring.dependency-management' version '1.1.7'
+	id 'com.google.cloud.tools.jib' version '3.4.4'
+}
+
+group = 'seg.work'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("org.springframework.boot:spring-boot-starter-data-redis")
+	implementation("org.springframework.boot:spring-boot-starter-security")
+	implementation("org.springframework.boot:spring-boot-starter-validation")
+	implementation("org.springframework.boot:spring-boot-starter-actuator")
+	implementation("org.springframework.boot:spring-boot-starter-mail")
+	implementation("org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16")
+	implementation("io.jsonwebtoken:jjwt-api:0.12.6")
+	implementation("org.springframework.boot:spring-boot-starter-webflux")
+	implementation("com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5")
+	implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.4")
+
+	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.6")
+	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.6")
+	runtimeOnly("org.postgresql:postgresql")
+
+	compileOnly("org.projectlombok:lombok")
+
+	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+	annotationProcessor("org.projectlombok:lombok")
+
+	developmentOnly("org.springframework.boot:spring-boot-devtools")
+
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("org.springframework.security:spring-security-test")
+	testImplementation("org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.4")
+
+	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+	// mac
+	runtimeOnly("io.netty:netty-resolver-dns-native-macos:4.2.2.Final:osx-aarch_64")
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+jib {
+	from {
+		image = "amazoncorretto:21"
+		platforms {
+			platform {
+				architecture = "arm64"
+				os = "linux"
+			}
+		}
+	}
+	to {
+		image = "ghcr.io/carog-dev/server"
+		tags = ["latest"]
+		auth {
+			// intellij Sync Gradle Changes 동작 시 앞에 ""를 추가하여 오류 해소
+			username = "" + System.getenv("CONTAINER_USER_NAME")
+			password = "" + System.getenv("CONTAINER_PASSWORD")
+		}
+	}
+	container {
+		jvmFlags = List.of(
+				// 컨테이너 환경 지원
+				"-XX:+UseContainerSupport",
+				// JVM 사용 최대 메모리 비율
+				"-XX:MaxRAMPercentage=50.0",
+				// JVM 초기 메모리 비율
+				"-XX:InitialRAMPercentage=30.0",
+				// JVM 최소 메모리 비율
+				"-XX:MinRAMPercentage=30.0",
+				// JVM 메모리를 미리 할당
+				"-XX:+AlwaysPreTouch",
+
+				// G1 Garbage Collector 사용
+				"-XX:+UseG1GC",
+				// 참조 처리 병렬화 활성화
+				"-XX:+ParallelRefProcEnabled",
+				// G1GC 힙 영역 크기 설정
+				"-XX:G1HeapRegionSize=16M",
+				// 지정한 힙 사용률 n%에서 GC 트리거
+				"-XX:InitiatingHeapOccupancyPercent=30",
+
+				// 메타스페이스 초기 크기
+				"-XX:MetaspaceSize=128m",
+				// 메타스페이스 최대 크기
+				"-XX:MaxMetaspaceSize=256m",
+
+				// 계층적 컴파일 활성화
+				"-XX:+TieredCompilation",
+				// 문자열 중복 제거 활성화
+				"-XX:+UseStringDeduplication",
+				// SoftReference Least Recently Used(LRU, 최소 최근 사용) 정책을 조정, 50밀리초 동안 소프트 레퍼런스 유지
+//                "-XX:SoftRefLRUPolicyMSPerMB=50",
+				// JVM 코드 캐시의 최대 크기를 지정
+//                "-XX:ReservedCodeCacheSize=512m",
+				// 코드 캐시를 비울 수 있도록 허용
+//                "-XX:+UseCodeCacheFlushing",
+
+				// 빠른 난수 생성
+				"-Djava.security.egd=file:/dev/./urandom",
+
+				"-Dspring.profiles.active=" + System.getenv("SPRING_PROFILES_ACTIVE"),
+				"-Djwt.secret=" + System.getenv("JWT_SECRET"),
+				"-Djasypt.encryptor.password=" + System.getenv("JASYPT_ENCRYPTOR_PASSWORD")
+		)
+		ports = ["8030"]
+	}
+}
