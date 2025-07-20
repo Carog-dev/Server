@@ -13,7 +13,7 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import seg.work.carog.server.auth.dto.KakaoUserInfo;
 import seg.work.carog.server.common.constant.Message;
-import seg.work.carog.server.exception.BaseException;
+import seg.work.carog.server.common.exception.BaseException;
 
 @Slf4j
 @Service

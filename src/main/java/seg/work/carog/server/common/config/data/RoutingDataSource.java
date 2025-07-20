@@ -1,4 +1,4 @@
-package seg.work.carog.server.config.data;
+package seg.work.carog.server.common.config.data;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,7 +12,7 @@ import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.util.CollectionUtils;
 import seg.work.carog.server.common.constant.Message;
-import seg.work.carog.server.exception.BaseException;
+import seg.work.carog.server.common.exception.BaseException;
 
 @Slf4j
 public class RoutingDataSource extends AbstractRoutingDataSource {

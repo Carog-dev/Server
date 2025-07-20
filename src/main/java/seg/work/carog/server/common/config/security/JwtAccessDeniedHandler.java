@@ -1,4 +1,4 @@
-package seg.work.carog.server.config.security;
+package seg.work.carog.server.common.config.security;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

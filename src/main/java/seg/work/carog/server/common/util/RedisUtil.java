@@ -1,11 +1,11 @@
-package seg.work.carog.server.util;
+package seg.work.carog.server.common.util;
 
 import java.util.concurrent.TimeUnit;
 import lombok.Setter;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import seg.work.carog.server.common.constant.Message;
-import seg.work.carog.server.exception.BaseException;
+import seg.work.carog.server.common.exception.BaseException;
 
 @Component
 public class RedisUtil {

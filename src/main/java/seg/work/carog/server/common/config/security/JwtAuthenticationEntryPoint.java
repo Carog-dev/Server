@@ -1,4 +1,4 @@
-package seg.work.carog.server.config.security;
+package seg.work.carog.server.common.config.security;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -10,7 +10,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 import seg.work.carog.server.common.constant.Message;
 import seg.work.carog.server.common.dto.BaseResponse;
-import seg.work.carog.server.util.ObjectUtil;
+import seg.work.carog.server.common.util.ObjectUtil;
 
 @Slf4j
 @Component

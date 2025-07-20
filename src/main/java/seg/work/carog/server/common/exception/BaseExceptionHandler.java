@@ -1,4 +1,4 @@
-package seg.work.carog.server.exception;
+package seg.work.carog.server.common.exception;
 
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import java.util.HashMap;

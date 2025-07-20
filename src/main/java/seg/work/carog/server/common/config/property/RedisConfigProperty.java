@@ -1,4 +1,4 @@
-package seg.work.carog.server.config.property;
+package seg.work.carog.server.common.config.property;
 
 import lombok.Getter;
 import lombok.Setter;

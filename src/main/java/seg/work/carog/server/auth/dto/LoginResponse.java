@@ -1,5 +1,6 @@
 package seg.work.carog.server.auth.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class LoginResponse {
     private String token;
     private String tokenType;

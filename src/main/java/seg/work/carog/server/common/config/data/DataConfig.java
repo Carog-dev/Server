@@ -1,4 +1,4 @@
-package seg.work.carog.server.config.data;
+package seg.work.carog.server.common.config.data;
 
 import jakarta.persistence.EntityManagerFactory;
 import java.util.Collections;

@@ -6,11 +6,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import seg.work.carog.server.auth.dto.KakaoUserInfo;
 import seg.work.carog.server.auth.dto.LoginResponse;
+import seg.work.carog.server.auth.dto.UserInfo;
 import seg.work.carog.server.auth.entity.User;
 import seg.work.carog.server.auth.repository.UserRepository;
 import seg.work.carog.server.common.constant.Message;
-import seg.work.carog.server.exception.BaseException;
-import seg.work.carog.server.util.JwtUtil;
+import seg.work.carog.server.common.constant.UserRole;
+import seg.work.carog.server.common.exception.BaseException;
+import seg.work.carog.server.common.util.JwtUtil;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +36,7 @@ public class AuthService {
             User user = findOrCreateUser(kakaoUserInfo);
 
             // 4. JWT 토큰 생성
-            String jwtToken = jwtUtil.generateToken(user.getId().toString(), user.getEmail(), user.getRole().name());
+            String jwtToken = jwtUtil.generateToken(user);
 
             return LoginResponse.builder()
                     .token(jwtToken)
@@ -48,8 +50,14 @@ public class AuthService {
                     .build();
 
         } catch (Exception e) {
+            log.error("ERROR : ", e);
             throw new BaseException(Message.LOGIN_FAIL);
         }
+    }
+
+    // TODO 카카오 로그아웃, 토큰 파기 적용
+    public void logoutWithKakao(UserInfo userInfo) {
+        userInfo.getAccessToken();
     }
 
     private User findOrCreateUser(KakaoUserInfo kakaoUserInfo) {
@@ -66,7 +74,7 @@ public class AuthService {
                 .email(email)
                 .nickname(nickname)
                 .profileImageUrl(profileImageUrl)
-                .role(User.UserRole.USER)
+                .role(UserRole.USER)
                 .build();
 
         return userRepository.save(newUser);

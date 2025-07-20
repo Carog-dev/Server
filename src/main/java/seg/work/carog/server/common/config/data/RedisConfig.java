@@ -1,4 +1,4 @@
-package seg.work.carog.server.config.data;
+package seg.work.carog.server.common.config.data;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -12,8 +12,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.util.List;
-import seg.work.carog.server.config.property.RedisConfigProperty;
-import seg.work.carog.server.util.RedisUtil;
+import seg.work.carog.server.common.config.property.RedisConfigProperty;
+import seg.work.carog.server.common.util.RedisUtil;
 
 @Configuration
 @EnableConfigurationProperties(RedisConfigProperty.class)
