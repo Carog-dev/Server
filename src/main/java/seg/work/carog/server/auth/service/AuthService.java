@@ -88,7 +88,7 @@ public class AuthService {
                 .role(UserRole.USER)
                 .build();
 
-        return userRepository.saveAndFlush(newUserEntity);
+        return userRepository.save(newUserEntity);
     }
 
     private String extractEmail(KakaoUserInfo kakaoUserInfo) {
