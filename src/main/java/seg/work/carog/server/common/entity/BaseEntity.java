@@ -3,12 +3,15 @@ package seg.work.carog.server.common.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
@@ -26,6 +29,9 @@ public abstract class BaseEntity implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 8937292677502402775L;
+
+    @ColumnDefault("'N'")
+    private String deleteYn;
 
     @CreatedDate
     @Column(updatable = false)

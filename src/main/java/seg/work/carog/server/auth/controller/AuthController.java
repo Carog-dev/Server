@@ -19,7 +19,6 @@ import seg.work.carog.server.common.dto.BaseResponse;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class AuthController {
 
     private final AuthService authService;
