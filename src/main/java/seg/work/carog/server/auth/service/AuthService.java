@@ -7,9 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 import seg.work.carog.server.auth.dto.KakaoUserInfo;
 import seg.work.carog.server.auth.dto.LoginResponse;
 import seg.work.carog.server.auth.dto.TokenUserInfo;
-import seg.work.carog.server.auth.dto.UserInfoResponse;
 import seg.work.carog.server.user.entity.UserEntity;
-import seg.work.carog.server.auth.repository.UserRepository;
+import seg.work.carog.server.user.repository.UserRepository;
 import seg.work.carog.server.common.constant.Message;
 import seg.work.carog.server.common.constant.UserRole;
 import seg.work.carog.server.common.exception.BaseException;
@@ -66,12 +65,6 @@ public class AuthService {
         } else {
             blacklistTokenService.addTokenToBlacklist(tokenUserInfo.getAccessToken());
         }
-    }
-
-    public UserInfoResponse getProfile(TokenUserInfo tokenUserInfo) {
-        UserEntity userEntity = userRepository.findById(tokenUserInfo.getId()).orElseThrow(() -> new BaseException(Message.USER_NOT_FOUND));
-
-        return new UserInfoResponse(userEntity);
     }
 
     private UserEntity findOrCreateUser(KakaoUserInfo kakaoUserInfo) {

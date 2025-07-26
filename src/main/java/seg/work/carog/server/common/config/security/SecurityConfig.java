@@ -36,8 +36,8 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/user/login/kakao").permitAll()
-                        .requestMatchers("/user/login/kakao/test").permitAll()
+                        .requestMatchers("/auth/login/kakao").permitAll()
+                        .requestMatchers("/auth/login/kakao/test").permitAll()
                         .requestMatchers("/api/public").permitAll()
                         .requestMatchers("/actuator/**").permitAll()
                         .requestMatchers("/error").permitAll()
