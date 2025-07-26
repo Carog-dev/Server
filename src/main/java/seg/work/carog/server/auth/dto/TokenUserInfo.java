@@ -10,15 +10,15 @@ import seg.work.carog.server.user.entity.UserEntity;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserInfo {
+public class TokenUserInfo {
 
     private Long id;
     private String key;
     private String email;
     private String accessToken;
 
-    public static UserInfo toDto(UserEntity userEntity, String accessToken) {
-        return UserInfo.builder()
+    public static TokenUserInfo toDto(UserEntity userEntity, String accessToken) {
+        return TokenUserInfo.builder()
                 .key(userEntity.getKey())
                 .email(userEntity.getEmail())
                 .accessToken(accessToken)

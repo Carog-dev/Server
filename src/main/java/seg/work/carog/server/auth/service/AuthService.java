@@ -6,7 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import seg.work.carog.server.auth.dto.KakaoUserInfo;
 import seg.work.carog.server.auth.dto.LoginResponse;
-import seg.work.carog.server.auth.dto.UserInfo;
+import seg.work.carog.server.auth.dto.TokenUserInfo;
+import seg.work.carog.server.auth.dto.UserInfoResponse;
 import seg.work.carog.server.user.entity.UserEntity;
 import seg.work.carog.server.auth.repository.UserRepository;
 import seg.work.carog.server.common.constant.Message;
@@ -59,16 +60,18 @@ public class AuthService {
     }
 
     @Transactional
-    public void logoutWithKakao(UserInfo userInfo) {
-        if (userInfo.getAccessToken().isBlank()) {
+    public void logoutWithKakao(TokenUserInfo tokenUserInfo) {
+        if (tokenUserInfo.getAccessToken().isBlank()) {
             throw new BaseException(Message.UNAUTHORIZED);
         } else {
-            blacklistTokenService.addTokenToBlacklist(userInfo.getAccessToken());
+            blacklistTokenService.addTokenToBlacklist(tokenUserInfo.getAccessToken());
         }
     }
 
-    public void getProfile(UserInfo userInfo) {
+    public UserInfoResponse getProfile(TokenUserInfo tokenUserInfo) {
+        UserEntity userEntity = userRepository.findById(tokenUserInfo.getId()).orElseThrow(() -> new BaseException(Message.USER_NOT_FOUND));
 
+        return new UserInfoResponse(userEntity);
     }
 
     private UserEntity findOrCreateUser(KakaoUserInfo kakaoUserInfo) {
