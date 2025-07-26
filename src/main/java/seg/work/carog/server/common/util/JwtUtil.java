@@ -18,7 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
-import seg.work.carog.server.auth.dto.UserInfo;
+import seg.work.carog.server.auth.dto.TokenUserInfo;
 import seg.work.carog.server.user.entity.UserEntity;
 import seg.work.carog.server.common.config.security.UserDetailService;
 import seg.work.carog.server.common.constant.Message;
@@ -65,7 +65,7 @@ public class JwtUtil {
                 .collect(Collectors.toList());
 
         UserEntity userEntity = userDetailService.loadUserInfoBySubject(claims.get("sub").toString());
-        return new UsernamePasswordAuthenticationToken(UserInfo.toDto(userEntity, accessToken), "", authorities);
+        return new UsernamePasswordAuthenticationToken(TokenUserInfo.toDto(userEntity, accessToken), "", authorities);
     }
 
     public Claims parserToken(String token) {

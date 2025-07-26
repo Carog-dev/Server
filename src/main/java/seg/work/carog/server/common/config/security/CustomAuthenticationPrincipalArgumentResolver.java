@@ -9,7 +9,7 @@ import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
-import seg.work.carog.server.auth.dto.UserInfo;
+import seg.work.carog.server.auth.dto.TokenUserInfo;
 import seg.work.carog.server.common.constant.Message;
 import seg.work.carog.server.common.exception.BaseException;
 import seg.work.carog.server.common.util.RedisUtil;
@@ -19,7 +19,7 @@ public class CustomAuthenticationPrincipalArgumentResolver implements HandlerMet
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.getParameterType() == UserInfo.class;
+        return parameter.getParameterType() == TokenUserInfo.class;
     }
 
     @Override
@@ -30,13 +30,13 @@ public class CustomAuthenticationPrincipalArgumentResolver implements HandlerMet
             return null;
         }
         Object principal = authentication.getPrincipal();
-        if (principal instanceof UserInfo userInfo) {
-            if (RedisUtil.has(userInfo.getKey())) {
-                userInfo.setId(RedisUtil.getLongValue(userInfo.getKey()));
+        if (principal instanceof TokenUserInfo tokenUserInfo) {
+            if (RedisUtil.has(tokenUserInfo.getKey())) {
+                tokenUserInfo.setId(RedisUtil.getLongValue(tokenUserInfo.getKey()));
             } else {
                 throw new BaseException(Message.USER_NOT_FOUND);
             }
-            return userInfo;
+            return tokenUserInfo;
         }
         return null;
     }

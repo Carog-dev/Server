@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import seg.work.carog.server.auth.dto.KakaoLoginRequest;
 import seg.work.carog.server.auth.dto.LoginResponse;
-import seg.work.carog.server.auth.dto.UserInfo;
+import seg.work.carog.server.auth.dto.TokenUserInfo;
+import seg.work.carog.server.auth.dto.UserInfoResponse;
 import seg.work.carog.server.auth.service.AuthService;
 import seg.work.carog.server.common.dto.BaseResponse;
 
@@ -33,15 +34,16 @@ public class AuthController {
     }
 
     @PostMapping("/logout/kakao")
-    public ResponseEntity<?> kakaoLogout(UserInfo userInfo) {
-        authService.logoutWithKakao(userInfo);
+    public ResponseEntity<?> kakaoLogout(TokenUserInfo tokenUserInfo) {
+        authService.logoutWithKakao(tokenUserInfo);
 
         return ResponseEntity.ok(BaseResponse.success());
     }
 
     @GetMapping("/profile")
-    public ResponseEntity<?> getProfile(UserInfo userInfo) {
-        authService.getProfile(userInfo);
-        return ResponseEntity.ok(BaseResponse.success());
+    public ResponseEntity<?> getProfile(TokenUserInfo tokenUserInfo) {
+        UserInfoResponse userInfoResponse = authService.getProfile(tokenUserInfo);
+
+        return ResponseEntity.ok(BaseResponse.success(userInfoResponse));
     }
 }
