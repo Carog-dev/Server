@@ -41,7 +41,7 @@ public class AuthController {
 
     @GetMapping("/profile")
     public ResponseEntity<?> getProfile(UserInfo userInfo) {
-        log.error("userInfo: {}", userInfo);
+        authService.getProfile(userInfo);
         return ResponseEntity.ok(BaseResponse.success());
     }
 }

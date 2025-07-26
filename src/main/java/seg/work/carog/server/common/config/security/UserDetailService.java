@@ -5,7 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import seg.work.carog.server.auth.entity.User;
+import seg.work.carog.server.user.entity.UserEntity;
 import seg.work.carog.server.auth.repository.UserRepository;
 import seg.work.carog.server.common.constant.Message;
 import seg.work.carog.server.common.exception.BaseException;
@@ -22,7 +22,7 @@ public class UserDetailService implements UserDetailsService {
         return userRepository.findByEmail(username).orElseThrow(() -> new BaseException(Message.USER_NOT_FOUND));
     }
 
-    public User loadUserInfoBySubject(String subject) {
+    public UserEntity loadUserInfoBySubject(String subject) {
         return userRepository.findByKey(subject).orElseThrow(() -> new BaseException(Message.USER_NOT_FOUND));
     }
 }

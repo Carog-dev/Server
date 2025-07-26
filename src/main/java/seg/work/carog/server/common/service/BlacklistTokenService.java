@@ -1,10 +1,11 @@
-package seg.work.carog.server.common.util;
+package seg.work.carog.server.common.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.concurrent.TimeUnit;
 import seg.work.carog.server.common.constant.Constant;
+import seg.work.carog.server.common.util.RedisUtil;
 
 @Service
 @Transactional(readOnly = true)

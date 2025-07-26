@@ -19,7 +19,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 import seg.work.carog.server.auth.dto.UserInfo;
-import seg.work.carog.server.auth.entity.User;
+import seg.work.carog.server.user.entity.UserEntity;
 import seg.work.carog.server.common.config.security.UserDetailService;
 import seg.work.carog.server.common.constant.Message;
 import seg.work.carog.server.common.exception.BaseException;
@@ -34,18 +34,18 @@ public class JwtUtil {
 
     private final UserDetailService userDetailService;
 
-    public String generateToken(User user) {
+    public String generateToken(UserEntity userEntity) {
         // 12시간
         long EXPIRATION_TIME = 1000 * 60 * 60 * 12;
 
         SecretKeySpec secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), Jwts.SIG.HS256.key().build().getAlgorithm());
 
-        RedisUtil.setWithExpiryHour(user.getKey(), user.getId().toString(), 4);
+        RedisUtil.setWithExpiryHour(userEntity.getKey(), userEntity.getId().toString(), 4);
 
         return Jwts.builder()
-                .subject(user.getKey())
-                .claim("email", user.getEmail())
-                .claim("auth", user.getRole().name())
+                .subject(userEntity.getKey())
+                .claim("email", userEntity.getEmail())
+                .claim("auth", userEntity.getRole().name())
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(secretKey)
@@ -64,8 +64,8 @@ public class JwtUtil {
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
 
-        User user = userDetailService.loadUserInfoBySubject(claims.get("sub").toString());
-        return new UsernamePasswordAuthenticationToken(UserInfo.toDto(user, accessToken), "", authorities);
+        UserEntity userEntity = userDetailService.loadUserInfoBySubject(claims.get("sub").toString());
+        return new UsernamePasswordAuthenticationToken(UserInfo.toDto(userEntity, accessToken), "", authorities);
     }
 
     public Claims parserToken(String token) {
