@@ -7,9 +7,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import seg.work.carog.server.auth.dto.TokenUserInfo;
-import seg.work.carog.server.car.dto.CarInfoRequest;
+import seg.work.carog.server.car.dto.CarInfoChangeRepresentRequest;
+import seg.work.carog.server.car.dto.CarInfoSaveRequest;
 import seg.work.carog.server.car.dto.CarInfoResponse;
-import seg.work.carog.server.car.dto.CarInfoSaveOrUpdateRequest;
+import seg.work.carog.server.car.dto.CarInfoUpdateRequest;
 import seg.work.carog.server.car.entity.CarInfoEntity;
 import seg.work.carog.server.car.repository.CarInfoRepository;
 import seg.work.carog.server.common.constant.Constant;
@@ -24,30 +25,43 @@ public class CarInfoService {
 
     private final CarInfoRepository carInfoRepository;
 
-    public CarInfoResponse getCarRepresent(TokenUserInfo tokenUserInfo) {
+    public CarInfoResponse getRepresentCarInfo(TokenUserInfo tokenUserInfo) {
         Optional<CarInfoEntity> optionalCarInfoEntity = carInfoRepository.findByUserIdAndRepresent(tokenUserInfo.getId(), Constant.FLAG_TRUE);
         return optionalCarInfoEntity.map(CarInfoResponse::new).orElse(null);
     }
 
-    public List<CarInfoResponse> getCarList(TokenUserInfo tokenUserInfo) {
+    public List<CarInfoResponse> getListCarInfo(TokenUserInfo tokenUserInfo) {
         List<CarInfoEntity> carInfoEntityList = carInfoRepository.findByUserId(tokenUserInfo.getId());
         return carInfoEntityList.stream().map(CarInfoResponse::new).toList();
     }
 
-    public void saveCarInfo(TokenUserInfo tokenUserInfo, CarInfoRequest carInfoRequest) {
-        boolean existsNumber = carInfoRepository.existsByUserIdAndNumber(tokenUserInfo.getId(), carInfoRequest.getNumber());
+    public void saveCarInfo(TokenUserInfo tokenUserInfo, CarInfoSaveRequest carInfoSaveRequest) {
+        boolean existsNumber = carInfoRepository.existsByUserIdAndNumber(tokenUserInfo.getId(), carInfoSaveRequest.getNumber());
         if (existsNumber) {
             throw new BaseException(Message.ALREADY_EXISTS_CAR_NUMBER);
         } else {
-            CarInfoEntity carInfoEntity = carInfoRequest.toEntity(tokenUserInfo.getId());
+            CarInfoEntity carInfoEntity = carInfoSaveRequest.toEntity(tokenUserInfo.getId());
             carInfoRepository.save(carInfoEntity);
         }
     }
 
-    public void updateCarInfo(TokenUserInfo tokenUserInfo, CarInfoSaveOrUpdateRequest carInfoSaveOrUpdateRequest) {
-        CarInfoEntity carInfoEntity = carInfoRepository.findByUserIdAndId(tokenUserInfo.getId(), carInfoSaveOrUpdateRequest.getId()).orElseThrow(() -> new BaseException(Message.NOT_FOUND));
-        carInfoEntity.update(carInfoSaveOrUpdateRequest);
+    public void updateCarInfo(TokenUserInfo tokenUserInfo, CarInfoUpdateRequest carInfoUpdateRequest) {
+        CarInfoEntity carInfoEntity = carInfoRepository.findByUserIdAndId(tokenUserInfo.getId(), carInfoUpdateRequest.getId()).orElseThrow(() -> new BaseException(Message.NOT_FOUND));
+        carInfoEntity.update(carInfoUpdateRequest);
 
         carInfoRepository.save(carInfoEntity);
+    }
+
+    public void updateRepresentCarInfo(TokenUserInfo tokenUserInfo, CarInfoChangeRepresentRequest carInfoChangeRepresentRequest) {
+        CarInfoEntity newRepresentcarInfoEntity = carInfoRepository.findByUserIdAndId(tokenUserInfo.getId(), carInfoChangeRepresentRequest.getId()).orElseThrow(() -> new BaseException(Message.NOT_FOUND));
+
+        Optional<CarInfoEntity> optionalCarInfoOldRepresentEntity = carInfoRepository.findByUserIdAndRepresent(tokenUserInfo.getId(), Constant.FLAG_TRUE);
+        optionalCarInfoOldRepresentEntity.ifPresent(carInfoEntity -> {
+            carInfoEntity.updateRepresent(Constant.FLAG_FALSE);
+            carInfoRepository.save(carInfoEntity);
+        });
+
+        newRepresentcarInfoEntity.updateRepresent(Constant.FLAG_TRUE);
+        carInfoRepository.save(newRepresentcarInfoEntity);
     }
 }

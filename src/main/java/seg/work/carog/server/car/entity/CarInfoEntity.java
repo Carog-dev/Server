@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import seg.work.carog.server.car.dto.CarInfoSaveOrUpdateRequest;
+import seg.work.carog.server.car.dto.CarInfoUpdateRequest;
 import seg.work.carog.server.common.entity.BaseEntity;
 
 @Entity
@@ -50,9 +50,13 @@ public class CarInfoEntity extends BaseEntity {
     @Column(name = "represent")
     private Boolean represent;
 
-    public void update(CarInfoSaveOrUpdateRequest carInfoSaveOrUpdateRequest) {
-        this.name = carInfoSaveOrUpdateRequest.getName();
-        this.number = carInfoSaveOrUpdateRequest.getNumber();
-        this.represent = carInfoSaveOrUpdateRequest.getRepresent();
+    public void update(CarInfoUpdateRequest carInfoUpdateRequest) {
+        this.name = carInfoUpdateRequest.getName();
+        this.number = carInfoUpdateRequest.getNumber();
+        this.represent = carInfoUpdateRequest.getRepresent();
+    }
+
+    public void updateRepresent(Boolean represent) {
+        this.represent = represent;
     }
 }
