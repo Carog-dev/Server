@@ -22,7 +22,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import seg.work.carog.server.common.constant.Message;
 import seg.work.carog.server.common.dto.BaseResponse;
 import seg.work.carog.server.common.exception.BaseException;
-import seg.work.carog.server.common.util.BlacklistTokenService;
+import seg.work.carog.server.common.service.BlacklistTokenService;
 import seg.work.carog.server.common.util.JwtUtil;
 import seg.work.carog.server.common.util.ObjectUtil;
 

@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import seg.work.carog.server.auth.entity.User;
+import seg.work.carog.server.user.entity.UserEntity;
 
 @Data
 @Builder
@@ -17,10 +17,10 @@ public class UserInfo {
     private String email;
     private String accessToken;
 
-    public static UserInfo toDto(User user, String accessToken) {
+    public static UserInfo toDto(UserEntity userEntity, String accessToken) {
         return UserInfo.builder()
-                .key(user.getKey())
-                .email(user.getEmail())
+                .key(userEntity.getKey())
+                .email(userEntity.getEmail())
                 .accessToken(accessToken)
                 .build();
     }

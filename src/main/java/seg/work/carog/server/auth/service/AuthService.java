@@ -7,18 +7,21 @@ import org.springframework.transaction.annotation.Transactional;
 import seg.work.carog.server.auth.dto.KakaoUserInfo;
 import seg.work.carog.server.auth.dto.LoginResponse;
 import seg.work.carog.server.auth.dto.UserInfo;
-import seg.work.carog.server.auth.entity.User;
+import seg.work.carog.server.user.entity.UserEntity;
 import seg.work.carog.server.auth.repository.UserRepository;
 import seg.work.carog.server.common.constant.Message;
 import seg.work.carog.server.common.constant.UserRole;
 import seg.work.carog.server.common.exception.BaseException;
+import seg.work.carog.server.common.service.BlacklistTokenService;
 import seg.work.carog.server.common.util.JwtUtil;
 
-@Service
-@RequiredArgsConstructor
 @Slf4j
+@Service
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class AuthService {
 
+    private final BlacklistTokenService blacklistTokenService;
     private final KakaoService kakaoService;
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
@@ -33,19 +36,19 @@ public class AuthService {
             KakaoUserInfo kakaoUserInfo = kakaoService.getUserInfo(accessToken);
 
             // 3. 사용자 정보로 회원가입 또는 로그인 처리
-            User user = findOrCreateUser(kakaoUserInfo);
+            UserEntity userEntity = findOrCreateUser(kakaoUserInfo);
 
             // 4. JWT 토큰 생성
-            String jwtToken = jwtUtil.generateToken(user);
+            String jwtToken = jwtUtil.generateToken(userEntity);
 
             return LoginResponse.builder()
                     .token(jwtToken)
                     .tokenType("Bearer")
                     .expiresDate(jwtUtil.parserToken(jwtToken).getExpiration())
                     .user(LoginResponse.UserInfo.builder()
-                            .email(user.getEmail())
-                            .nickname(user.getNickname())
-                            .profileImageUrl(user.getProfileImageUrl())
+                            .email(userEntity.getEmail())
+                            .nickname(userEntity.getNickname())
+                            .profileImageUrl(userEntity.getProfileImageUrl())
                             .build())
                     .build();
 
@@ -55,21 +58,29 @@ public class AuthService {
         }
     }
 
-    // TODO 카카오 로그아웃, 토큰 파기 적용
+    @Transactional
     public void logoutWithKakao(UserInfo userInfo) {
-        userInfo.getAccessToken();
+        if (userInfo.getAccessToken().isBlank()) {
+            throw new BaseException(Message.UNAUTHORIZED);
+        } else {
+            blacklistTokenService.addTokenToBlacklist(userInfo.getAccessToken());
+        }
     }
 
-    private User findOrCreateUser(KakaoUserInfo kakaoUserInfo) {
+    public void getProfile(UserInfo userInfo) {
+
+    }
+
+    private UserEntity findOrCreateUser(KakaoUserInfo kakaoUserInfo) {
         return userRepository.findByKakaoId(kakaoUserInfo.getId().toString()).orElseGet(() -> createNewUser(kakaoUserInfo));
     }
 
-    private User createNewUser(KakaoUserInfo kakaoUserInfo) {
+    private UserEntity createNewUser(KakaoUserInfo kakaoUserInfo) {
         String email = extractEmail(kakaoUserInfo);
         String nickname = extractNickname(kakaoUserInfo);
         String profileImageUrl = extractProfileImageUrl(kakaoUserInfo);
 
-        User newUser = User.builder()
+        UserEntity newUserEntity = UserEntity.builder()
                 .kakaoId(kakaoUserInfo.getId().toString())
                 .email(email)
                 .nickname(nickname)
@@ -77,7 +88,7 @@ public class AuthService {
                 .role(UserRole.USER)
                 .build();
 
-        return userRepository.save(newUser);
+        return userRepository.saveAndFlush(newUserEntity);
     }
 
     private String extractEmail(KakaoUserInfo kakaoUserInfo) {
@@ -111,7 +122,7 @@ public class AuthService {
             return kakaoUserInfo.getProperties().getProfileImage();
         }
 
-        log.warn("카카오 닉네임 추출 실패");
+        log.warn("카카오 프로필 추출 실패");
         return null;
     }
 }
