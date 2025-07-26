@@ -53,7 +53,6 @@ public class CarInfoEntity extends BaseEntity {
     public void update(CarInfoUpdateRequest carInfoUpdateRequest) {
         this.name = carInfoUpdateRequest.getName();
         this.number = carInfoUpdateRequest.getNumber();
-        this.represent = carInfoUpdateRequest.getRepresent();
     }
 
     public void updateRepresent(Boolean represent) {
