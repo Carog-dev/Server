@@ -10,9 +10,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import seg.work.carog.server.auth.dto.TokenUserInfo;
-import seg.work.carog.server.car.dto.CarInfoRequest;
+import seg.work.carog.server.car.dto.CarInfoChangeRepresentRequest;
+import seg.work.carog.server.car.dto.CarInfoSaveRequest;
 import seg.work.carog.server.car.dto.CarInfoResponse;
-import seg.work.carog.server.car.dto.CarInfoSaveOrUpdateRequest;
+import seg.work.carog.server.car.dto.CarInfoUpdateRequest;
 import seg.work.carog.server.car.service.CarInfoService;
 import seg.work.carog.server.common.dto.BaseResponse;
 
@@ -25,29 +26,36 @@ public class CarInfoController {
     private final CarInfoService carInfoService;
 
     @GetMapping("/represent")
-    public ResponseEntity<?> getCarRepresent(TokenUserInfo tokenUserInfo) {
-        CarInfoResponse carInfoResponse = carInfoService.getCarRepresent(tokenUserInfo);
+    public ResponseEntity<?> getRepresentCarInfo(TokenUserInfo tokenUserInfo) {
+        CarInfoResponse carInfoResponse = carInfoService.getRepresentCarInfo(tokenUserInfo);
 
         return ResponseEntity.ok(BaseResponse.success(carInfoResponse));
     }
 
     @GetMapping("/list")
-    public ResponseEntity<?> getCarList(TokenUserInfo tokenUserInfo) {
-        List<CarInfoResponse> carInfoResponseList = carInfoService.getCarList(tokenUserInfo);
+    public ResponseEntity<?> getListCarInfo(TokenUserInfo tokenUserInfo) {
+        List<CarInfoResponse> carInfoResponseList = carInfoService.getListCarInfo(tokenUserInfo);
 
         return ResponseEntity.ok(BaseResponse.success(carInfoResponseList));
     }
 
     @PostMapping
-    public ResponseEntity<?> saveCarInfo(TokenUserInfo tokenUserInfo, CarInfoRequest carInfoRequest) {
-        carInfoService.saveCarInfo(tokenUserInfo, carInfoRequest);
+    public ResponseEntity<?> saveCarInfo(TokenUserInfo tokenUserInfo, CarInfoSaveRequest carInfoSaveRequest) {
+        carInfoService.saveCarInfo(tokenUserInfo, carInfoSaveRequest);
 
         return ResponseEntity.ok(BaseResponse.success());
     }
 
     @PutMapping
-    public ResponseEntity<?> updateCarInfo(TokenUserInfo tokenUserInfo, CarInfoSaveOrUpdateRequest carInfoSaveOrUpdateRequest) {
-        carInfoService.updateCarInfo(tokenUserInfo, carInfoSaveOrUpdateRequest);
+    public ResponseEntity<?> updateCarInfo(TokenUserInfo tokenUserInfo, CarInfoUpdateRequest carInfoUpdateRequest) {
+        carInfoService.updateCarInfo(tokenUserInfo, carInfoUpdateRequest);
+
+        return ResponseEntity.ok(BaseResponse.success());
+    }
+
+    @PutMapping("/represent")
+    public ResponseEntity<?> updateRepresentCarInfo(TokenUserInfo tokenUserInfo, CarInfoChangeRepresentRequest carInfoChangeRepresentRequest) {
+        carInfoService.updateRepresentCarInfo(tokenUserInfo, carInfoChangeRepresentRequest);
 
         return ResponseEntity.ok(BaseResponse.success());
     }
