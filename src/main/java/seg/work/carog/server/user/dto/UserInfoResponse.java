@@ -1,4 +1,4 @@
-package seg.work.carog.server.auth.dto;
+package seg.work.carog.server.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,14 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 import seg.work.carog.server.auth.dto.KakaoLoginRequest;
 import seg.work.carog.server.auth.dto.LoginResponse;
 import seg.work.carog.server.auth.dto.TokenUserInfo;
-import seg.work.carog.server.auth.dto.UserInfoResponse;
 import seg.work.carog.server.auth.service.AuthService;
 import seg.work.carog.server.common.dto.BaseResponse;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/user")
+@RequestMapping("/auth")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class AuthController {
 
@@ -38,12 +36,5 @@ public class AuthController {
         authService.logoutWithKakao(tokenUserInfo);
 
         return ResponseEntity.ok(BaseResponse.success());
-    }
-
-    @GetMapping("/profile")
-    public ResponseEntity<?> getProfile(TokenUserInfo tokenUserInfo) {
-        UserInfoResponse userInfoResponse = authService.getProfile(tokenUserInfo);
-
-        return ResponseEntity.ok(BaseResponse.success(userInfoResponse));
     }
 }
