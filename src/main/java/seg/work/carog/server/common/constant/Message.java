@@ -25,6 +25,7 @@ public enum Message {
     USER_NOT_FOUND("EA0011", "사용자를 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
     NO_DATA("EA0012", "조회된 데이터가 없습니다.", HttpStatus.NOT_FOUND),
     REQUIRED_PARAMETER_IS_NULL("EA0013", "필수 전달 정보가 누락되었습니다.", HttpStatus.BAD_REQUEST),
+    ALREADY_EXISTS_CAR_NUMBER("EA0014", "이미 등록된 차량번호 입니다.", HttpStatus.BAD_REQUEST),
 
     // file
     CANNOT_GET_FILE("EF0000", "파일을 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
