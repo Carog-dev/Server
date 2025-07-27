@@ -1,9 +1,13 @@
 package seg.work.carog.server.car.service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import seg.work.carog.server.auth.dto.TokenUserInfo;
@@ -30,9 +34,9 @@ public class CarInfoService {
         return optionalCarInfoEntity.map(CarInfoResponse::new).orElse(null);
     }
 
-    public List<CarInfoResponse> getListCarInfo(TokenUserInfo tokenUserInfo) {
-        List<CarInfoEntity> carInfoEntityList = carInfoRepository.findByUserId(tokenUserInfo.getId());
-        return carInfoEntityList.stream().map(CarInfoResponse::new).toList();
+    public Slice<CarInfoResponse> getListCarInfo(TokenUserInfo tokenUserInfo, Pageable pageable) {
+        Optional<Slice<CarInfoEntity>> optionalCarInfoEntityList = carInfoRepository.findByUserId(tokenUserInfo.getId());
+        return optionalCarInfoEntityList.map(carInfoEntityList -> carInfoEntityList.stream().map(CarInfoResponse::new).toList()).<Slice<CarInfoResponse>>map(PageImpl::new).orElse(new PageImpl<>(Collections.emptyList()));
     }
 
     public void saveCarInfo(TokenUserInfo tokenUserInfo, CarInfoSaveRequest carInfoSaveRequest) {

@@ -1,0 +1,50 @@
+package seg.work.carog.server.maintenance.controller;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Slice;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import seg.work.carog.server.auth.dto.TokenUserInfo;
+import seg.work.carog.server.common.dto.BaseResponse;
+import seg.work.carog.server.maintenance.dto.MaintenanceCostInfoResponse;
+import seg.work.carog.server.maintenance.dto.MaintenanceCostInfoSaveRequest;
+import seg.work.carog.server.maintenance.dto.MaintenanceCostInfoUpdateRequest;
+import seg.work.carog.server.maintenance.service.MaintenanceCostInfoService;
+
+@Slf4j
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/maintenance")
+public class MaintenanceCostInfoController {
+
+    private final MaintenanceCostInfoService maintenanceCostInfoService;
+
+    @GetMapping({"/list", "/list/{carInfoId}"})
+    public ResponseEntity<?> getMaintenanceList(TokenUserInfo tokenUserInfo, @PathVariable(required = false) Long carInfoId) {
+        Slice<MaintenanceCostInfoResponse> maintenanceCostInfoResponseList = maintenanceCostInfoService.getMaintenanceList(tokenUserInfo, carInfoId);
+
+        return ResponseEntity.ok(BaseResponse.success(maintenanceCostInfoResponseList));
+    }
+
+    @PostMapping
+    public ResponseEntity<?> saveMaintenance(TokenUserInfo tokenUserInfo, @RequestBody MaintenanceCostInfoSaveRequest maintenanceCostInfoSaveRequest) {
+        maintenanceCostInfoService.saveMaintenance(tokenUserInfo, maintenanceCostInfoSaveRequest);
+
+        return ResponseEntity.ok(BaseResponse.success());
+    }
+
+    @PutMapping
+    public ResponseEntity<?> updateMaintenance(TokenUserInfo tokenUserInfo, @RequestBody MaintenanceCostInfoUpdateRequest maintenanceCostInfoUpdateRequest) {
+        maintenanceCostInfoService.updateMaintenance(tokenUserInfo, maintenanceCostInfoUpdateRequest);
+
+        return ResponseEntity.ok(BaseResponse.success());
+    }
+
+}
