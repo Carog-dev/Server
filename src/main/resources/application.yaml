@@ -56,6 +56,10 @@ spring:
           time_zone: Asia/Seoul
 
   data:
+    web:
+      pageable:
+        one-indexed-parameters: true
+
     redis:
       username: ENC(IMYEwU5/lTq8GOlK/qVPlp/s3mGt86kB0nONcuamqkwxY3nYukjiMebBmrVK51im)
       password: ENC(Ghv2hJmAH+U/Ckl1WThDjmGwze9HraZjCnXx0VHoF1/8PuiQVqyrcSucao+aHA2m)
