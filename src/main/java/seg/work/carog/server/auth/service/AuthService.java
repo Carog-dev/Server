@@ -7,13 +7,13 @@ import org.springframework.transaction.annotation.Transactional;
 import seg.work.carog.server.auth.dto.KakaoUserInfo;
 import seg.work.carog.server.auth.dto.LoginResponse;
 import seg.work.carog.server.auth.dto.TokenUserInfo;
-import seg.work.carog.server.user.entity.UserEntity;
-import seg.work.carog.server.user.repository.UserRepository;
 import seg.work.carog.server.common.constant.Message;
 import seg.work.carog.server.common.constant.UserRole;
 import seg.work.carog.server.common.exception.BaseException;
 import seg.work.carog.server.common.service.BlacklistTokenService;
 import seg.work.carog.server.common.util.JwtUtil;
+import seg.work.carog.server.user.entity.UserEntity;
+import seg.work.carog.server.user.repository.UserRepository;
 
 @Slf4j
 @Service
