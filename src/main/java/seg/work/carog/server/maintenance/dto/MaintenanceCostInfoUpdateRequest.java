@@ -9,7 +9,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import seg.work.carog.server.maintenance.entity.MaintenanceCostInfoEntity;
 
 @Data
 @Builder
@@ -39,17 +38,4 @@ public class MaintenanceCostInfoUpdateRequest {
     private String memo;
     private LocalDate date;
     private Instant time;
-
-    public MaintenanceCostInfoEntity toEntity(Long carInfoId) {
-        return MaintenanceCostInfoEntity.builder()
-                .carInfoId(carInfoId)
-                .item(this.item)
-                .price(this.price)
-                .mileage(this.mileage)
-                .company(this.company)
-                .memo(this.memo)
-                .date(this.date)
-                .time(this.time)
-                .build();
-    }
 }

@@ -1,7 +1,6 @@
 package seg.work.carog.server.car.repository;
 
 import jakarta.validation.constraints.NotNull;
-import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,6 +1,5 @@
 package seg.work.carog.server.car.controller;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -14,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import seg.work.carog.server.auth.dto.TokenUserInfo;
 import seg.work.carog.server.car.dto.CarInfoChangeRepresentRequest;
-import seg.work.carog.server.car.dto.CarInfoSaveRequest;
 import seg.work.carog.server.car.dto.CarInfoResponse;
+import seg.work.carog.server.car.dto.CarInfoSaveRequest;
 import seg.work.carog.server.car.dto.CarInfoUpdateRequest;
 import seg.work.carog.server.car.service.CarInfoService;
 import seg.work.carog.server.common.dto.BaseResponse;

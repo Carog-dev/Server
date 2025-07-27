@@ -1,7 +1,6 @@
 package seg.work.carog.server.car.service;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,8 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import seg.work.carog.server.auth.dto.TokenUserInfo;
 import seg.work.carog.server.car.dto.CarInfoChangeRepresentRequest;
-import seg.work.carog.server.car.dto.CarInfoSaveRequest;
 import seg.work.carog.server.car.dto.CarInfoResponse;
+import seg.work.carog.server.car.dto.CarInfoSaveRequest;
 import seg.work.carog.server.car.dto.CarInfoUpdateRequest;
 import seg.work.carog.server.car.entity.CarInfoEntity;
 import seg.work.carog.server.car.repository.CarInfoRepository;

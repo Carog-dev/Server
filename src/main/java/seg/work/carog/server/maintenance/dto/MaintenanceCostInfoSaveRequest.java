@@ -2,7 +2,6 @@ package seg.work.carog.server.maintenance.dto;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Null;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;

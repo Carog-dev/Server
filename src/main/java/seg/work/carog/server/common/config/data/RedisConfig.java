@@ -1,5 +1,6 @@
 package seg.work.carog.server.common.config.data;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -10,8 +11,6 @@ import org.springframework.data.redis.connection.RedisSentinelConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-
-import java.util.List;
 import seg.work.carog.server.common.config.property.RedisConfigProperty;
 import seg.work.carog.server.common.util.RedisUtil;
 

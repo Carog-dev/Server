@@ -19,10 +19,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 import seg.work.carog.server.auth.dto.TokenUserInfo;
-import seg.work.carog.server.user.entity.UserEntity;
 import seg.work.carog.server.common.config.security.UserDetailService;
 import seg.work.carog.server.common.constant.Message;
 import seg.work.carog.server.common.exception.BaseException;
+import seg.work.carog.server.user.entity.UserEntity;
 
 @Slf4j
 @Component
