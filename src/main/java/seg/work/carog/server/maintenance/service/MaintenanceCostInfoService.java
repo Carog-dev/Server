@@ -41,7 +41,7 @@ public class MaintenanceCostInfoService {
         return (carInfoId != null && carInfoId > 0) ? this.getCarInfoById(carInfoId) : this.getRepresentCarInfo(tokenUserInfo);
     }
 
-    public Slice<MaintenanceCostInfoResponse> getMaintenanceList(TokenUserInfo tokenUserInfo, Long carInfoId) {
+    public Slice<MaintenanceCostInfoResponse> getMaintenanceCostInfoList(TokenUserInfo tokenUserInfo, Long carInfoId) {
         CarInfoEntity carInfoEntity = this.getCarInfo(tokenUserInfo, carInfoId);
 
         Optional<Slice<MaintenanceCostInfoEntity>> optionalMaintenanceCostInfoEntityList = maintenanceCostInfoRepository.findByCarInfoId(carInfoEntity.getId());
@@ -49,7 +49,7 @@ public class MaintenanceCostInfoService {
     }
 
     @Transactional
-    public void saveMaintenance(TokenUserInfo tokenUserInfo, MaintenanceCostInfoSaveRequest maintenanceCostInfoSaveRequest) {
+    public void saveMaintenanceCostInfo(TokenUserInfo tokenUserInfo, MaintenanceCostInfoSaveRequest maintenanceCostInfoSaveRequest) {
         CarInfoEntity carInfoEntity = this.getCarInfo(tokenUserInfo, maintenanceCostInfoSaveRequest.getCarInfoId());
 
         MaintenanceCostInfoEntity maintenanceCostInfoEntity = maintenanceCostInfoSaveRequest.toEntity(carInfoEntity.getId());
@@ -57,7 +57,7 @@ public class MaintenanceCostInfoService {
     }
 
     @Transactional
-    public void updateMaintenance(TokenUserInfo tokenUserInfo, MaintenanceCostInfoUpdateRequest maintenanceCostInfoUpdateRequest) {
+    public void updateMaintenanceCostInfo(TokenUserInfo tokenUserInfo, MaintenanceCostInfoUpdateRequest maintenanceCostInfoUpdateRequest) {
         MaintenanceCostInfoEntity maintenanceCostInfoEntity = maintenanceCostInfoRepository.findById(maintenanceCostInfoUpdateRequest.getId()).orElseThrow(() -> new BaseException(Message.NO_MAINTENANCE_COST_INFO));
         maintenanceCostInfoEntity.updateMaintenanceCostInfo(maintenanceCostInfoUpdateRequest);
         maintenanceCostInfoRepository.save(maintenanceCostInfoEntity);

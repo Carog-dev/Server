@@ -27,22 +27,22 @@ public class MaintenanceCostInfoController {
     private final MaintenanceCostInfoService maintenanceCostInfoService;
 
     @GetMapping({"/list", "/list/{carInfoId}"})
-    public ResponseEntity<?> getMaintenanceList(TokenUserInfo tokenUserInfo, @PathVariable(required = false) Long carInfoId) {
-        Slice<MaintenanceCostInfoResponse> maintenanceCostInfoResponseList = maintenanceCostInfoService.getMaintenanceList(tokenUserInfo, carInfoId);
+    public ResponseEntity<?> getMaintenanceCostInfoList(TokenUserInfo tokenUserInfo, @PathVariable(required = false) Long carInfoId) {
+        Slice<MaintenanceCostInfoResponse> maintenanceCostInfoResponseList = maintenanceCostInfoService.getMaintenanceCostInfoList(tokenUserInfo, carInfoId);
 
         return ResponseEntity.ok(BaseResponse.success(maintenanceCostInfoResponseList));
     }
 
     @PostMapping
-    public ResponseEntity<?> saveMaintenance(TokenUserInfo tokenUserInfo, @RequestBody MaintenanceCostInfoSaveRequest maintenanceCostInfoSaveRequest) {
-        maintenanceCostInfoService.saveMaintenance(tokenUserInfo, maintenanceCostInfoSaveRequest);
+    public ResponseEntity<?> saveMaintenanceCostInfo(TokenUserInfo tokenUserInfo, @RequestBody MaintenanceCostInfoSaveRequest maintenanceCostInfoSaveRequest) {
+        maintenanceCostInfoService.saveMaintenanceCostInfo(tokenUserInfo, maintenanceCostInfoSaveRequest);
 
         return ResponseEntity.ok(BaseResponse.success());
     }
 
     @PutMapping
-    public ResponseEntity<?> updateMaintenance(TokenUserInfo tokenUserInfo, @RequestBody MaintenanceCostInfoUpdateRequest maintenanceCostInfoUpdateRequest) {
-        maintenanceCostInfoService.updateMaintenance(tokenUserInfo, maintenanceCostInfoUpdateRequest);
+    public ResponseEntity<?> updateMaintenanceCostInfo(TokenUserInfo tokenUserInfo, @RequestBody MaintenanceCostInfoUpdateRequest maintenanceCostInfoUpdateRequest) {
+        maintenanceCostInfoService.updateMaintenanceCostInfo(tokenUserInfo, maintenanceCostInfoUpdateRequest);
 
         return ResponseEntity.ok(BaseResponse.success());
     }

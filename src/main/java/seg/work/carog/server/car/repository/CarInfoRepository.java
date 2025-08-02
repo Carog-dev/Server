@@ -3,10 +3,10 @@ package seg.work.carog.server.car.repository;
 import jakarta.validation.constraints.NotNull;
 import java.util.Optional;
 import org.springframework.data.domain.Slice;
-import org.springframework.data.jpa.repository.JpaRepository;
 import seg.work.carog.server.car.entity.CarInfoEntity;
+import seg.work.carog.server.common.repository.BaseRepository;
 
-public interface CarInfoRepository extends JpaRepository<CarInfoEntity, Long> {
+public interface CarInfoRepository extends BaseRepository<CarInfoEntity> {
 
     Optional<CarInfoEntity> findByUserIdAndRepresent(@NotNull Long userId, Boolean represent);
 
