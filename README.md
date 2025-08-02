@@ -8,6 +8,7 @@
 - **Cache**: Redis
 - **ORM**: JPA (Hibernate), Mybatis
 - **Build Tool**: Gradle
+- **소셜 로그인**: 카카오 OAuth 2.0
 
 ## 주요 기능
 
@@ -23,7 +24,14 @@
 2. **플랫폼 설정** → **Web 플랫폼 등록**
    - 사이트 도메인: `http://localhost:3000`
 3. **카카오 로그인** 활성화
-4. **Redirect URI 설정**: `http://localhost:3000/auth/kakao/callback`
+4. **Redirect URI 설정**: `http://localhost:3000/auth/login/kakao`
 5. **동의항목 설정**:
    - 닉네임: 필수
    - 카카오계정(이메일): 필수
+
+# JVM Options
+```aiexclude
+-Dspring.profiles.active=local
+-Djwt.secret=secretValue
+-Djasypt.encryptor.password=encryptorPassword
+```
