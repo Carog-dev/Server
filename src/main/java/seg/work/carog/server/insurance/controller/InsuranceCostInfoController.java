@@ -28,9 +28,9 @@ public class InsuranceCostInfoController {
 
     @GetMapping({"/list", "/list/{carInfoId}"})
     public ResponseEntity<?> getInsuranceCostInfoList(TokenUserInfo tokenUserInfo, @PathVariable(required = false) Long carInfoId) {
-        Slice<InsuranceCostInfoResponse> oilCostInfoResponseList = insuranceCostInfoService.getInsuranceCostInfoList(tokenUserInfo, carInfoId);
+        Slice<InsuranceCostInfoResponse> insuranceCostInfoResponseList = insuranceCostInfoService.getInsuranceCostInfoList(tokenUserInfo, carInfoId);
 
-        return ResponseEntity.ok(BaseResponse.success(oilCostInfoResponseList));
+        return ResponseEntity.ok(BaseResponse.success(insuranceCostInfoResponseList));
     }
 
     @PostMapping
