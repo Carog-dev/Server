@@ -38,6 +38,7 @@ public class CarInfoService {
         return optionalCarInfoEntityList.map(carInfoEntityList -> carInfoEntityList.stream().map(CarInfoResponse::new).toList()).<Slice<CarInfoResponse>>map(PageImpl::new).orElse(new PageImpl<>(Collections.emptyList()));
     }
 
+    @Transactional
     public void saveCarInfo(TokenUserInfo tokenUserInfo, CarInfoSaveRequest carInfoSaveRequest) {
         boolean existsNumber = carInfoRepository.existsByUserIdAndNumber(tokenUserInfo.getId(), carInfoSaveRequest.getNumber());
         if (existsNumber) {
@@ -48,6 +49,7 @@ public class CarInfoService {
         }
     }
 
+    @Transactional
     public void updateCarInfo(TokenUserInfo tokenUserInfo, CarInfoUpdateRequest carInfoUpdateRequest) {
         CarInfoEntity carInfoEntity = carInfoRepository.findByUserIdAndId(tokenUserInfo.getId(), carInfoUpdateRequest.getId()).orElseThrow(() -> new BaseException(Message.NOT_FOUND));
         carInfoEntity.update(carInfoUpdateRequest);
@@ -55,6 +57,7 @@ public class CarInfoService {
         carInfoRepository.save(carInfoEntity);
     }
 
+    @Transactional
     public void updateRepresentCarInfo(TokenUserInfo tokenUserInfo, CarInfoChangeRepresentRequest carInfoChangeRepresentRequest) {
         CarInfoEntity newRepresentcarInfoEntity = carInfoRepository.findByUserIdAndId(tokenUserInfo.getId(), carInfoChangeRepresentRequest.getId()).orElseThrow(() -> new BaseException(Message.NOT_FOUND));
 
