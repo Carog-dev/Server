@@ -59,7 +59,7 @@ public class UserEntity extends BaseEntity implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     @Builder.Default
-    private UserRole role = UserRole.USER;
+    private UserRole role = UserRole.TEMP_USER;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -79,5 +79,9 @@ public class UserEntity extends BaseEntity implements UserDetails {
     @PrePersist
     public void prePersist() {
         this.key = UUID.randomUUID().toString();
+    }
+
+    public void updateUserRole(UserRole userRole) {
+        this.role = userRole;
     }
 }

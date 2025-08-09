@@ -5,9 +5,11 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import seg.work.carog.server.auth.dto.KakaoLoginRequest;
 import seg.work.carog.server.auth.dto.LoginResponse;
@@ -34,6 +36,20 @@ public class AuthController {
     @PostMapping("/logout/kakao")
     public ResponseEntity<?> kakaoLogout(TokenUserInfo tokenUserInfo) {
         authService.logoutWithKakao(tokenUserInfo);
+
+        return ResponseEntity.ok(BaseResponse.success());
+    }
+
+    @GetMapping("/verify")
+    public ResponseEntity<?> verifyEmail(@RequestParam("token") String token) {
+        authService.verify(token);
+
+        return ResponseEntity.ok(BaseResponse.success());
+    }
+
+    @GetMapping("/verify/resend")
+    public ResponseEntity<?> verifyEmailResend(TokenUserInfo tokenUserInfo) {
+        authService.verifyEmailResend(tokenUserInfo);
 
         return ResponseEntity.ok(BaseResponse.success());
     }

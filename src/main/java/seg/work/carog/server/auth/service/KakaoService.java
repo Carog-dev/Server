@@ -1,8 +1,6 @@
 package seg.work.carog.server.auth.service;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -11,6 +9,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
+import seg.work.carog.server.auth.dto.KakaoTokenResponse;
 import seg.work.carog.server.auth.dto.KakaoUserInfo;
 import seg.work.carog.server.common.constant.Message;
 import seg.work.carog.server.common.exception.BaseException;
@@ -75,38 +74,6 @@ public class KakaoService {
         } catch (Exception e) {
             log.error("Kakao 사용자 정보 조회 오류", e);
             throw new BaseException(Message.KAKAO_GET_USER_INFO);
-        }
-    }
-
-    @Getter
-    @Setter
-    private static class KakaoTokenResponse {
-
-        private String access_token;
-        private String token_type;
-        private String refresh_token;
-        private Integer expires_in;
-        private String scope;
-        private Integer refresh_token_expires_in;
-
-        public String getAccessToken() {
-            return access_token;
-        }
-
-        public String getTokenType() {
-            return token_type;
-        }
-
-        public String getRefreshToken() {
-            return refresh_token;
-        }
-
-        public Integer getExpiresIn() {
-            return expires_in;
-        }
-
-        public Integer getRefreshTokenExpiresIn() {
-            return refresh_token_expires_in;
         }
     }
 }

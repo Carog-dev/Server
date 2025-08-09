@@ -91,6 +91,14 @@ public class RedisUtil {
         return redisTemplate.opsForHash().get(hash, key);
     }
 
+    public static Long getHashLongValue(String hash, String key) {
+        Object value = getHash(hash, key);
+        if (value == null) {
+            throw new BaseException(Message.NO_DATA);
+        }
+        return Long.valueOf(value.toString());
+    }
+
     // hash table 추가
     public static void putHash(String hash, String key, Object value) {
         redisTemplate.opsForHash().put(hash, key, value);

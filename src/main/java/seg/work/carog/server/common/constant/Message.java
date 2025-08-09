@@ -33,6 +33,8 @@ public enum Message {
     NO_INSURANCE_COST_INFO("EA0019", "등록된 보혐료 또는 세금 내역이 존재하지 않습니다.", HttpStatus.BAD_REQUEST),
     NO_ACCIDENT_COST_INFO("EA0020", "등록된 사고 내역이 존재하지 않습니다.", HttpStatus.BAD_REQUEST),
     NO_INSTALLMENT_COST_INFO("EA0019", "등록된 할부 내역이 존재하지 않습니다.", HttpStatus.BAD_REQUEST),
+    AUTH_MAIL_SEND_FAIL("EA0020", "인증 메일 전송에 실패하였습니다.", HttpStatus.BAD_REQUEST),
+    AUTH_MAIL_IS_EXPIRED("EA0021", "인증 메일이 만료되었습니다. 다시 인증해주세요.", HttpStatus.BAD_REQUEST),
 
     // file
     CANNOT_GET_FILE("EF0000", "파일을 찾을 수 없습니다.", HttpStatus.NOT_FOUND),

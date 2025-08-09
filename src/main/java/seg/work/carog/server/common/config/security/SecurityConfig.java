@@ -19,6 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import seg.work.carog.server.common.constant.UserRole;
 
 @Configuration
 @EnableWebSecurity
@@ -41,7 +42,11 @@ public class SecurityConfig {
                         .requestMatchers("/actuator/**").permitAll()
                         .requestMatchers("/error").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                        .anyRequest().authenticated()
+                        .anyRequest().hasAnyAuthority(
+                                UserRole.USER.getRole(),
+                                UserRole.DEVELOPER.getRole(),
+                                UserRole.ADMIN.getRole()
+                        )
                 )
                 .exceptionHandling(config ->
                         config.authenticationEntryPoint(jwtAuthenticationEntryPoint).accessDeniedHandler(jwtAccessDeniedHandler)

@@ -1,5 +1,6 @@
 package seg.work.carog.server.auth.service;
 
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -10,7 +11,9 @@ import seg.work.carog.server.auth.dto.TokenUserInfo;
 import seg.work.carog.server.common.constant.Message;
 import seg.work.carog.server.common.constant.UserRole;
 import seg.work.carog.server.common.exception.BaseException;
+import seg.work.carog.server.common.service.AuthTokenService;
 import seg.work.carog.server.common.service.BlacklistTokenService;
+import seg.work.carog.server.common.service.EmailService;
 import seg.work.carog.server.common.util.JwtUtil;
 import seg.work.carog.server.user.entity.UserEntity;
 import seg.work.carog.server.user.repository.UserRepository;
@@ -22,6 +25,8 @@ import seg.work.carog.server.user.repository.UserRepository;
 public class AuthService {
 
     private final BlacklistTokenService blacklistTokenService;
+    private final AuthTokenService authTokenService;
+    private final EmailService emailService;
     private final KakaoService kakaoService;
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
@@ -36,10 +41,15 @@ public class AuthService {
             KakaoUserInfo kakaoUserInfo = kakaoService.getUserInfo(accessToken);
 
             // 3. 사용자 정보로 회원가입 또는 로그인 처리
-            UserEntity userEntity = findOrCreateUser(kakaoUserInfo);
+            UserEntity userEntity = userRepository.findByKakaoId(kakaoUserInfo.getId().toString()).orElseGet(() -> createNewUser(kakaoUserInfo));
 
             // 4. JWT 토큰 생성
             String jwtToken = jwtUtil.generateToken(userEntity);
+
+            // 5. 인증 메일 발송
+            String authToken = UUID.randomUUID().toString();
+            authTokenService.addTokenToAuthMap(authToken, userEntity.getId());
+            emailService.sendAuthEmail(userEntity.getEmail(), authToken);
 
             return LoginResponse.builder()
                     .token(jwtToken)
@@ -51,7 +61,6 @@ public class AuthService {
                             .profileImageUrl(userEntity.getProfileImageUrl())
                             .build())
                     .build();
-
         } catch (Exception e) {
             log.error("ERROR : ", e);
             throw new BaseException(Message.LOGIN_FAIL);
@@ -67,8 +76,24 @@ public class AuthService {
         }
     }
 
-    private UserEntity findOrCreateUser(KakaoUserInfo kakaoUserInfo) {
-        return userRepository.findByKakaoId(kakaoUserInfo.getId().toString()).orElseGet(() -> createNewUser(kakaoUserInfo));
+    @Transactional
+    public void verify(String token) {
+        if (authTokenService.checkHashHasKey(token)) {
+            Long userId = authTokenService.getAuthMapByAuthToken(token);
+            UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new BaseException(Message.USER_NOT_FOUND));
+            userEntity.updateUserRole(UserRole.USER);
+
+            userRepository.save(userEntity);
+        } else {
+            throw new BaseException(Message.AUTH_MAIL_IS_EXPIRED);
+        }
+    }
+
+    @Transactional
+    public void verifyEmailResend(TokenUserInfo tokenUserInfo) {
+        String authToken = UUID.randomUUID().toString();
+        authTokenService.addTokenToAuthMap(authToken, tokenUserInfo.getId());
+        emailService.sendAuthEmail(tokenUserInfo.getEmail(), authToken);
     }
 
     private UserEntity createNewUser(KakaoUserInfo kakaoUserInfo) {
@@ -81,7 +106,7 @@ public class AuthService {
                 .email(email)
                 .nickname(nickname)
                 .profileImageUrl(profileImageUrl)
-                .role(UserRole.USER)
+                .role(UserRole.TEMP_USER)
                 .build();
 
         return userRepository.save(newUserEntity);
