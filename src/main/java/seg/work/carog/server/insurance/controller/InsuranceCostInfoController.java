@@ -1,5 +1,7 @@
 package seg.work.carog.server.insurance.controller;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Slice;
@@ -22,11 +24,13 @@ import seg.work.carog.server.insurance.service.InsuranceCostInfoService;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/insurance")
+@Tag(name = "보험료/세금")
 public class InsuranceCostInfoController {
 
     private final InsuranceCostInfoService insuranceCostInfoService;
 
     @GetMapping({"/list", "/list/{carInfoId}"})
+    @Parameter(name = "carInfoId", description = "대표챠랑 또는 선택한 차량 아이디")
     public ResponseEntity<?> getInsuranceCostInfoList(TokenUserInfo tokenUserInfo, @PathVariable(required = false) Long carInfoId) {
         Slice<InsuranceCostInfoResponse> insuranceCostInfoResponseList = insuranceCostInfoService.getInsuranceCostInfoList(tokenUserInfo, carInfoId);
 

@@ -1,5 +1,7 @@
 package seg.work.carog.server.oil.controller;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Slice;
@@ -22,11 +24,12 @@ import seg.work.carog.server.oil.service.OilCostInfoService;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/oil")
+@Tag(name = "유류비")
 public class OilCostInfoController {
 
     private final OilCostInfoService oilCostInfoService;
-
     @GetMapping({"/list", "/list/{carInfoId}"})
+    @Parameter(name = "carInfoId", description = "대표챠랑 또는 선택한 차량 아이디")
     public ResponseEntity<?> getOilCostInfoList(TokenUserInfo tokenUserInfo, @PathVariable(required = false) Long carInfoId) {
         Slice<OilCostInfoResponse> oilCostInfoResponseList = oilCostInfoService.getOilCostInfoList(tokenUserInfo, carInfoId);
 

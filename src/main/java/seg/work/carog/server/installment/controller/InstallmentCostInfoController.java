@@ -1,5 +1,7 @@
 package seg.work.carog.server.installment.controller;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Slice;
@@ -22,11 +24,13 @@ import seg.work.carog.server.installment.service.InstallmentCostInfoService;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/installment")
+@Tag(name = "할부")
 public class InstallmentCostInfoController {
 
     private final InstallmentCostInfoService installmentCostInfoService;
 
     @GetMapping({"/list", "/list/{carInfoId}"})
+    @Parameter(name = "carInfoId", description = "대표챠랑 또는 선택한 차량 아이디")
     public ResponseEntity<?> getInstallmentCostInfoList(TokenUserInfo tokenUserInfo, @PathVariable(required = false) Long carInfoId) {
         Slice<InstallmentCostInfoResponse> installmentCostInfoResponseList = installmentCostInfoService.getInstallmentCostInfoList(tokenUserInfo, carInfoId);
 

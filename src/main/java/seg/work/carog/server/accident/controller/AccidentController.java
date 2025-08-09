@@ -1,5 +1,7 @@
 package seg.work.carog.server.accident.controller;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Slice;
@@ -22,11 +24,13 @@ import seg.work.carog.server.common.dto.BaseResponse;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/accident")
+@Tag(name = "사고")
 public class AccidentController {
 
     private final AccidentCostInfoService accidentCostInfoService;
 
     @GetMapping({"/list", "/list/{carInfoId}"})
+    @Parameter(name = "carInfoId", description = "대표챠랑 또는 선택한 차량 아이디")
     public ResponseEntity<?> getAccidentCostInfoList(TokenUserInfo tokenUserInfo, @PathVariable(required = false) Long carInfoId) {
         Slice<AccidentCostInfoResponse> maintenanceCostInfoResponseList = accidentCostInfoService.getAccidentCostInfoList(tokenUserInfo, carInfoId);
 

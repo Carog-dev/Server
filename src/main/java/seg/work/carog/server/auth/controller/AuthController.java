@@ -1,5 +1,6 @@
 package seg.work.carog.server.auth.controller;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +19,7 @@ import seg.work.carog.server.common.dto.BaseResponse;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth")
+@Hidden
 public class AuthController {
 
     private final AuthService authService;

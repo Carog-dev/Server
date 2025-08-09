@@ -2,8 +2,8 @@ package seg.work.carog.server.accident.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,7 +28,7 @@ public class AccidentCostInfoResponse {
     private LocalDate date;
 
     @JsonFormat(pattern = "HH:mm:ss")
-    private Instant time;
+    private LocalTime time;
 
     public AccidentCostInfoResponse(AccidentCostInfoEntity accidentCostInfoEntity) {
         this.id = accidentCostInfoEntity.getId();

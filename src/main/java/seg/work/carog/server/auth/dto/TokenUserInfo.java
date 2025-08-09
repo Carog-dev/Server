@@ -1,5 +1,6 @@
 package seg.work.carog.server.auth.dto;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,6 +11,7 @@ import seg.work.carog.server.user.entity.UserEntity;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Hidden
 public class TokenUserInfo {
 
     private Long id;

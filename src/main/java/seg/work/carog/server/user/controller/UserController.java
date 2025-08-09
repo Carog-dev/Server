@@ -1,5 +1,6 @@
 package seg.work.carog.server.user.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import seg.work.carog.server.user.service.UserService;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
+@Tag(name = "User")
 public class UserController {
 
     private final UserService userService;
