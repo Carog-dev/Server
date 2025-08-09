@@ -3,19 +3,20 @@ package seg.work.carog.server.insurance.dto;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import seg.work.carog.server.common.dto.BaseSaveRequest;
 import seg.work.carog.server.insurance.entity.InsuranceCostInfoEntity;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class InsuranceCostInfoSaveRequest {
+@EqualsAndHashCode(callSuper = true)
+public class InsuranceCostInfoSaveRequest extends BaseSaveRequest {
 
     private Long carInfoId;
 
@@ -26,21 +27,17 @@ public class InsuranceCostInfoSaveRequest {
     @NotBlank
     private BigDecimal price;
 
-    private String memo;
-
     @NotBlank
-    private LocalDate date;
-
-    private Instant time;
+    private String company;
 
     public InsuranceCostInfoEntity toEntity(Long carInfoId) {
         return InsuranceCostInfoEntity.builder()
                 .carInfoId(carInfoId)
                 .type(this.type)
                 .price(this.price)
-                .memo(this.memo)
-                .date(this.date)
-                .time(this.time)
+                .memo(getMemo())
+                .date(getDate())
+                .time(getTime())
                 .build();
     }
 }

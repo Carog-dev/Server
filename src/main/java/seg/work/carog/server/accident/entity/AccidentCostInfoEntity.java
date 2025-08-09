@@ -9,8 +9,8 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import java.io.Serial;
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -66,7 +66,7 @@ public class AccidentCostInfoEntity extends BaseEntity {
     private LocalDate date;
 
     @Column(name = "\"time\"")
-    private Instant time;
+    private LocalTime time;
 
     public void updateAccidentCostInfo(AccidentCostInfoUpdateRequest accidentCostInfoUpdateRequest) {
         this.type = accidentCostInfoUpdateRequest.getType();

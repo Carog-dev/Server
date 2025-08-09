@@ -2,8 +2,8 @@ package seg.work.carog.server.oil.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,7 +30,7 @@ public class OilCostInfoResponse {
     private LocalDate date;
 
     @JsonFormat(pattern = "HH:mm:ss")
-    private Instant time;
+    private LocalTime time;
 
     public OilCostInfoResponse(OilCostInfoEntity oilCostInfoEntity) {
         this.id = oilCostInfoEntity.getId();
