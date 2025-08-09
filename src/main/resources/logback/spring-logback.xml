@@ -10,7 +10,7 @@
     <include resource="logback/loki/loki.xml" />
 
     <springProfile name="local">
-        <root level="DEBUG">
+        <root level="INFO">
             <appender-ref ref="CONSOLE"/>
         </root>
         <logger name="jdbc.sqltiming" level="DEBUG"/>
@@ -18,7 +18,7 @@
     </springProfile>
 
     <springProfile name="dev">
-        <root level="DEBUG">
+        <root level="INFO">
             <appender-ref ref="CONSOLE"/>
             <appender-ref ref="FILE"/>
             <appender-ref ref="ERROR_FILE"/>
