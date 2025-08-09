@@ -10,7 +10,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import seg.work.carog.server.accident.entity.AccidentCostInfoEntity;
-import seg.work.carog.server.common.dto.BaseRequest;
+import seg.work.carog.server.common.dto.BaseSaveRequest;
 
 @Data
 @Builder
@@ -18,7 +18,7 @@ import seg.work.carog.server.common.dto.BaseRequest;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Schema(description = "사고내역 저장 요청")
-public class AccidentCostInfoSaveRequest extends BaseRequest {
+public class AccidentCostInfoSaveRequest extends BaseSaveRequest {
 
     @Schema(description = "대표챠랑 또는 선택한 차량 아이디", example = "1")
     private Long carInfoId;

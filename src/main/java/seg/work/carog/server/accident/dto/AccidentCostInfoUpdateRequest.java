@@ -9,7 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import seg.work.carog.server.common.dto.BaseRequest;
+import seg.work.carog.server.common.dto.BaseUpdateRequest;
 
 @Data
 @Builder
@@ -17,7 +17,7 @@ import seg.work.carog.server.common.dto.BaseRequest;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Schema(description = "사고내역 수정 요청")
-public class AccidentCostInfoUpdateRequest extends BaseRequest {
+public class AccidentCostInfoUpdateRequest extends BaseUpdateRequest {
 
     @NotBlank
     @Schema(description = "사고내역 아이디", example = "1")
