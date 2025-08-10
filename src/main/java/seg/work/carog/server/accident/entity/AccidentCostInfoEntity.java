@@ -57,8 +57,7 @@ public class AccidentCostInfoEntity extends BaseEntity {
     @Column(name = "additional_price", nullable = false)
     private BigDecimal additionalPrice;
 
-    @NotNull
-    @Column(name = "memo", nullable = false, length = 500)
+    @Column(name = "memo", length = 500)
     private String memo;
 
     @NotNull

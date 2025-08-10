@@ -57,8 +57,7 @@ public class MaintenanceCostInfoEntity extends BaseEntity {
     @Column(name = "company", nullable = false)
     private String company;
 
-    @NotNull
-    @Column(name = "memo", nullable = false)
+    @Column(name = "memo", length = 500)
     private String memo;
 
     @NotNull

@@ -65,8 +65,7 @@ public class OilCostInfoEntity extends BaseEntity {
     @Column(name = "range", nullable = false)
     private BigDecimal range;
 
-    @NotNull
-    @Column(name = "memo", nullable = false, length = 500)
+    @Column(name = "memo", length = 500)
     private String memo;
 
     @NotNull
