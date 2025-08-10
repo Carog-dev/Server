@@ -2,6 +2,7 @@ package seg.work.carog.server.installment.dto;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,7 +22,7 @@ public class InstallmentCostInfoSaveRequest extends BaseSaveRequest {
     private Long carInfoId;
 
     @Min(0)
-    @NotBlank
+    @NotNull
     private BigDecimal price;
 
     @Min(0)

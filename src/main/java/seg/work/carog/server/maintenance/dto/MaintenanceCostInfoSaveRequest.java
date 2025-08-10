@@ -2,6 +2,7 @@ package seg.work.carog.server.maintenance.dto;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,11 +25,11 @@ public class MaintenanceCostInfoSaveRequest extends BaseSaveRequest {
     private String item;
 
     @Min(0)
-    @NotBlank
+    @NotNull
     private BigDecimal price;
 
     @Min(0)
-    @NotBlank
+    @NotNull
     private BigDecimal mileage;
 
     @NotBlank

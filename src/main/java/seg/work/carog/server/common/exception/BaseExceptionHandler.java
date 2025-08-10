@@ -1,6 +1,7 @@
 package seg.work.carog.server.common.exception;
 
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
+import jakarta.validation.ConstraintViolationException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -45,6 +46,15 @@ public class BaseExceptionHandler {
                 errors.put(fieldName, errorMessage != null ? errorMessage : "Not Exception Message");
             }
         });
+        Message statusInfo = Message.BAD_REQUEST;
+        return new ResponseEntity<>(BaseResponse.error(statusInfo, errors), statusInfo.getHttpStatus());
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<BaseResponse<Map<String, String>>> onConstraintValidationException(ConstraintViolationException ex) {
+        log.error("ConstraintViolation error: {}", ex.getMessage());
+        Map<String, String> errors = new HashMap<>();
+        ex.getConstraintViolations().forEach(violation -> errors.put(violation.getPropertyPath().toString(), violation.getMessage()));
         Message statusInfo = Message.BAD_REQUEST;
         return new ResponseEntity<>(BaseResponse.error(statusInfo, errors), statusInfo.getHttpStatus());
     }

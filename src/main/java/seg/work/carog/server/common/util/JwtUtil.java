@@ -40,7 +40,7 @@ public class JwtUtil {
 
         SecretKeySpec secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), Jwts.SIG.HS256.key().build().getAlgorithm());
 
-        RedisUtil.setWithExpiryHour(userEntity.getKey(), userEntity.getId().toString(), 4);
+        RedisUtil.setWithExpiryHour(userEntity.getKey(), userEntity.getId().toString(), 12);
 
         return Jwts.builder()
                 .subject(userEntity.getKey())

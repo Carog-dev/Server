@@ -2,6 +2,7 @@ package seg.work.carog.server.insurance.dto;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,7 +25,7 @@ public class InsuranceCostInfoSaveRequest extends BaseSaveRequest {
     private String type;
 
     @Min(0)
-    @NotBlank
+    @NotNull
     private BigDecimal price;
 
     @NotBlank
