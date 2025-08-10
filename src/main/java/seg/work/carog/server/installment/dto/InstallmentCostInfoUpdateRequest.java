@@ -20,8 +20,6 @@ public class InstallmentCostInfoUpdateRequest extends BaseUpdateRequest {
     @NotBlank
     private Long id;
 
-    private Long carInfoId;
-
     @Min(0)
     @NotBlank
     private BigDecimal price;

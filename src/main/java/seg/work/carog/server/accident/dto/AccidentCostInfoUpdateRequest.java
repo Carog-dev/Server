@@ -20,8 +20,6 @@ public class AccidentCostInfoUpdateRequest extends BaseUpdateRequest {
     @NotBlank
     private Long id;
 
-    private Long carInfoId;
-
     @NotBlank
     private String type;
 
