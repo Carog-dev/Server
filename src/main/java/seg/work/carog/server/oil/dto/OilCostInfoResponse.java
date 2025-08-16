@@ -20,7 +20,7 @@ public class OilCostInfoResponse {
     private Long carInfoId;
     private String type;
     private BigDecimal price;
-    private String litre;
+    private String liter;
     private BigDecimal unit;
     private String company;
     private BigDecimal range;
@@ -37,7 +37,7 @@ public class OilCostInfoResponse {
         this.carInfoId = oilCostInfoEntity.getCarInfoId();
         this.type = oilCostInfoEntity.getType();
         this.price = oilCostInfoEntity.getPrice();
-        this.litre = oilCostInfoEntity.getLitre();
+        this.liter = oilCostInfoEntity.getLiter();
         this.unit = oilCostInfoEntity.getUnit();
         this.company = oilCostInfoEntity.getCompany();
         this.range = oilCostInfoEntity.getRange();

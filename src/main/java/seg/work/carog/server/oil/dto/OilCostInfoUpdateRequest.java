@@ -29,7 +29,7 @@ public class OilCostInfoUpdateRequest extends BaseUpdateRequest {
     private BigDecimal price;
 
     @NotBlank
-    private String litre;
+    private String liter;
 
     @Min(0)
     @NotNull

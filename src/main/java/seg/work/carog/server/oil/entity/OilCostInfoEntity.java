@@ -50,8 +50,8 @@ public class OilCostInfoEntity extends BaseEntity {
     private BigDecimal price;
 
     @NotNull
-    @Column(name = "litre", nullable = false, length = 20)
-    private String litre;
+    @Column(name = "liter", nullable = false, length = 20)
+    private String liter;
 
     @NotNull
     @Column(name = "unit", nullable = false)
@@ -78,7 +78,7 @@ public class OilCostInfoEntity extends BaseEntity {
     public void updateOilCostInfo(OilCostInfoUpdateRequest oilCostInfoUpdateRequest) {
         this.type = oilCostInfoUpdateRequest.getType();
         this.price = oilCostInfoUpdateRequest.getPrice();
-        this.litre = oilCostInfoUpdateRequest.getLitre();
+        this.liter = oilCostInfoUpdateRequest.getLiter();
         this.unit = oilCostInfoUpdateRequest.getUnit();
         this.company = oilCostInfoUpdateRequest.getCompany();
         this.range = oilCostInfoUpdateRequest.getRange();

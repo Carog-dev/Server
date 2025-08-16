@@ -29,7 +29,7 @@ public class OilCostInfoSaveRequest extends BaseSaveRequest {
     private BigDecimal price;
 
     @NotBlank
-    private String litre;
+    private String liter;
 
     @Min(0)
     @NotNull
@@ -47,7 +47,7 @@ public class OilCostInfoSaveRequest extends BaseSaveRequest {
                 .carInfoId(carInfoId)
                 .type(this.type)
                 .price(this.price)
-                .litre(this.litre)
+                .liter(this.liter)
                 .unit(this.unit)
                 .company(this.company)
                 .range(this.range)
