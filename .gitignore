@@ -641,3 +641,5 @@ gradle-app.setting
 *.hprof
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,jetbrains,jetbrains+all,jetbrains+iml,intellij,intellij+all,intellij+iml,eclipse,java,gradle,maven,kotlin,windows,macos
+
+.idea
