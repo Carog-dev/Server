@@ -5,6 +5,7 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,10 +42,10 @@ public class MaintenanceCostInfoService {
         return (carInfoId != null && carInfoId > 0) ? this.getCarInfoById(carInfoId) : this.getRepresentCarInfo(tokenUserInfo);
     }
 
-    public Slice<MaintenanceCostInfoResponse> getMaintenanceCostInfoList(TokenUserInfo tokenUserInfo, Long carInfoId) {
+    public Slice<MaintenanceCostInfoResponse> getMaintenanceCostInfoList(TokenUserInfo tokenUserInfo, Long carInfoId, Pageable pageable) {
         CarInfoEntity carInfoEntity = this.getCarInfo(tokenUserInfo, carInfoId);
 
-        Optional<Slice<MaintenanceCostInfoEntity>> optionalMaintenanceCostInfoEntityList = maintenanceCostInfoRepository.findByCarInfoIdAndDeleteYn(carInfoEntity.getId(), Constant.FLAG_N);
+        Optional<Slice<MaintenanceCostInfoEntity>> optionalMaintenanceCostInfoEntityList = maintenanceCostInfoRepository.findByCarInfoIdAndDeleteYn(carInfoEntity.getId(), Constant.FLAG_N, pageable);
         return optionalMaintenanceCostInfoEntityList.map(maintenanceCostInfoEntityList -> maintenanceCostInfoEntityList.stream().map(MaintenanceCostInfoResponse::new).toList()).<Slice<MaintenanceCostInfoResponse>>map(PageImpl::new).orElse(new PageImpl<>(Collections.emptyList()));
     }
 

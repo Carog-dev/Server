@@ -2,8 +2,10 @@ package seg.work.carog.server.maintenance.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,21 +29,21 @@ public class MaintenanceCostInfoController {
     private final MaintenanceCostInfoService maintenanceCostInfoService;
 
     @GetMapping({"/list", "/list/{carInfoId}"})
-    public ResponseEntity<?> getMaintenanceCostInfoList(TokenUserInfo tokenUserInfo, @PathVariable(required = false) Long carInfoId) {
-        Slice<MaintenanceCostInfoResponse> maintenanceCostInfoResponseList = maintenanceCostInfoService.getMaintenanceCostInfoList(tokenUserInfo, carInfoId);
+    public ResponseEntity<?> getMaintenanceCostInfoList(TokenUserInfo tokenUserInfo, @PathVariable(required = false) Long carInfoId, Pageable pageable) {
+        Slice<MaintenanceCostInfoResponse> maintenanceCostInfoResponseList = maintenanceCostInfoService.getMaintenanceCostInfoList(tokenUserInfo, carInfoId, pageable);
 
         return ResponseEntity.ok(BaseResponse.success(maintenanceCostInfoResponseList));
     }
 
     @PostMapping
-    public ResponseEntity<?> saveMaintenanceCostInfo(TokenUserInfo tokenUserInfo, @RequestBody MaintenanceCostInfoSaveRequest maintenanceCostInfoSaveRequest) {
+    public ResponseEntity<?> saveMaintenanceCostInfo(TokenUserInfo tokenUserInfo, @Validated @RequestBody MaintenanceCostInfoSaveRequest maintenanceCostInfoSaveRequest) {
         maintenanceCostInfoService.saveMaintenanceCostInfo(tokenUserInfo, maintenanceCostInfoSaveRequest);
 
         return ResponseEntity.ok(BaseResponse.success());
     }
 
     @PutMapping
-    public ResponseEntity<?> updateMaintenanceCostInfo(TokenUserInfo tokenUserInfo, @RequestBody MaintenanceCostInfoUpdateRequest maintenanceCostInfoUpdateRequest) {
+    public ResponseEntity<?> updateMaintenanceCostInfo(TokenUserInfo tokenUserInfo, @Validated @RequestBody MaintenanceCostInfoUpdateRequest maintenanceCostInfoUpdateRequest) {
         maintenanceCostInfoService.updateMaintenanceCostInfo(tokenUserInfo, maintenanceCostInfoUpdateRequest);
 
         return ResponseEntity.ok(BaseResponse.success());

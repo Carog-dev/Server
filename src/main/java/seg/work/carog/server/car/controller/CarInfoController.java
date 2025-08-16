@@ -1,10 +1,10 @@
 package seg.work.carog.server.car.controller;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,21 +36,21 @@ public class CarInfoController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<?> getListCarInfo(TokenUserInfo tokenUserInfo, Pageable pageable) {
-        Slice<CarInfoResponse> carInfoResponseList = carInfoService.getListCarInfo(tokenUserInfo, pageable);
+    public ResponseEntity<?> getListCarInfo(TokenUserInfo tokenUserInfo) {
+        List<CarInfoResponse> carInfoResponseList = carInfoService.getListCarInfo(tokenUserInfo);
 
         return ResponseEntity.ok(BaseResponse.success(carInfoResponseList));
     }
 
     @PostMapping
-    public ResponseEntity<?> saveCarInfo(TokenUserInfo tokenUserInfo, @RequestBody CarInfoSaveRequest carInfoSaveRequest) {
+    public ResponseEntity<?> saveCarInfo(TokenUserInfo tokenUserInfo, @Validated @RequestBody CarInfoSaveRequest carInfoSaveRequest) {
         carInfoService.saveCarInfo(tokenUserInfo, carInfoSaveRequest);
 
         return ResponseEntity.ok(BaseResponse.success());
     }
 
     @PutMapping
-    public ResponseEntity<?> updateCarInfo(TokenUserInfo tokenUserInfo, @RequestBody CarInfoUpdateRequest carInfoUpdateRequest) {
+    public ResponseEntity<?> updateCarInfo(TokenUserInfo tokenUserInfo, @Validated @RequestBody CarInfoUpdateRequest carInfoUpdateRequest) {
         carInfoService.updateCarInfo(tokenUserInfo, carInfoUpdateRequest);
 
         return ResponseEntity.ok(BaseResponse.success());

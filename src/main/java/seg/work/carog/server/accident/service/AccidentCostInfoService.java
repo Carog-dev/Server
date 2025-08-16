@@ -5,6 +5,7 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,10 +42,10 @@ public class AccidentCostInfoService {
         return (carInfoId != null && carInfoId > 0) ? this.getCarInfoById(carInfoId) : this.getRepresentCarInfo(tokenUserInfo);
     }
 
-    public Slice<AccidentCostInfoResponse> getAccidentCostInfoList(TokenUserInfo tokenUserInfo, Long carInfoId) {
+    public Slice<AccidentCostInfoResponse> getAccidentCostInfoList(TokenUserInfo tokenUserInfo, Long carInfoId, Pageable pageable) {
         CarInfoEntity carInfoEntity = this.getCarInfo(tokenUserInfo, carInfoId);
 
-        Optional<Slice<AccidentCostInfoEntity>> optionalAccidentCostInfoEntityList = accidentCostInfoRepository.findByCarInfoIdAndDeleteYn(carInfoEntity.getId(), Constant.FLAG_N);
+        Optional<Slice<AccidentCostInfoEntity>> optionalAccidentCostInfoEntityList = accidentCostInfoRepository.findByCarInfoIdAndDeleteYn(carInfoEntity.getId(), Constant.FLAG_N, pageable);
         return optionalAccidentCostInfoEntityList.map(accidentCostInfoEntityList -> accidentCostInfoEntityList.stream().map(AccidentCostInfoResponse::new).toList()).<Slice<AccidentCostInfoResponse>>map(PageImpl::new).orElse(new PageImpl<>(Collections.emptyList()));
     }
 

@@ -1,12 +1,10 @@
 package seg.work.carog.server.car.service;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import seg.work.carog.server.auth.dto.TokenUserInfo;
@@ -32,9 +30,9 @@ public class CarInfoService {
         return optionalCarInfoEntity.map(CarInfoResponse::new).orElse(null);
     }
 
-    public Slice<CarInfoResponse> getListCarInfo(TokenUserInfo tokenUserInfo, Pageable pageable) {
-        Optional<Slice<CarInfoEntity>> optionalCarInfoEntityList = carInfoRepository.findByUserIdAndDeleteYn(tokenUserInfo.getId(), Constant.FLAG_N);
-        return optionalCarInfoEntityList.map(carInfoEntityList -> carInfoEntityList.stream().map(CarInfoResponse::new).toList()).<Slice<CarInfoResponse>>map(PageImpl::new).orElse(new PageImpl<>(Collections.emptyList()));
+    public List<CarInfoResponse> getListCarInfo(TokenUserInfo tokenUserInfo) {
+        Optional<List<CarInfoEntity>> optionalCarInfoEntityList = carInfoRepository.findByUserIdAndDeleteYn(tokenUserInfo.getId(), Constant.FLAG_N);
+        return optionalCarInfoEntityList.map(carInfoEntityList -> carInfoEntityList.stream().map(CarInfoResponse::new).toList()).orElse(Collections.emptyList());
     }
 
     @Transactional

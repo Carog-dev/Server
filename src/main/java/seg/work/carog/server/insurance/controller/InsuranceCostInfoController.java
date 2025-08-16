@@ -2,8 +2,10 @@ package seg.work.carog.server.insurance.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,21 +29,21 @@ public class InsuranceCostInfoController {
     private final InsuranceCostInfoService insuranceCostInfoService;
 
     @GetMapping({"/list", "/list/{carInfoId}"})
-    public ResponseEntity<?> getInsuranceCostInfoList(TokenUserInfo tokenUserInfo, @PathVariable(required = false) Long carInfoId) {
-        Slice<InsuranceCostInfoResponse> insuranceCostInfoResponseList = insuranceCostInfoService.getInsuranceCostInfoList(tokenUserInfo, carInfoId);
+    public ResponseEntity<?> getInsuranceCostInfoList(TokenUserInfo tokenUserInfo, @PathVariable(required = false) Long carInfoId, Pageable pageable) {
+        Slice<InsuranceCostInfoResponse> insuranceCostInfoResponseList = insuranceCostInfoService.getInsuranceCostInfoList(tokenUserInfo, carInfoId, pageable);
 
         return ResponseEntity.ok(BaseResponse.success(insuranceCostInfoResponseList));
     }
 
     @PostMapping
-    public ResponseEntity<?> saveInsuranceCostInfo(TokenUserInfo tokenUserInfo, @RequestBody InsuranceCostInfoSaveRequest insuranceCostInfoSaveRequest) {
+    public ResponseEntity<?> saveInsuranceCostInfo(TokenUserInfo tokenUserInfo, @Validated @RequestBody InsuranceCostInfoSaveRequest insuranceCostInfoSaveRequest) {
         insuranceCostInfoService.saveInsuranceCostInfo(tokenUserInfo, insuranceCostInfoSaveRequest);
 
         return ResponseEntity.ok(BaseResponse.success());
     }
 
     @PutMapping
-    public ResponseEntity<?> updateInsuranceCostInfo(TokenUserInfo tokenUserInfo, @RequestBody InsuranceCostInfoUpdateRequest insuranceCostInfoUpdateRequest) {
+    public ResponseEntity<?> updateInsuranceCostInfo(TokenUserInfo tokenUserInfo, @Validated @RequestBody InsuranceCostInfoUpdateRequest insuranceCostInfoUpdateRequest) {
         insuranceCostInfoService.updateInsuranceCostInfo(tokenUserInfo, insuranceCostInfoUpdateRequest);
 
         return ResponseEntity.ok(BaseResponse.success());

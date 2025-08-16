@@ -1,9 +1,9 @@
 package seg.work.carog.server.auth.controller;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +23,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login/kakao")
-    public ResponseEntity<?> kakaoLogin(@Valid @RequestBody KakaoLoginRequest request) {
+    public ResponseEntity<?> kakaoLogin(@Validated @RequestBody KakaoLoginRequest request) {
         LoginResponse response = authService.loginWithKakao(request.getCode());
 
         return ResponseEntity.ok(BaseResponse.success(response));
