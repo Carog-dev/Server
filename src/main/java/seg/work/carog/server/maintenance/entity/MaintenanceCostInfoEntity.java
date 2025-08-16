@@ -54,7 +54,7 @@ public class MaintenanceCostInfoEntity extends BaseEntity {
     private BigDecimal mileage;
 
     @NotNull
-    @Column(name = "company", nullable = false)
+    @Column(name = "company", nullable = false, length = 50)
     private String company;
 
     @Column(name = "memo", length = 500)

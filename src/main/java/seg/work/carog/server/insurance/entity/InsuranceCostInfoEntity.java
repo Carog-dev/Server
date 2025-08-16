@@ -49,6 +49,10 @@ public class InsuranceCostInfoEntity extends BaseEntity {
     @Column(name = "price", nullable = false)
     private BigDecimal price;
 
+    @NotNull
+    @Column(name = "company", nullable = false, length = 50)
+    private String company;
+
     @Column(name = "memo", length = 500)
     private String memo;
 
@@ -62,6 +66,7 @@ public class InsuranceCostInfoEntity extends BaseEntity {
     public void updateInsuranceCostInfo(InsuranceCostInfoUpdateRequest insuranceCostInfoUpdateRequest) {
         this.type = insuranceCostInfoUpdateRequest.getType();
         this.price = insuranceCostInfoUpdateRequest.getPrice();
+        this.company = insuranceCostInfoUpdateRequest.getCompany();
         this.memo = insuranceCostInfoUpdateRequest.getMemo();
         this.date = insuranceCostInfoUpdateRequest.getDate();
         this.time = insuranceCostInfoUpdateRequest.getTime();

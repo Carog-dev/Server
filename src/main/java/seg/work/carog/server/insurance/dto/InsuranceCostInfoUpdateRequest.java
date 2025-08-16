@@ -21,7 +21,7 @@ public class InsuranceCostInfoUpdateRequest extends BaseUpdateRequest {
     @NotBlank
     private Long id;
 
-    @NotBlank
+    @NotNull
     private String type;
 
     @Min(0)
