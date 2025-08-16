@@ -15,6 +15,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import seg.work.carog.server.common.constant.Constant;
 
 @Getter
 @SuperBuilder
@@ -37,4 +38,8 @@ public abstract class BaseEntity implements Serializable {
 
     @LastModifiedDate
     private LocalDateTime updatedAt;
+
+    public void delete() {
+        this.deleteYn = Constant.FLAG_Y;
+    }
 }

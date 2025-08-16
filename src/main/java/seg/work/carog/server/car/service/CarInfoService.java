@@ -10,7 +10,6 @@ import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import seg.work.carog.server.auth.dto.TokenUserInfo;
-import seg.work.carog.server.car.dto.CarInfoChangeRepresentRequest;
 import seg.work.carog.server.car.dto.CarInfoResponse;
 import seg.work.carog.server.car.dto.CarInfoSaveRequest;
 import seg.work.carog.server.car.dto.CarInfoUpdateRequest;
@@ -29,18 +28,18 @@ public class CarInfoService {
     private final CarInfoRepository carInfoRepository;
 
     public CarInfoResponse getRepresentCarInfo(TokenUserInfo tokenUserInfo) {
-        Optional<CarInfoEntity> optionalCarInfoEntity = carInfoRepository.findByUserIdAndRepresent(tokenUserInfo.getId(), Constant.FLAG_TRUE);
+        Optional<CarInfoEntity> optionalCarInfoEntity = carInfoRepository.findByUserIdAndRepresentAndDeleteYn(tokenUserInfo.getId(), Constant.FLAG_TRUE, Constant.FLAG_N);
         return optionalCarInfoEntity.map(CarInfoResponse::new).orElse(null);
     }
 
     public Slice<CarInfoResponse> getListCarInfo(TokenUserInfo tokenUserInfo, Pageable pageable) {
-        Optional<Slice<CarInfoEntity>> optionalCarInfoEntityList = carInfoRepository.findByUserId(tokenUserInfo.getId());
+        Optional<Slice<CarInfoEntity>> optionalCarInfoEntityList = carInfoRepository.findByUserIdAndDeleteYn(tokenUserInfo.getId(), Constant.FLAG_N);
         return optionalCarInfoEntityList.map(carInfoEntityList -> carInfoEntityList.stream().map(CarInfoResponse::new).toList()).<Slice<CarInfoResponse>>map(PageImpl::new).orElse(new PageImpl<>(Collections.emptyList()));
     }
 
     @Transactional
     public void saveCarInfo(TokenUserInfo tokenUserInfo, CarInfoSaveRequest carInfoSaveRequest) {
-        boolean existsNumber = carInfoRepository.existsByUserIdAndNumber(tokenUserInfo.getId(), carInfoSaveRequest.getNumber());
+        boolean existsNumber = carInfoRepository.existsByUserIdAndNumberAndDeleteYn(tokenUserInfo.getId(), carInfoSaveRequest.getNumber(), Constant.FLAG_N);
         if (existsNumber) {
             throw new BaseException(Message.ALREADY_EXISTS_CAR_NUMBER);
         } else {
@@ -51,17 +50,17 @@ public class CarInfoService {
 
     @Transactional
     public void updateCarInfo(TokenUserInfo tokenUserInfo, CarInfoUpdateRequest carInfoUpdateRequest) {
-        CarInfoEntity carInfoEntity = carInfoRepository.findByUserIdAndId(tokenUserInfo.getId(), carInfoUpdateRequest.getId()).orElseThrow(() -> new BaseException(Message.NOT_FOUND));
+        CarInfoEntity carInfoEntity = carInfoRepository.findByUserIdAndIdAndDeleteYn(tokenUserInfo.getId(), carInfoUpdateRequest.getId(), Constant.FLAG_N).orElseThrow(() -> new BaseException(Message.NOT_FOUND));
         carInfoEntity.update(carInfoUpdateRequest);
 
         carInfoRepository.save(carInfoEntity);
     }
 
     @Transactional
-    public void updateRepresentCarInfo(TokenUserInfo tokenUserInfo, CarInfoChangeRepresentRequest carInfoChangeRepresentRequest) {
-        CarInfoEntity newRepresentcarInfoEntity = carInfoRepository.findByUserIdAndId(tokenUserInfo.getId(), carInfoChangeRepresentRequest.getId()).orElseThrow(() -> new BaseException(Message.NOT_FOUND));
+    public void updateRepresentCarInfo(TokenUserInfo tokenUserInfo, Long carInfoId) {
+        CarInfoEntity newRepresentcarInfoEntity = carInfoRepository.findByUserIdAndIdAndDeleteYn(tokenUserInfo.getId(), carInfoId, Constant.FLAG_N).orElseThrow(() -> new BaseException(Message.NOT_FOUND));
 
-        Optional<CarInfoEntity> optionalCarInfoOldRepresentEntity = carInfoRepository.findByUserIdAndRepresent(tokenUserInfo.getId(), Constant.FLAG_TRUE);
+        Optional<CarInfoEntity> optionalCarInfoOldRepresentEntity = carInfoRepository.findByUserIdAndRepresentAndDeleteYn(tokenUserInfo.getId(), Constant.FLAG_TRUE, Constant.FLAG_N);
         optionalCarInfoOldRepresentEntity.ifPresent(carInfoEntity -> {
             carInfoEntity.updateRepresent(Constant.FLAG_FALSE);
             carInfoRepository.save(carInfoEntity);
@@ -69,5 +68,19 @@ public class CarInfoService {
 
         newRepresentcarInfoEntity.updateRepresent(Constant.FLAG_TRUE);
         carInfoRepository.save(newRepresentcarInfoEntity);
+    }
+
+    @Transactional
+    public void updateUnRepresentCarInfo(TokenUserInfo tokenUserInfo, Long carInfoId) {
+        CarInfoEntity unRepresentcarInfoEntity = carInfoRepository.findByUserIdAndIdAndRepresentAndDeleteYn(tokenUserInfo.getId(), carInfoId, Constant.FLAG_TRUE, Constant.FLAG_N).orElseThrow(() -> new BaseException(Message.NOT_FOUND));
+        unRepresentcarInfoEntity.updateRepresent(Constant.FLAG_FALSE);
+        carInfoRepository.save(unRepresentcarInfoEntity);
+    }
+
+    @Transactional
+    public void deleteCarInfo(TokenUserInfo tokenUserInfo, Long carInfoId) {
+        CarInfoEntity carInfoEntity = carInfoRepository.findByUserIdAndIdAndDeleteYn(tokenUserInfo.getId(), carInfoId, Constant.FLAG_N).orElseThrow(() -> new BaseException(Message.NOT_FOUND));
+        carInfoEntity.delete();
+        carInfoRepository.save(carInfoEntity);
     }
 }
