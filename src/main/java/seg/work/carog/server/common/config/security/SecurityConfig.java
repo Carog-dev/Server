@@ -19,6 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import seg.work.carog.server.common.constant.UserRole;
 
 @Configuration
 @EnableWebSecurity
@@ -40,6 +41,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/public").permitAll()
                         .requestMatchers("/actuator/**").permitAll()
                         .requestMatchers("/error").permitAll()
+                        .requestMatchers("/admin").hasAnyAuthority(UserRole.ADMIN.name())
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(config ->

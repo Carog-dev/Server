@@ -26,6 +26,7 @@ import seg.work.carog.server.auth.dto.TokenUserInfo;
 import seg.work.carog.server.common.config.security.UserDetailService;
 import seg.work.carog.server.common.constant.Message;
 import seg.work.carog.server.common.exception.BaseException;
+import seg.work.carog.server.common.service.AccessTokenService;
 import seg.work.carog.server.common.service.RefreshTokenService;
 import seg.work.carog.server.user.entity.UserEntity;
 
@@ -38,43 +39,48 @@ public class JwtUtil {
     private String secret;
 
     private final UserDetailService userDetailService;
+    private final AccessTokenService accessTokenService;
     private final RefreshTokenService refreshTokenService;
 
     public String generateToken(UserEntity userEntity) {
         SecretKeySpec secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), Jwts.SIG.HS256.key().build().getAlgorithm());
 
-        long token_expiration_millisecond;
-        long redis_expiration_hour;
+        long tokenExpirationMillisecond;
+        long redisExpirationHour;
         switch (userEntity.getRole()) {
             // USER 2시간
             case USER -> {
-                token_expiration_millisecond = 1000 * 60 * 60 * 2;
-                redis_expiration_hour = 2;
+                tokenExpirationMillisecond = 1000 * 60 * 60 * 2;
+                redisExpirationHour = 2;
             }
             // DEVELOPER 8시간
             case DEVELOPER -> {
-                token_expiration_millisecond = 1000 * 60 * 60 * 8;
-                redis_expiration_hour = 8;
+                tokenExpirationMillisecond = 1000 * 60 * 60 * 8;
+                redisExpirationHour = 8;
             }
             // ADMIN 12시간
             case ADMIN -> {
-                token_expiration_millisecond = 1000 * 60 * 60 * 12;
-                redis_expiration_hour = 12;
+                tokenExpirationMillisecond = 1000 * 60 * 60 * 12;
+                redisExpirationHour = 12;
             }
             default -> throw new BaseException(Message.USER_NOT_FOUND);
         }
 
-        RedisUtil.setWithExpiryHour(userEntity.getKey(), userEntity.getId().toString(), redis_expiration_hour);
+        RedisUtil.setWithExpiryHour(userEntity.getKey(), userEntity.getId().toString(), redisExpirationHour);
 
-        return Jwts.builder()
+        String accessToken = Jwts.builder()
                 .subject(userEntity.getKey())
                 .claim("type", "access")
                 .claim("email", userEntity.getEmail())
                 .claim("auth", userEntity.getRole().name())
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + token_expiration_millisecond))
+                .expiration(new Date(System.currentTimeMillis() + tokenExpirationMillisecond))
                 .signWith(secretKey)
                 .compact();
+
+        accessTokenService.addAccessToken(userEntity.getKey(), accessToken, redisExpirationHour);
+
+        return accessToken;
     }
 
     public Authentication getAuthentication(String accessToken) {
@@ -160,7 +166,7 @@ public class JwtUtil {
     public String generateRefreshToken(UserEntity userEntity) {
         SecretKeySpec secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), Jwts.SIG.HS256.key().build().getAlgorithm());
 
-        long expiration_millisecond = 1000L * 60 * 60 * 24 * 30 * 6;
+        long expirationMillisecond = 1000L * 60 * 60 * 24 * 30 * 6;
 
         return Jwts.builder()
                 .subject(userEntity.getKey())
@@ -168,7 +174,7 @@ public class JwtUtil {
                 .claim("email", userEntity.getEmail())
                 .claim("auth", userEntity.getRole().name())
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + expiration_millisecond))
+                .expiration(new Date(System.currentTimeMillis() + expirationMillisecond))
                 .signWith(secretKey)
                 .compact();
     }

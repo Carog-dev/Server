@@ -86,12 +86,12 @@ public class RedisUtil {
     }
 
     // 변경예정 키 이름이 없을 경우에만 변경
-    public static Boolean renameKeyIfAbsent(String oldKey, String newKey) {
-        return redisTemplate.renameIfAbsent(oldKey, newKey);
+    public static void renameKeyIfAbsent(String oldKey, String newKey) {
+        redisTemplate.renameIfAbsent(oldKey, newKey);
     }
 
     // 데이터 삭제
-    public static boolean delete(String key) {
-        return redisTemplate.delete(key);
+    public static void delete(String key) {
+        redisTemplate.delete(key);
     }
 }

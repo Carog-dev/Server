@@ -13,4 +13,5 @@ public class Constant {
 
     public static final String BLACKLIST_TOKEN_SUFFIX = ":blacklist";
     public static final String REFRESH_TOKEN_KEY_SUFFIX = ":refresh";
+    public static final String ACCESS_TOKEN_KEY_SUFFIX = ":access";
 }

@@ -24,8 +24,8 @@ import seg.work.carog.server.user.repository.UserRepository;
 @RequiredArgsConstructor
 public class AuthService {
 
-    private final BlacklistTokenService blacklistTokenService;
     private final RefreshTokenService refreshTokenService;
+    private final BlacklistTokenService blacklistTokenService;
     private final KakaoService kakaoService;
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
