@@ -44,7 +44,7 @@ public class AccidentCostInfoService {
     public Slice<AccidentCostInfoResponse> getAccidentCostInfoList(TokenUserInfo tokenUserInfo, Long carInfoId) {
         CarInfoEntity carInfoEntity = this.getCarInfo(tokenUserInfo, carInfoId);
 
-        Optional<Slice<AccidentCostInfoEntity>> optionalAccidentCostInfoEntityList = accidentCostInfoRepository.findByCarInfoId(carInfoEntity.getId());
+        Optional<Slice<AccidentCostInfoEntity>> optionalAccidentCostInfoEntityList = accidentCostInfoRepository.findByCarInfoIdAndDeleteYn(carInfoEntity.getId(), Constant.FLAG_N);
         return optionalAccidentCostInfoEntityList.map(accidentCostInfoEntityList -> accidentCostInfoEntityList.stream().map(AccidentCostInfoResponse::new).toList()).<Slice<AccidentCostInfoResponse>>map(PageImpl::new).orElse(new PageImpl<>(Collections.emptyList()));
     }
 

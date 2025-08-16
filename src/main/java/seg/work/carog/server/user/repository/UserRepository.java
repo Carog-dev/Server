@@ -8,9 +8,9 @@ import seg.work.carog.server.user.entity.UserEntity;
 @Repository
 public interface UserRepository extends BaseRepository<UserEntity> {
 
-    Optional<UserEntity> findByKey(String key);
+    Optional<UserEntity> findByKeyAndDeleteYn(String key, String deleteYn);
 
-    Optional<UserEntity> findByKakaoId(String kakaoId);
+    Optional<UserEntity> findByKakaoIdAndDeleteYn(String kakaoId, String deleteYn);
 
-    Optional<UserEntity> findByEmail(String email);
+    Optional<UserEntity> findByEmailAndDeleteYn(String email, String deleteYn);
 }

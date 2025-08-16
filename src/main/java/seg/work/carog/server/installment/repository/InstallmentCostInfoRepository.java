@@ -7,5 +7,5 @@ import seg.work.carog.server.installment.entity.InstallmentCostInfoEntity;
 
 public interface InstallmentCostInfoRepository extends BaseRepository<InstallmentCostInfoEntity> {
 
-    Optional<Slice<InstallmentCostInfoEntity>> findByCarInfoId(Long carInfoId);
+    Optional<Slice<InstallmentCostInfoEntity>> findByCarInfoIdAndDeleteYn(Long carInfoId, String deleteYn);
 }

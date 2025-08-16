@@ -7,5 +7,5 @@ import seg.work.carog.server.maintenance.entity.MaintenanceCostInfoEntity;
 
 public interface MaintenanceCostInfoRepository extends BaseRepository<MaintenanceCostInfoEntity> {
 
-    Optional<Slice<MaintenanceCostInfoEntity>> findByCarInfoId(Long carInfoId);
+    Optional<Slice<MaintenanceCostInfoEntity>> findByCarInfoIdAndDeleteYn(Long carInfoId, String deleteYn);
 }

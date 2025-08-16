@@ -7,5 +7,5 @@ import seg.work.carog.server.oil.entity.OilCostInfoEntity;
 
 public interface OilCostInfoEntityRepository extends BaseRepository<OilCostInfoEntity> {
 
-    Optional<Slice<OilCostInfoEntity>> findByCarInfoId(Long carInfoId);
+    Optional<Slice<OilCostInfoEntity>> findByCarInfoIdAndDeleteYn(Long carInfoId, String deleteYn);
 }

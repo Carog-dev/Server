@@ -44,7 +44,7 @@ public class MaintenanceCostInfoService {
     public Slice<MaintenanceCostInfoResponse> getMaintenanceCostInfoList(TokenUserInfo tokenUserInfo, Long carInfoId) {
         CarInfoEntity carInfoEntity = this.getCarInfo(tokenUserInfo, carInfoId);
 
-        Optional<Slice<MaintenanceCostInfoEntity>> optionalMaintenanceCostInfoEntityList = maintenanceCostInfoRepository.findByCarInfoId(carInfoEntity.getId());
+        Optional<Slice<MaintenanceCostInfoEntity>> optionalMaintenanceCostInfoEntityList = maintenanceCostInfoRepository.findByCarInfoIdAndDeleteYn(carInfoEntity.getId(), Constant.FLAG_N);
         return optionalMaintenanceCostInfoEntityList.map(maintenanceCostInfoEntityList -> maintenanceCostInfoEntityList.stream().map(MaintenanceCostInfoResponse::new).toList()).<Slice<MaintenanceCostInfoResponse>>map(PageImpl::new).orElse(new PageImpl<>(Collections.emptyList()));
     }
 

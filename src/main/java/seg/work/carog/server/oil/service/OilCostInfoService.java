@@ -44,7 +44,7 @@ public class OilCostInfoService {
     public Slice<OilCostInfoResponse> getOilCostInfoList(TokenUserInfo tokenUserInfo, Long carInfoId) {
         CarInfoEntity carInfoEntity = this.getCarInfo(tokenUserInfo, carInfoId);
 
-        Optional<Slice<OilCostInfoEntity>> optionalOilCostInfoEntityList = oilCostInfoEntityRepository.findByCarInfoId(carInfoEntity.getId());
+        Optional<Slice<OilCostInfoEntity>> optionalOilCostInfoEntityList = oilCostInfoEntityRepository.findByCarInfoIdAndDeleteYn(carInfoEntity.getId(), Constant.FLAG_N);
         return optionalOilCostInfoEntityList.map(oilCostInfoEntityList -> oilCostInfoEntityList.stream().map(OilCostInfoResponse::new).toList()).<Slice<OilCostInfoResponse>>map(PageImpl::new).orElse(new PageImpl<>(Collections.emptyList()));
     }
 

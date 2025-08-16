@@ -7,5 +7,5 @@ import seg.work.carog.server.insurance.entity.InsuranceCostInfoEntity;
 
 public interface InsuranceCostInfoRepository extends BaseRepository<InsuranceCostInfoEntity> {
 
-    Optional<Slice<InsuranceCostInfoEntity>> findByCarInfoId(Long carInfoId);
+    Optional<Slice<InsuranceCostInfoEntity>> findByCarInfoIdAndDeleteYn(Long carInfoId, String deleteYn);
 }

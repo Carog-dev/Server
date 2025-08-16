@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import seg.work.carog.server.auth.dto.KakaoUserInfo;
 import seg.work.carog.server.auth.dto.LoginResponse;
 import seg.work.carog.server.auth.dto.TokenUserInfo;
+import seg.work.carog.server.common.constant.Constant;
 import seg.work.carog.server.common.constant.Message;
 import seg.work.carog.server.common.constant.UserRole;
 import seg.work.carog.server.common.exception.BaseException;
@@ -68,7 +69,7 @@ public class AuthService {
     }
 
     private UserEntity findOrCreateUser(KakaoUserInfo kakaoUserInfo) {
-        return userRepository.findByKakaoId(kakaoUserInfo.getId().toString()).orElseGet(() -> createNewUser(kakaoUserInfo));
+        return userRepository.findByKakaoIdAndDeleteYn(kakaoUserInfo.getId().toString(), Constant.FLAG_N).orElseGet(() -> createNewUser(kakaoUserInfo));
     }
 
     private UserEntity createNewUser(KakaoUserInfo kakaoUserInfo) {

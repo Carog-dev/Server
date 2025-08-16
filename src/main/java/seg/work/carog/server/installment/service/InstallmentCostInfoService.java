@@ -44,7 +44,7 @@ public class InstallmentCostInfoService {
     public Slice<InstallmentCostInfoResponse> getInstallmentCostInfoList(TokenUserInfo tokenUserInfo, Long carInfoId) {
         CarInfoEntity carInfoEntity = this.getCarInfo(tokenUserInfo, carInfoId);
 
-        Optional<Slice<InstallmentCostInfoEntity>> optionalInstallmentCostInfoEntityList = installmentCostInfoRepository.findByCarInfoId(carInfoEntity.getId());
+        Optional<Slice<InstallmentCostInfoEntity>> optionalInstallmentCostInfoEntityList = installmentCostInfoRepository.findByCarInfoIdAndDeleteYn(carInfoEntity.getId(), Constant.FLAG_N);
         return optionalInstallmentCostInfoEntityList.map(installmentCostInfoEntityList -> installmentCostInfoEntityList.stream().map(InstallmentCostInfoResponse::new).toList()).<Slice<InstallmentCostInfoResponse>>map(PageImpl::new).orElse(new PageImpl<>(Collections.emptyList()));
     }
 
