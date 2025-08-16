@@ -36,6 +36,7 @@ public class InsuranceCostInfoSaveRequest extends BaseSaveRequest {
                 .carInfoId(carInfoId)
                 .type(this.type)
                 .price(this.price)
+                .company(this.company)
                 .memo(getMemo())
                 .date(getDate())
                 .time(getTime())

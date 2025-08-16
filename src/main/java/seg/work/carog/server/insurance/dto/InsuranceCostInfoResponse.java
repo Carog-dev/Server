@@ -20,6 +20,7 @@ public class InsuranceCostInfoResponse {
     private Long carInfoId;
     private String type;
     private BigDecimal price;
+    private String company;
     private String memo;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -33,6 +34,7 @@ public class InsuranceCostInfoResponse {
         this.carInfoId = insuranceCostInfoEntity.getCarInfoId();
         this.type = insuranceCostInfoEntity.getType();
         this.price = insuranceCostInfoEntity.getPrice();
+        this.company = insuranceCostInfoEntity.getCompany();
         this.memo = insuranceCostInfoEntity.getMemo();
         this.date = insuranceCostInfoEntity.getDate();
         this.time = insuranceCostInfoEntity.getTime();
