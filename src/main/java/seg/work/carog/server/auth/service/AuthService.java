@@ -45,7 +45,7 @@ public class AuthService {
             // 4. JWT 토큰 생성
             String jwtToken = jwtUtil.generateToken(userEntity);
             String refreshToken = jwtUtil.generateRefreshToken(userEntity);
-            refreshTokenService.addTokenToRefresh(jwtToken, refreshToken);
+            refreshTokenService.addRefreshToken(jwtToken, refreshToken);
 
             return LoginResponse.builder()
                     .token(jwtToken)
@@ -71,6 +71,7 @@ public class AuthService {
         } else {
             if (StringUtils.hasText(tokenUserInfo.getAccessToken())) {
                 blacklistTokenService.addTokenToBlacklist(tokenUserInfo.getAccessToken());
+                refreshTokenService.deleteRefreshToken(tokenUserInfo.getAccessToken());
             }
         }
     }

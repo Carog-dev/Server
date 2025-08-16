@@ -10,16 +10,20 @@ import seg.work.carog.server.common.util.RedisUtil;
 public class RefreshTokenService {
 
     @Transactional
-    public void addTokenToRefresh(String accessToken, String refreshToken) {
+    public void addRefreshToken(String accessToken, String refreshToken) {
         RedisUtil.setWithExpiryMonth(accessToken + Constant.REFRESH_TOKEN_KEY_SUFFIX, refreshToken, 6);
     }
 
     @Transactional
-    public void renameTokenToRefresh(String oldKey, String accessToken) {
+    public void renameRefreshToken(String oldKey, String accessToken) {
         RedisUtil.renameKeyIfAbsent(oldKey + Constant.REFRESH_TOKEN_KEY_SUFFIX, accessToken + Constant.REFRESH_TOKEN_KEY_SUFFIX);
     }
 
     public String getRefreshToken(String accessToken) {
         return RedisUtil.getStringValue(accessToken + Constant.REFRESH_TOKEN_KEY_SUFFIX);
+    }
+
+    public void deleteRefreshToken(String accessToken) {
+        RedisUtil.delete(accessToken + Constant.REFRESH_TOKEN_KEY_SUFFIX);
     }
 }
