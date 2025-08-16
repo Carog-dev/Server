@@ -62,7 +62,7 @@ public class RedisUtil {
     public static String getStringValue(String key) {
         Object value = get(key);
         if (value == null) {
-            throw new BaseException(Message.NO_DATA);
+            return null;
         }
         return value.toString();
     }
@@ -80,50 +80,18 @@ public class RedisUtil {
         return redisTemplate.hasKey(key);
     }
 
+    // 키 이름 변경
+    public static void renameKey(String oldKey, String newKey) {
+        redisTemplate.rename(oldKey, newKey);
+    }
+
+    // 변경예정 키 이름이 없을 경우에만 변경
+    public static Boolean renameKeyIfAbsent(String oldKey, String newKey) {
+        return redisTemplate.renameIfAbsent(oldKey, newKey);
+    }
+
     // 데이터 삭제
     public static boolean delete(String key) {
         return redisTemplate.delete(key);
-    }
-
-    // ======================== hash ========================
-    // hash table 조회
-    public static Object getHash(String hash, String key) {
-        return redisTemplate.opsForHash().get(hash, key);
-    }
-
-    // hash table 추가
-    public static void putHash(String hash, String key, Object value) {
-        redisTemplate.opsForHash().put(hash, key, value);
-    }
-
-    // hash table 만료시간 지정
-    public static void setExpireHash(String hash, long timeout, TimeUnit unit) {
-        redisTemplate.expire(hash, timeout, unit);
-    }
-
-    // hash table 키 존재 확인
-    public static boolean hashHasKey(String hash, Object key) {
-        return redisTemplate.opsForHash().hasKey(hash, key);
-    }
-
-    // hash table 삭제
-    public static void deleteHash(String hash, String key) {
-        redisTemplate.opsForHash().delete(hash, key);
-    }
-
-    // ======================== set ========================
-    // set 추가
-    public static Boolean isSetMember(String set, Object value) {
-        return redisTemplate.opsForSet().isMember(set, value);
-    }
-
-    // set 추가
-    public static void putSet(String set, Object value) {
-        redisTemplate.opsForSet().add(set, value);
-    }
-
-    // set 만료시간 지정
-    public static void setExpireSet(String set, long timeout, TimeUnit unit) {
-        redisTemplate.expire(set, timeout, unit);
     }
 }

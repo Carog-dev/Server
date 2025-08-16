@@ -1,6 +1,5 @@
 package seg.work.carog.server.common.service;
 
-import java.util.concurrent.TimeUnit;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import seg.work.carog.server.common.constant.Constant;
@@ -12,12 +11,10 @@ public class BlacklistTokenService {
 
     @Transactional
     public void addTokenToBlacklist(String accessToken) {
-        RedisUtil.putSet(Constant.BLACKLIST_TOKEN_KEY, accessToken);
-        RedisUtil.setExpireSet(Constant.BLACKLIST_TOKEN_KEY, 7, TimeUnit.DAYS);
+        RedisUtil.setWithExpiryDay(accessToken + Constant.BLACKLIST_TOKEN_SUFFIX, accessToken, 7);
     }
 
     public boolean isBlockedToken(String accessToken) {
-        Boolean isMember = RedisUtil.isSetMember(Constant.BLACKLIST_TOKEN_KEY, accessToken);
-        return isMember != null ? isMember : false;
+        return RedisUtil.has(accessToken + Constant.BLACKLIST_TOKEN_SUFFIX);
     }
 }

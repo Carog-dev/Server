@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import seg.work.carog.server.auth.dto.KakaoUserInfo;
 import seg.work.carog.server.auth.dto.LoginResponse;
 import seg.work.carog.server.auth.dto.TokenUserInfo;
@@ -12,6 +13,7 @@ import seg.work.carog.server.common.constant.Message;
 import seg.work.carog.server.common.constant.UserRole;
 import seg.work.carog.server.common.exception.BaseException;
 import seg.work.carog.server.common.service.BlacklistTokenService;
+import seg.work.carog.server.common.service.RefreshTokenService;
 import seg.work.carog.server.common.util.JwtUtil;
 import seg.work.carog.server.user.entity.UserEntity;
 import seg.work.carog.server.user.repository.UserRepository;
@@ -23,6 +25,7 @@ import seg.work.carog.server.user.repository.UserRepository;
 public class AuthService {
 
     private final BlacklistTokenService blacklistTokenService;
+    private final RefreshTokenService refreshTokenService;
     private final KakaoService kakaoService;
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
@@ -41,6 +44,8 @@ public class AuthService {
 
             // 4. JWT 토큰 생성
             String jwtToken = jwtUtil.generateToken(userEntity);
+            String refreshToken = jwtUtil.generateRefreshToken(userEntity);
+            refreshTokenService.addTokenToRefresh(jwtToken, refreshToken);
 
             return LoginResponse.builder()
                     .token(jwtToken)
@@ -64,7 +69,9 @@ public class AuthService {
         if (tokenUserInfo.getAccessToken().isBlank()) {
             throw new BaseException(Message.UNAUTHORIZED);
         } else {
-            blacklistTokenService.addTokenToBlacklist(tokenUserInfo.getAccessToken());
+            if (StringUtils.hasText(tokenUserInfo.getAccessToken())) {
+                blacklistTokenService.addTokenToBlacklist(tokenUserInfo.getAccessToken());
+            }
         }
     }
 

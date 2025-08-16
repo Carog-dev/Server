@@ -26,4 +26,8 @@ public class UserDetailService implements UserDetailsService {
     public UserEntity loadUserInfoBySubject(String subject) {
         return userRepository.findByKeyAndDeleteYn(subject, Constant.FLAG_N).orElseThrow(() -> new BaseException(Message.USER_NOT_FOUND));
     }
+
+    public UserEntity loadUserInfoByKey(String userKey) {
+        return this.loadUserInfoBySubject(userKey);
+    }
 }

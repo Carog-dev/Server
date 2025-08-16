@@ -11,6 +11,6 @@ public class Constant {
     public static final Boolean FLAG_TRUE = true;
     public static final Boolean FLAG_FALSE = false;
 
-    public static final String REFRESH_TOKEN_KEY = "refresh_token";
-    public static final String BLACKLIST_TOKEN_KEY = "blacklist";
+    public static final String BLACKLIST_TOKEN_SUFFIX = ":blacklist";
+    public static final String REFRESH_TOKEN_KEY_SUFFIX = ":refresh";
 }
