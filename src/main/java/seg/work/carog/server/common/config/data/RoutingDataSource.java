@@ -17,8 +17,8 @@ import seg.work.carog.server.common.exception.BaseException;
 @Slf4j
 public class RoutingDataSource extends AbstractRoutingDataSource {
 
-    public static final String WRITE_KEY = "write";
-    public static final String READ_KEY_PREFIX = "read_";
+    public static final String WRITE_KEY = "WRITE";
+    public static final String READ_KEY_PREFIX = "READ_";
 
     private final boolean writeOnly;
     private final List<String> readKeys;
@@ -44,32 +44,29 @@ public class RoutingDataSource extends AbstractRoutingDataSource {
             }
 
             this.readSize = this.readKeys.size();
-            this.writeOnly = false; // readDataSource 존재
+            this.writeOnly = false;
         } else {
             this.readKeys = new ArrayList<>();
             this.readSize = 0;
-            this.writeOnly = true; // readDataSource 미존재
+            this.writeOnly = true;
             log.warn("readDataSource가 제공되지 않았습니다. 모든 작업은 writeDataSource를 사용합니다.");
         }
 
         setTargetDataSources(targetDataSources);
         setDefaultTargetDataSource(targetDataSources.get(WRITE_KEY));
 
-        // AbstractRoutingDataSource의 초기화 보장
         super.afterPropertiesSet();
     }
 
     @Override
     protected Object determineCurrentLookupKey() {
-        String key = WRITE_KEY; // 기본값은 쓰기
+        String key = WRITE_KEY;
 
-        // 현재 트랜잭션이 읽기 전용이고 readDataSource를 사용할 수 있는지 확인
         if (!writeOnly && TransactionSynchronizationManager.isCurrentTransactionReadOnly()) {
             key = getReadDataSourceKey();
-            log.debug("현재 트랜잭션은 읽기 전용입니다. readDataSource로 라우팅: [{}]", key);
+            log.info("현재 트랜잭션은 읽기 전용입니다. readDataSource로 라우팅: [{}]", key);
         } else {
-            // 읽기 전용이 아닌 트랜잭션이거나 readDataSource가 구성되지 않은 경우
-            log.debug("현재 트랜잭션은 읽기 전용이 아니거나 readDataSource가 구성되지 않았습니다. writeDataSource 라우팅: [{}]", key);
+            log.info("현재 트랜잭션은 읽기 전용이 아니거나 readDataSource가 구성되지 않았습니다. writeDataSource 라우팅: [{}]", key);
         }
 
         return key;
@@ -77,7 +74,6 @@ public class RoutingDataSource extends AbstractRoutingDataSource {
 
     private String getReadDataSourceKey() {
         if (readSize == 0) {
-            // writeOnly가 true인 경우 발생해서는 안 되지만, 보호 조치로 포함
             log.warn("readDataSource가 구성되지 않아 writeDataSource로 대체합니다.");
             return WRITE_KEY;
         }

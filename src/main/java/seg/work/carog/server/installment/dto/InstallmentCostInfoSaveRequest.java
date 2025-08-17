@@ -28,11 +28,11 @@ public class InstallmentCostInfoSaveRequest extends BaseSaveRequest {
     private BigDecimal price;
 
     @Min(0)
-    @NotBlank
+    @NotNull
     private Short monthly;
 
     @Min(0)
-    @NotBlank
+    @NotNull
     private Short round;
 
     public InstallmentCostInfoEntity toEntity(Long carInfoId) {

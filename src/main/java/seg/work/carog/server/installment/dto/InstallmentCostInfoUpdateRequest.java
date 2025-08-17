@@ -28,10 +28,10 @@ public class InstallmentCostInfoUpdateRequest extends BaseUpdateRequest {
     private BigDecimal price;
 
     @Min(0)
-    @NotBlank
+    @NotNull
     private Short monthly;
 
     @Min(0)
-    @NotBlank
+    @NotNull
     private Short round;
 }

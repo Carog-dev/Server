@@ -38,15 +38,15 @@ public class DataConfig {
     private final HibernateProperties hibernateProperties;
     private final JpaProperties jpaProperties;
 
-    @Bean("writeDataSource")
-    @ConfigurationProperties("spring.datasource.write")
-    public DataSource writeDataSource() {
-        return DataSourceBuilder.create().build();
-    }
-
     @Bean("readDataSource")
     @ConfigurationProperties("spring.datasource.read")
     public DataSource readDataSource() {
+        return DataSourceBuilder.create().build();
+    }
+
+    @Bean("writeDataSource")
+    @ConfigurationProperties("spring.datasource.write")
+    public DataSource writeDataSource() {
         return DataSourceBuilder.create().build();
     }
 
@@ -86,6 +86,7 @@ public class DataConfig {
         return transactionManager;
     }
 
+    @Primary
     @Bean(name = "sqlSessionFactory")
     public SqlSessionFactory sqlSessionFactory(@Qualifier("dataSource") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
@@ -97,6 +98,7 @@ public class DataConfig {
         return sqlSessionFactoryBean.getObject();
     }
 
+    @Primary
     @Bean(name = "sqlSessionTemplate")
     public SqlSessionTemplate sqlSessionTemplate(@Qualifier("sqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
         return new SqlSessionTemplate(sqlSessionFactory);
