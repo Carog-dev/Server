@@ -18,7 +18,7 @@ import seg.work.carog.server.car.dto.CarInfoResponse;
 import seg.work.carog.server.car.dto.CarInfoSaveRequest;
 import seg.work.carog.server.car.dto.CarInfoUpdateRequest;
 import seg.work.carog.server.car.service.CarInfoService;
-import seg.work.carog.server.common.dto.BaseResponse;
+import seg.work.carog.server.common.dto.BaseApiResponse;
 
 @Slf4j
 @RestController
@@ -32,48 +32,48 @@ public class CarInfoController {
     public ResponseEntity<?> getRepresentCarInfo(TokenUserInfo tokenUserInfo) {
         CarInfoResponse carInfoResponse = carInfoService.getRepresentCarInfo(tokenUserInfo);
 
-        return ResponseEntity.ok(BaseResponse.success(carInfoResponse));
+        return ResponseEntity.ok(BaseApiResponse.success(carInfoResponse));
     }
 
     @GetMapping("/list")
     public ResponseEntity<?> getListCarInfo(TokenUserInfo tokenUserInfo) {
         List<CarInfoResponse> carInfoResponseList = carInfoService.getListCarInfo(tokenUserInfo);
 
-        return ResponseEntity.ok(BaseResponse.success(carInfoResponseList));
+        return ResponseEntity.ok(BaseApiResponse.success(carInfoResponseList));
     }
 
     @PostMapping
     public ResponseEntity<?> saveCarInfo(TokenUserInfo tokenUserInfo, @Validated @RequestBody CarInfoSaveRequest carInfoSaveRequest) {
         carInfoService.saveCarInfo(tokenUserInfo, carInfoSaveRequest);
 
-        return ResponseEntity.ok(BaseResponse.success());
+        return ResponseEntity.ok(BaseApiResponse.success());
     }
 
     @PutMapping
     public ResponseEntity<?> updateCarInfo(TokenUserInfo tokenUserInfo, @Validated @RequestBody CarInfoUpdateRequest carInfoUpdateRequest) {
         carInfoService.updateCarInfo(tokenUserInfo, carInfoUpdateRequest);
 
-        return ResponseEntity.ok(BaseResponse.success());
+        return ResponseEntity.ok(BaseApiResponse.success());
     }
 
     @PutMapping("/represent/{carInfoId}")
     public ResponseEntity<?> updateRepresentCarInfo(TokenUserInfo tokenUserInfo, @PathVariable Long carInfoId) {
         carInfoService.updateRepresentCarInfo(tokenUserInfo, carInfoId);
 
-        return ResponseEntity.ok(BaseResponse.success());
+        return ResponseEntity.ok(BaseApiResponse.success());
     }
 
     @PutMapping("/unrepresent/{carInfoId}")
     public ResponseEntity<?> updateUnRepresentCarInfo(TokenUserInfo tokenUserInfo, @PathVariable Long carInfoId) {
         carInfoService.updateUnRepresentCarInfo(tokenUserInfo, carInfoId);
 
-        return ResponseEntity.ok(BaseResponse.success());
+        return ResponseEntity.ok(BaseApiResponse.success());
     }
 
     @DeleteMapping("/{carInfoId}")
     public ResponseEntity<?> deleteCarInfo(TokenUserInfo tokenUserInfo, @PathVariable Long carInfoId) {
         carInfoService.deleteCarInfo(tokenUserInfo, carInfoId);
 
-        return ResponseEntity.ok(BaseResponse.success());
+        return ResponseEntity.ok(BaseApiResponse.success());
     }
 }

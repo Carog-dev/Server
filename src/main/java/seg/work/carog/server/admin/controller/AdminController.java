@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import seg.work.carog.server.admin.service.AdminService;
 import seg.work.carog.server.auth.dto.TokenUserInfo;
-import seg.work.carog.server.common.dto.BaseResponse;
+import seg.work.carog.server.common.dto.BaseApiResponse;
 
 @Slf4j
 @RestController
@@ -22,14 +22,14 @@ public class AdminController {
     public ResponseEntity<?> revokeToken(TokenUserInfo tokenUserInfo) {
         adminService.revokeToken(tokenUserInfo);
 
-        return ResponseEntity.ok(BaseResponse.success());
+        return ResponseEntity.ok(BaseApiResponse.success());
     }
 
     @PostMapping("/revoke/token/{userKey}")
     public ResponseEntity<?> revokeToken(TokenUserInfo tokenUserInfo, @PathVariable String userKey) {
         adminService.revokeToken(tokenUserInfo, userKey);
 
-        return ResponseEntity.ok(BaseResponse.success());
+        return ResponseEntity.ok(BaseApiResponse.success());
     }
 
 }

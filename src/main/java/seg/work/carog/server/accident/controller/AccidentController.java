@@ -18,7 +18,7 @@ import seg.work.carog.server.accident.dto.AccidentCostInfoSaveRequest;
 import seg.work.carog.server.accident.dto.AccidentCostInfoUpdateRequest;
 import seg.work.carog.server.accident.service.AccidentCostInfoService;
 import seg.work.carog.server.auth.dto.TokenUserInfo;
-import seg.work.carog.server.common.dto.BaseResponse;
+import seg.work.carog.server.common.dto.BaseApiResponse;
 
 @Slf4j
 @RestController
@@ -32,21 +32,21 @@ public class AccidentController {
     public ResponseEntity<?> getAccidentCostInfoList(TokenUserInfo tokenUserInfo, @PathVariable(required = false) Long carInfoId, Pageable pageable) {
         Slice<AccidentCostInfoResponse> maintenanceCostInfoResponseList = accidentCostInfoService.getAccidentCostInfoList(tokenUserInfo, carInfoId, pageable);
 
-        return ResponseEntity.ok(BaseResponse.success(maintenanceCostInfoResponseList));
+        return ResponseEntity.ok(BaseApiResponse.success(maintenanceCostInfoResponseList));
     }
 
     @PostMapping
     public ResponseEntity<?> saveAccidentCostInfo(TokenUserInfo tokenUserInfo, @Validated @RequestBody AccidentCostInfoSaveRequest accidentCostInfoSaveRequest) {
         accidentCostInfoService.saveAccidentCostInfo(tokenUserInfo, accidentCostInfoSaveRequest);
 
-        return ResponseEntity.ok(BaseResponse.success());
+        return ResponseEntity.ok(BaseApiResponse.success());
     }
 
     @PutMapping
     public ResponseEntity<?> updateAccidentCostInfo(TokenUserInfo tokenUserInfo, @Validated @RequestBody AccidentCostInfoUpdateRequest accidentCostInfoUpdateRequest) {
         accidentCostInfoService.updateAccidentCostInfo(tokenUserInfo, accidentCostInfoUpdateRequest);
 
-        return ResponseEntity.ok(BaseResponse.success());
+        return ResponseEntity.ok(BaseApiResponse.success());
     }
 
 }

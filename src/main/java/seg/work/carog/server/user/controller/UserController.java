@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import seg.work.carog.server.auth.dto.TokenUserInfo;
-import seg.work.carog.server.common.dto.BaseResponse;
+import seg.work.carog.server.common.dto.BaseApiResponse;
 import seg.work.carog.server.user.dto.UserInfoResponse;
 import seg.work.carog.server.user.service.UserService;
 
@@ -23,6 +23,6 @@ public class UserController {
     public ResponseEntity<?> getProfile(TokenUserInfo tokenUserInfo) {
         UserInfoResponse userInfoResponse = userService.getProfile(tokenUserInfo);
 
-        return ResponseEntity.ok(BaseResponse.success(userInfoResponse));
+        return ResponseEntity.ok(BaseApiResponse.success(userInfoResponse));
     }
 }

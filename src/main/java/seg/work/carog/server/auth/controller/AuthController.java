@@ -12,7 +12,7 @@ import seg.work.carog.server.auth.dto.KakaoLoginRequest;
 import seg.work.carog.server.auth.dto.LoginResponse;
 import seg.work.carog.server.auth.dto.TokenUserInfo;
 import seg.work.carog.server.auth.service.AuthService;
-import seg.work.carog.server.common.dto.BaseResponse;
+import seg.work.carog.server.common.dto.BaseApiResponse;
 
 @Slf4j
 @RestController
@@ -26,13 +26,13 @@ public class AuthController {
     public ResponseEntity<?> kakaoLogin(@Validated @RequestBody KakaoLoginRequest request) {
         LoginResponse response = authService.loginWithKakao(request.getCode());
 
-        return ResponseEntity.ok(BaseResponse.success(response));
+        return ResponseEntity.ok(BaseApiResponse.success(response));
     }
 
     @PostMapping("/logout/kakao")
     public ResponseEntity<?> kakaoLogout(TokenUserInfo tokenUserInfo) {
         authService.logoutWithKakao(tokenUserInfo);
 
-        return ResponseEntity.ok(BaseResponse.success());
+        return ResponseEntity.ok(BaseApiResponse.success());
     }
 }

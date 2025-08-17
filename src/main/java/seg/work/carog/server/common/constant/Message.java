@@ -33,6 +33,8 @@ public enum Message {
     NO_INSURANCE_COST_INFO("EA0019", "등록된 보혐료 또는 세금 내역이 존재하지 않습니다.", HttpStatus.BAD_REQUEST),
     NO_ACCIDENT_COST_INFO("EA0020", "등록된 사고 내역이 존재하지 않습니다.", HttpStatus.BAD_REQUEST),
     NO_INSTALLMENT_COST_INFO("EA0019", "등록된 할부 내역이 존재하지 않습니다.", HttpStatus.BAD_REQUEST),
+    NO_PARKING_COST_INFO("EA0018", "등록된 주차비 내역이 존재하지 않습니다.", HttpStatus.BAD_REQUEST),
+    NO_ETC_COST_INFO("EA0018", "등록된 기타 내역이 존재하지 않습니다.", HttpStatus.BAD_REQUEST),
 
     // file
     CANNOT_GET_FILE("EF0000", "파일을 찾을 수 없습니다.", HttpStatus.NOT_FOUND),

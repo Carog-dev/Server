@@ -1,22 +1,22 @@
 package seg.work.carog.server.maintenance.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import seg.work.carog.server.common.dto.BaseResponse;
 import seg.work.carog.server.maintenance.entity.MaintenanceCostInfoEntity;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class MaintenanceCostInfoResponse {
+public class MaintenanceCostInfoResponse extends BaseResponse {
 
     private Long id;
     private Long carInfoId;
@@ -24,13 +24,6 @@ public class MaintenanceCostInfoResponse {
     private BigDecimal price;
     private BigDecimal mileage;
     private String company;
-    private String memo;
-
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate date;
-
-    @JsonFormat(pattern = "HH:mm:ss")
-    private LocalTime time;
 
     public MaintenanceCostInfoResponse(MaintenanceCostInfoEntity maintenanceCostInfoEntity) {
         this.id = maintenanceCostInfoEntity.getId();
@@ -39,8 +32,8 @@ public class MaintenanceCostInfoResponse {
         this.price = maintenanceCostInfoEntity.getPrice();
         this.mileage = maintenanceCostInfoEntity.getMileage();
         this.company = maintenanceCostInfoEntity.getCompany();
-        this.memo = maintenanceCostInfoEntity.getMemo();
-        this.date = maintenanceCostInfoEntity.getDate();
-        this.time = maintenanceCostInfoEntity.getTime();
+        setMemo(maintenanceCostInfoEntity.getMemo());
+        setDate(maintenanceCostInfoEntity.getDate());
+        setTime(maintenanceCostInfoEntity.getTime());
     }
 }

@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 import seg.work.carog.server.common.constant.Message;
-import seg.work.carog.server.common.dto.BaseResponse;
+import seg.work.carog.server.common.dto.BaseApiResponse;
 import seg.work.carog.server.common.exception.BaseException;
 import seg.work.carog.server.common.service.BlacklistTokenService;
 import seg.work.carog.server.common.service.RefreshTokenService;
@@ -96,21 +96,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         try {
             if (request.getRequestURI().endsWith("/logout/kakao")) {
-                BaseResponse<?> baseResponse = BaseResponse.success();
+                BaseApiResponse<?> baseApiResponse = BaseApiResponse.success();
 
                 if (!token.isBlank() && !token.equals("null")) {
                     Message message = Message.EXPIRED_TOKEN_RE_LOGIN;
 
                     response.setStatus(message.getHttpStatus().value());
                     if (blacklistTokenService.isBlockedToken(token)) {
-                        baseResponse = BaseResponse.error(message);
+                        baseApiResponse = BaseApiResponse.error(message);
                     } else {
                         response.setStatus(Message.SUCCESS.getHttpStatus().value());
                         blacklistTokenService.addTokenToBlacklist(token);
                     }
                 }
 
-                response.getWriter().write(ObjectUtil.convertObjectToString(baseResponse));
+                response.getWriter().write(ObjectUtil.convertObjectToString(baseApiResponse));
             } else {
                 Object data = null;
                 Message message;
@@ -126,7 +126,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
 
                 response.setStatus(message.getHttpStatus().value());
-                response.getWriter().write(ObjectUtil.convertObjectToString(BaseResponse.error(message, data)));
+                response.getWriter().write(ObjectUtil.convertObjectToString(BaseApiResponse.error(message, data)));
             }
         } catch (IOException ioe) {
             log.error("Error while sending JWT Token", ioe);
@@ -148,6 +148,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         response.setStatus(message.getHttpStatus().value());
-        response.getWriter().write(ObjectUtil.convertObjectToString(BaseResponse.error(message, null)));
+        response.getWriter().write(ObjectUtil.convertObjectToString(BaseApiResponse.error(message, null)));
     }
 }

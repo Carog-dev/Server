@@ -7,17 +7,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import seg.work.carog.server.accident.entity.AccidentCostInfoEntity;
 import seg.work.carog.server.accident.repository.AccidentCostInfoRepository;
 import seg.work.carog.server.common.constant.Constant;
-import seg.work.carog.server.installment.entity.InstallmentCostInfoEntity;
+import seg.work.carog.server.common.entity.BaseEntity;
+import seg.work.carog.server.common.repository.BaseRepository;
+import seg.work.carog.server.etc.repository.EtcCostInfoRepository;
 import seg.work.carog.server.installment.repository.InstallmentCostInfoRepository;
-import seg.work.carog.server.insurance.entity.InsuranceCostInfoEntity;
 import seg.work.carog.server.insurance.repository.InsuranceCostInfoRepository;
-import seg.work.carog.server.maintenance.entity.MaintenanceCostInfoEntity;
 import seg.work.carog.server.maintenance.repository.MaintenanceCostInfoRepository;
-import seg.work.carog.server.oil.entity.OilCostInfoEntity;
 import seg.work.carog.server.oil.repository.OilCostInfoRepository;
+import seg.work.carog.server.parking.repository.ParkingCostInfoRepository;
 
 @Slf4j
 @Async
@@ -27,82 +26,83 @@ import seg.work.carog.server.oil.repository.OilCostInfoRepository;
 public class AsyncService {
 
     private final AccidentCostInfoRepository accidentCostInfoRepository;
+    private final EtcCostInfoRepository etcCostInfoRepository;
     private final InstallmentCostInfoRepository installmentCostInfoRepository;
     private final InsuranceCostInfoRepository insuranceCostInfoRepository;
     private final MaintenanceCostInfoRepository maintenanceCostInfoRepository;
     private final OilCostInfoRepository oilCostInfoRepository;
+    private final ParkingCostInfoRepository parkingCostInfoRepository;
+
+    private <T extends BaseEntity, R extends BaseRepository<T>> void deleteAllCostInfoByCarInfoId(Long carInfoId, R repository, FindAllByCarInfoIdAndDeleteYn<T> finder) {
+
+        Optional<List<T>> optionalCostInfos = finder.findAllByCarInfoIdAndDeleteYn(carInfoId, Constant.FLAG_N);
+
+        if (optionalCostInfos.isPresent()) {
+            List<T> costInfos = optionalCostInfos.get();
+            for (T costInfo : costInfos) {
+                costInfo.delete();
+            }
+
+            repository.saveAll(costInfos);
+        }
+    }
+
+    @FunctionalInterface
+    private interface FindAllByCarInfoIdAndDeleteYn<T> {
+
+        Optional<List<T>> findAllByCarInfoIdAndDeleteYn(Long carInfoId, String deleteYn);
+    }
 
     @Transactional
     public void deleteAllByCarInfoId(Long carInfoId) {
         this.deleteAllAccidentByCarInfoId(carInfoId);
+        this.deleteAllEtcByCarInfoId(carInfoId);
         this.deleteAllInstallmentByCarInfoId(carInfoId);
         this.deleteAllInsuranceByCarInfoId(carInfoId);
         this.deleteAllMaintenanceByCarInfoId(carInfoId);
         this.deleteAllOilByCarInfoId(carInfoId);
+        this.deleteAllParkingByCarInfoId(carInfoId);
     }
 
+    @Transactional
     public void deleteAllAccidentByCarInfoId(Long carInfoId) {
-        Optional<List<AccidentCostInfoEntity>> optionalAccidentCostInfos = accidentCostInfoRepository.findAllByCarInfoIdAndDeleteYn(carInfoId, Constant.FLAG_N);
-
-        if (optionalAccidentCostInfos.isPresent()) {
-            List<AccidentCostInfoEntity> accidentCostInfos = optionalAccidentCostInfos.get();
-            for (AccidentCostInfoEntity accidentCostInfo : accidentCostInfos) {
-                accidentCostInfo.delete();
-            }
-
-            accidentCostInfoRepository.saveAll(accidentCostInfos);
-        }
+        log.info("deleteAllAccidentByCarInfoId async run by {}", carInfoId);
+        deleteAllCostInfoByCarInfoId(carInfoId, accidentCostInfoRepository, accidentCostInfoRepository::findAllByCarInfoIdAndDeleteYn);
     }
 
+    @Transactional
+    public void deleteAllEtcByCarInfoId(Long carInfoId) {
+        log.info("deleteAllEtcByCarInfoId async run by {}", carInfoId);
+        deleteAllCostInfoByCarInfoId(carInfoId, etcCostInfoRepository, etcCostInfoRepository::findAllByCarInfoIdAndDeleteYn);
+    }
+
+    @Transactional
     public void deleteAllInstallmentByCarInfoId(Long carInfoId) {
-        Optional<List<InstallmentCostInfoEntity>> optionalInstallmentCostInfos = installmentCostInfoRepository.findAllByCarInfoIdAndDeleteYn(carInfoId, Constant.FLAG_N);
-
-        if (optionalInstallmentCostInfos.isPresent()) {
-            List<InstallmentCostInfoEntity> installmentCostInfos = optionalInstallmentCostInfos.get();
-            for (InstallmentCostInfoEntity installmentCostInfo : installmentCostInfos) {
-                installmentCostInfo.delete();
-            }
-
-            installmentCostInfoRepository.saveAll(installmentCostInfos);
-        }
+        log.info("deleteAllInstallmentByCarInfoId async run by {}", carInfoId);
+        deleteAllCostInfoByCarInfoId(carInfoId, installmentCostInfoRepository, installmentCostInfoRepository::findAllByCarInfoIdAndDeleteYn);
     }
 
+    @Transactional
     public void deleteAllInsuranceByCarInfoId(Long carInfoId) {
-        Optional<List<InsuranceCostInfoEntity>> optionalInsuranceCostInfos = insuranceCostInfoRepository.findAllByCarInfoIdAndDeleteYn(carInfoId, Constant.FLAG_N);
-
-        if (optionalInsuranceCostInfos.isPresent()) {
-            List<InsuranceCostInfoEntity> insuranceCostInfos = optionalInsuranceCostInfos.get();
-            for (InsuranceCostInfoEntity insuranceCostInfo : insuranceCostInfos) {
-                insuranceCostInfo.delete();
-            }
-
-            insuranceCostInfoRepository.saveAll(insuranceCostInfos);
-        }
+        log.info("deleteAllInsuranceByCarInfoId async run by {}", carInfoId);
+        deleteAllCostInfoByCarInfoId(carInfoId, insuranceCostInfoRepository, insuranceCostInfoRepository::findAllByCarInfoIdAndDeleteYn);
     }
 
+    @Transactional
     public void deleteAllMaintenanceByCarInfoId(Long carInfoId) {
-        Optional<List<MaintenanceCostInfoEntity>> optionalMaintenanceCostInfos = maintenanceCostInfoRepository.findAllByCarInfoIdAndDeleteYn(carInfoId, Constant.FLAG_N);
-
-        if (optionalMaintenanceCostInfos.isPresent()) {
-            List<MaintenanceCostInfoEntity> maintenanceCostInfos = optionalMaintenanceCostInfos.get();
-            for (MaintenanceCostInfoEntity maintenanceCostInfo : maintenanceCostInfos) {
-                maintenanceCostInfo.delete();
-            }
-
-            maintenanceCostInfoRepository.saveAll(maintenanceCostInfos);
-        }
+        log.info("deleteAllMaintenanceByCarInfoId async run by {}", carInfoId);
+        deleteAllCostInfoByCarInfoId(carInfoId, maintenanceCostInfoRepository, maintenanceCostInfoRepository::findAllByCarInfoIdAndDeleteYn);
     }
 
+    @Transactional
     public void deleteAllOilByCarInfoId(Long carInfoId) {
-        Optional<List<OilCostInfoEntity>> optionalOilCostInfos = oilCostInfoRepository.findAllByCarInfoIdAndDeleteYn(carInfoId, Constant.FLAG_N);
+        log.info("deleteAllOilByCarInfoId async run by {}", carInfoId);
+        deleteAllCostInfoByCarInfoId(carInfoId, oilCostInfoRepository, oilCostInfoRepository::findAllByCarInfoIdAndDeleteYn);
+    }
 
-        if (optionalOilCostInfos.isPresent()) {
-            List<OilCostInfoEntity> oilCostInfos = optionalOilCostInfos.get();
-            for (OilCostInfoEntity oilCostInfo : oilCostInfos) {
-                oilCostInfo.delete();
-            }
-
-            oilCostInfoRepository.saveAll(oilCostInfos);
-        }
+    @Transactional
+    public void deleteAllParkingByCarInfoId(Long carInfoId) {
+        log.info("deleteAllParkingByCarInfoId async run by {}", carInfoId);
+        deleteAllCostInfoByCarInfoId(carInfoId, parkingCostInfoRepository, parkingCostInfoRepository::findAllByCarInfoIdAndDeleteYn);
     }
 }

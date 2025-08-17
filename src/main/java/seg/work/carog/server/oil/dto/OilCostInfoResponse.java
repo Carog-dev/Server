@@ -1,22 +1,22 @@
 package seg.work.carog.server.oil.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import seg.work.carog.server.common.dto.BaseResponse;
 import seg.work.carog.server.oil.entity.OilCostInfoEntity;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class OilCostInfoResponse {
+public class OilCostInfoResponse extends BaseResponse {
 
     private Long id;
     private Long carInfoId;
@@ -26,13 +26,6 @@ public class OilCostInfoResponse {
     private BigDecimal unit;
     private String company;
     private BigDecimal range;
-    private String memo;
-
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate date;
-
-    @JsonFormat(pattern = "HH:mm:ss")
-    private LocalTime time;
 
     public OilCostInfoResponse(OilCostInfoEntity oilCostInfoEntity) {
         this.id = oilCostInfoEntity.getId();
@@ -43,8 +36,8 @@ public class OilCostInfoResponse {
         this.unit = oilCostInfoEntity.getUnit();
         this.company = oilCostInfoEntity.getCompany();
         this.range = oilCostInfoEntity.getRange();
-        this.memo = oilCostInfoEntity.getMemo();
-        this.date = oilCostInfoEntity.getDate();
-        this.time = oilCostInfoEntity.getTime();
+        setMemo(oilCostInfoEntity.getMemo());
+        setDate(oilCostInfoEntity.getDate());
+        setTime(oilCostInfoEntity.getTime());
     }
 }

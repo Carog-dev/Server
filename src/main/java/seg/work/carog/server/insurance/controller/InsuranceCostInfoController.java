@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import seg.work.carog.server.auth.dto.TokenUserInfo;
-import seg.work.carog.server.common.dto.BaseResponse;
+import seg.work.carog.server.common.dto.BaseApiResponse;
 import seg.work.carog.server.insurance.dto.InsuranceCostInfoResponse;
 import seg.work.carog.server.insurance.dto.InsuranceCostInfoSaveRequest;
 import seg.work.carog.server.insurance.dto.InsuranceCostInfoUpdateRequest;
@@ -32,20 +32,20 @@ public class InsuranceCostInfoController {
     public ResponseEntity<?> getInsuranceCostInfoList(TokenUserInfo tokenUserInfo, @PathVariable(required = false) Long carInfoId, Pageable pageable) {
         Slice<InsuranceCostInfoResponse> insuranceCostInfoResponseList = insuranceCostInfoService.getInsuranceCostInfoList(tokenUserInfo, carInfoId, pageable);
 
-        return ResponseEntity.ok(BaseResponse.success(insuranceCostInfoResponseList));
+        return ResponseEntity.ok(BaseApiResponse.success(insuranceCostInfoResponseList));
     }
 
     @PostMapping
     public ResponseEntity<?> saveInsuranceCostInfo(TokenUserInfo tokenUserInfo, @Validated @RequestBody InsuranceCostInfoSaveRequest insuranceCostInfoSaveRequest) {
         insuranceCostInfoService.saveInsuranceCostInfo(tokenUserInfo, insuranceCostInfoSaveRequest);
 
-        return ResponseEntity.ok(BaseResponse.success());
+        return ResponseEntity.ok(BaseApiResponse.success());
     }
 
     @PutMapping
     public ResponseEntity<?> updateInsuranceCostInfo(TokenUserInfo tokenUserInfo, @Validated @RequestBody InsuranceCostInfoUpdateRequest insuranceCostInfoUpdateRequest) {
         insuranceCostInfoService.updateInsuranceCostInfo(tokenUserInfo, insuranceCostInfoUpdateRequest);
 
-        return ResponseEntity.ok(BaseResponse.success());
+        return ResponseEntity.ok(BaseApiResponse.success());
     }
 }

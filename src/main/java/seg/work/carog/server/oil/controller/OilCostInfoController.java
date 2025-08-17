@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import seg.work.carog.server.auth.dto.TokenUserInfo;
-import seg.work.carog.server.common.dto.BaseResponse;
+import seg.work.carog.server.common.dto.BaseApiResponse;
 import seg.work.carog.server.oil.dto.OilCostInfoResponse;
 import seg.work.carog.server.oil.dto.OilCostInfoSaveRequest;
 import seg.work.carog.server.oil.dto.OilCostInfoUpdateRequest;
@@ -32,20 +32,20 @@ public class OilCostInfoController {
     public ResponseEntity<?> getOilCostInfoList(TokenUserInfo tokenUserInfo, @PathVariable(required = false) Long carInfoId, Pageable pageable) {
         Slice<OilCostInfoResponse> oilCostInfoResponseList = oilCostInfoService.getOilCostInfoList(tokenUserInfo, carInfoId, pageable);
 
-        return ResponseEntity.ok(BaseResponse.success(oilCostInfoResponseList));
+        return ResponseEntity.ok(BaseApiResponse.success(oilCostInfoResponseList));
     }
 
     @PostMapping
     public ResponseEntity<?> saveOilCostInfo(TokenUserInfo tokenUserInfo, @Validated @RequestBody OilCostInfoSaveRequest oilCostInfoSaveRequest) {
         oilCostInfoService.saveOilCostInfo(tokenUserInfo, oilCostInfoSaveRequest);
 
-        return ResponseEntity.ok(BaseResponse.success());
+        return ResponseEntity.ok(BaseApiResponse.success());
     }
 
     @PutMapping
     public ResponseEntity<?> updateOilCostInfo(TokenUserInfo tokenUserInfo, @Validated @RequestBody OilCostInfoUpdateRequest oilCostInfoUpdateRequest) {
         oilCostInfoService.updateOilCostInfo(tokenUserInfo, oilCostInfoUpdateRequest);
 
-        return ResponseEntity.ok(BaseResponse.success());
+        return ResponseEntity.ok(BaseApiResponse.success());
     }
 }

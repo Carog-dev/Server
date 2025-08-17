@@ -9,7 +9,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 import seg.work.carog.server.common.constant.Message;
-import seg.work.carog.server.common.dto.BaseResponse;
+import seg.work.carog.server.common.dto.BaseApiResponse;
 import seg.work.carog.server.common.util.ObjectUtil;
 
 @Slf4j
@@ -23,7 +23,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
             response.setStatus(message.getHttpStatus().value());
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-            response.getWriter().write(ObjectUtil.convertObjectToString(BaseResponse.error(message, null)));
+            response.getWriter().write(ObjectUtil.convertObjectToString(BaseApiResponse.error(message, null)));
         } catch (IOException ie) {
             log.error(ie.getMessage(), ie);
         }
