@@ -7,7 +7,7 @@ import org.springframework.data.domain.Slice;
 import seg.work.carog.server.common.repository.BaseRepository;
 import seg.work.carog.server.oil.entity.OilCostInfoEntity;
 
-public interface OilCostInfoEntityRepository extends BaseRepository<OilCostInfoEntity> {
+public interface OilCostInfoRepository extends BaseRepository<OilCostInfoEntity> {
 
     Optional<List<OilCostInfoEntity>> findAllByCarInfoIdAndDeleteYn(Long carInfoId, String deleteYn);
 

@@ -19,7 +19,7 @@ import seg.work.carog.server.oil.dto.OilCostInfoResponse;
 import seg.work.carog.server.oil.dto.OilCostInfoSaveRequest;
 import seg.work.carog.server.oil.dto.OilCostInfoUpdateRequest;
 import seg.work.carog.server.oil.entity.OilCostInfoEntity;
-import seg.work.carog.server.oil.repository.OilCostInfoEntityRepository;
+import seg.work.carog.server.oil.repository.OilCostInfoRepository;
 
 @Slf4j
 @Service
@@ -28,7 +28,7 @@ import seg.work.carog.server.oil.repository.OilCostInfoEntityRepository;
 public class OilCostInfoService {
 
     private final CarInfoRepository carInfoRepository;
-    private final OilCostInfoEntityRepository oilCostInfoEntityRepository;
+    private final OilCostInfoRepository oilCostInfoRepository;
 
     private CarInfoEntity getCarInfoById(Long carInfoId) {
         return carInfoRepository.findById(carInfoId).orElseThrow(() -> new BaseException(Message.NO_CAR_INFO));
@@ -45,7 +45,7 @@ public class OilCostInfoService {
     public Slice<OilCostInfoResponse> getOilCostInfoList(TokenUserInfo tokenUserInfo, Long carInfoId, Pageable pageable) {
         CarInfoEntity carInfoEntity = this.getCarInfo(tokenUserInfo, carInfoId);
 
-        Optional<Slice<OilCostInfoEntity>> optionalOilCostInfoEntityList = oilCostInfoEntityRepository.findByCarInfoIdAndDeleteYn(carInfoEntity.getId(), Constant.FLAG_N, pageable);
+        Optional<Slice<OilCostInfoEntity>> optionalOilCostInfoEntityList = oilCostInfoRepository.findByCarInfoIdAndDeleteYn(carInfoEntity.getId(), Constant.FLAG_N, pageable);
         return optionalOilCostInfoEntityList.map(oilCostInfoEntityList -> oilCostInfoEntityList.stream().map(OilCostInfoResponse::new).toList()).<Slice<OilCostInfoResponse>>map(PageImpl::new).orElse(new PageImpl<>(Collections.emptyList()));
     }
 
@@ -54,14 +54,14 @@ public class OilCostInfoService {
         CarInfoEntity carInfoEntity = this.getCarInfo(tokenUserInfo, oilCostInfoSaveRequest.getCarInfoId());
 
         OilCostInfoEntity oilCostInfoEntity = oilCostInfoSaveRequest.toEntity(carInfoEntity.getId());
-        oilCostInfoEntityRepository.save(oilCostInfoEntity);
+        oilCostInfoRepository.save(oilCostInfoEntity);
     }
 
     @Transactional
     public void updateOilCostInfo(TokenUserInfo tokenUserInfo, OilCostInfoUpdateRequest oilCostInfoUpdateRequest) {
-        OilCostInfoEntity oilCostInfoEntity = oilCostInfoEntityRepository.findById(oilCostInfoUpdateRequest.getId()).orElseThrow(() -> new BaseException(Message.NO_OIL_COST_INFO));
+        OilCostInfoEntity oilCostInfoEntity = oilCostInfoRepository.findById(oilCostInfoUpdateRequest.getId()).orElseThrow(() -> new BaseException(Message.NO_OIL_COST_INFO));
         oilCostInfoEntity.updateOilCostInfo(oilCostInfoUpdateRequest);
-        oilCostInfoEntityRepository.save(oilCostInfoEntity);
+        oilCostInfoRepository.save(oilCostInfoEntity);
     }
 
 }
