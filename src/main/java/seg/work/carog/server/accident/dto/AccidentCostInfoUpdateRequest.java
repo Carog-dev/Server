@@ -20,7 +20,7 @@ import seg.work.carog.server.common.dto.BaseUpdateRequest;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class AccidentCostInfoUpdateRequest extends BaseUpdateRequest {
 
-    @NotBlank
+    @NotNull
     private Long id;
 
     @NotBlank

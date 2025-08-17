@@ -20,7 +20,7 @@ import seg.work.carog.server.common.dto.BaseUpdateRequest;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class InstallmentCostInfoUpdateRequest extends BaseUpdateRequest {
 
-    @NotBlank
+    @NotNull
     private Long id;
 
     @Min(0)

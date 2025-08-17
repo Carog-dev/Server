@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import seg.work.carog.server.async.service.AsyncService;
 import seg.work.carog.server.auth.dto.TokenUserInfo;
 import seg.work.carog.server.car.dto.CarInfoResponse;
 import seg.work.carog.server.car.dto.CarInfoSaveRequest;
@@ -24,6 +25,7 @@ import seg.work.carog.server.common.exception.BaseException;
 public class CarInfoService {
 
     private final CarInfoRepository carInfoRepository;
+    private final AsyncService asyncService;
 
     public CarInfoResponse getRepresentCarInfo(TokenUserInfo tokenUserInfo) {
         Optional<CarInfoEntity> optionalCarInfoEntity = carInfoRepository.findByUserIdAndRepresentAndDeleteYn(tokenUserInfo.getId(), Constant.FLAG_TRUE, Constant.FLAG_N);
@@ -80,5 +82,7 @@ public class CarInfoService {
         CarInfoEntity carInfoEntity = carInfoRepository.findByUserIdAndIdAndDeleteYn(tokenUserInfo.getId(), carInfoId, Constant.FLAG_N).orElseThrow(() -> new BaseException(Message.NOT_FOUND));
         carInfoEntity.delete();
         carInfoRepository.save(carInfoEntity);
+
+        asyncService.deleteAllByCarInfoId(carInfoId);
     }
 }
