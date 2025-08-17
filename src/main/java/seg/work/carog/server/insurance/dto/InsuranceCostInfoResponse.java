@@ -1,6 +1,7 @@
 package seg.work.carog.server.insurance.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -14,6 +15,7 @@ import seg.work.carog.server.insurance.entity.InsuranceCostInfoEntity;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class InsuranceCostInfoResponse {
 
     private Long id;

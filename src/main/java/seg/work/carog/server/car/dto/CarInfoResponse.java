@@ -1,5 +1,6 @@
 package seg.work.carog.server.car.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,6 +11,7 @@ import seg.work.carog.server.car.entity.CarInfoEntity;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class CarInfoResponse {
     private Long id;
     private String name;

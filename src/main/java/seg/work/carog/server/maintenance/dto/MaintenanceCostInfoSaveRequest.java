@@ -1,5 +1,6 @@
 package seg.work.carog.server.maintenance.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -17,6 +18,7 @@ import seg.work.carog.server.maintenance.entity.MaintenanceCostInfoEntity;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class MaintenanceCostInfoSaveRequest extends BaseSaveRequest {
 
     private Long carInfoId;

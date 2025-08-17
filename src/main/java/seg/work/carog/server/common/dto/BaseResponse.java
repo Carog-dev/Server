@@ -9,9 +9,9 @@ import seg.work.carog.server.common.constant.Message;
 
 @Getter
 @Setter
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class BaseResponse<T> {
 
     private Boolean success = false;
