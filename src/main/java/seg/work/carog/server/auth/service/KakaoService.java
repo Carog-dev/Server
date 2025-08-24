@@ -60,6 +60,7 @@ public class KakaoService {
                 throw new RuntimeException("Failed to get access token from Kakao");
             }
         } catch (Exception e) {
+            log.error("");
             throw new BaseException(Message.KAKAO_ACCESS_TOKEN_ERROR);
         }
     }
