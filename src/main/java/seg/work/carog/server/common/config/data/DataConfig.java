@@ -2,9 +2,7 @@ package seg.work.carog.server.common.config.data;
 
 import com.zaxxer.hikari.HikariDataSource;
 import jakarta.persistence.EntityManagerFactory;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Objects;
 import javax.sql.DataSource;
 import lombok.RequiredArgsConstructor;
@@ -52,10 +50,21 @@ public class DataConfig {
         return DataSourceBuilder.create().type(HikariDataSource.class).build();
     }
 
-    @Bean("routingDataSource")
-    public DataSource routingDataSource(@Qualifier("writeDataSource") HikariDataSource writeDataSource, @Qualifier("readDataSource") HikariDataSource readDataSource) {
-        List<HikariDataSource> slaves = Collections.singletonList(readDataSource);
-        return new RoutingDataSource(writeDataSource, slaves);
+    @Bean
+    public DataSource routingDataSource() {
+        DataSource readDataSource = readDataSource();
+        DataSource writeDataSource = writeDataSource();
+
+        HashMap<Object, Object> dataSourcesMap = new HashMap<>();
+        dataSourcesMap.put("readDataSource", readDataSource);
+        dataSourcesMap.put("writeDataSource", writeDataSource);
+
+        ReplicationRoutingDataSource replicationRoutingDataSource = new ReplicationRoutingDataSource();
+        replicationRoutingDataSource.setDefaultTargetDataSource(writeDataSource);
+        replicationRoutingDataSource.setTargetDataSources(dataSourcesMap);
+        replicationRoutingDataSource.afterPropertiesSet();
+
+        return replicationRoutingDataSource;
     }
 
     @Primary
