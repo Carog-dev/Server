@@ -35,20 +35,15 @@ public class KakaoService {
     private static final String KAKAO_USER_INFO_URL = "https://kapi.kakao.com/v2/user/me";
 
     public String getAccessToken(String authorizationCode) {
-        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("grant_type", "authorization_code");
-        params.add("client_id", clientId);
-        params.add("client_secret", clientSecret);
-        params.add("redirect_uri", redirectUri);
-        params.add("code", authorizationCode);
-
-        log.info("params: {}", params);
-
         try {
             KakaoTokenResponse response = webClient.post()
                     .uri(KAKAO_TOKEN_URL)
                     .header(HttpHeaders.CONTENT_TYPE, "application/x-www-form-urlencoded;charset=utf-8")
-                    .body(BodyInserters.fromFormData(params))
+                    .body(BodyInserters.fromFormData("grant_type", "authorization_code")
+                        .with("client_id", clientId)
+                        .with("client_secret", clientSecret)
+                        .with("redirect_uri", redirectUri)
+                        .with("code", authorizationCode))
                     .retrieve()
                     .bodyToMono(KakaoTokenResponse.class)
                     .block();
@@ -60,7 +55,7 @@ public class KakaoService {
                 throw new RuntimeException("Failed to get access token from Kakao");
             }
         } catch (Exception e) {
-            log.error("");
+            log.error("ERROR: ", e);
             throw new BaseException(Message.KAKAO_ACCESS_TOKEN_ERROR);
         }
     }
