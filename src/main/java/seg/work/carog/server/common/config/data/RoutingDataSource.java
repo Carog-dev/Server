@@ -1,11 +1,11 @@
 package seg.work.carog.server.common.config.data;
 
+import com.zaxxer.hikari.HikariDataSource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
-import javax.sql.DataSource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
@@ -25,7 +25,7 @@ public class RoutingDataSource extends AbstractRoutingDataSource {
     private final int readSize;
     private final AtomicInteger readIdx = new AtomicInteger(-1);
 
-    public RoutingDataSource(DataSource writeDataSource, List<DataSource> readDataSources) {
+    public RoutingDataSource(HikariDataSource writeDataSource, List<HikariDataSource> readDataSources) {
         if (writeDataSource == null) {
             log.error("writeDataSource 미 존재");
             throw new BaseException(Message.FAIL);

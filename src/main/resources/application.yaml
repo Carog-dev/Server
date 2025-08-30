@@ -25,9 +25,10 @@ spring:
       minimum-idle: 10
       maximum-pool-size: 20
       connection-test-query: SELECT 1
-      read-only: true
       pool-name: READ-POOL-CAROG
       driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+      read-only: true
+      auto-commit: true
     write:
       jdbc-url: ENC(OSfQn5fPwuFVXhL59QRgyNDMymUJXpXZYgFngiTmnTRpg+6VaU3S18tj/rGkktTlIbRQWG9fUJ1uApzdO3Yh3+6mraNCVP0m4Wmt8wY/2ASS6aEsXE6iTcPt5ETQl9xcdmyTRQIu0xJhEVf3/sDA9cD9bhFUGKC7T7LNW9WWQzrvcv3A29azodDRh+j2/njx)
       username: ENC(K1hM9KNlWGO3qVvrThLUZ+kX17tuneUXGL87sEkYQ8vqXWKoB88TaRDss0u4Yr0W)

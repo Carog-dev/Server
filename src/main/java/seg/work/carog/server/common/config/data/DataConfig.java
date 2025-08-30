@@ -1,7 +1,9 @@
 package seg.work.carog.server.common.config.data;
 
+import com.zaxxer.hikari.HikariDataSource;
 import jakarta.persistence.EntityManagerFactory;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import javax.sql.DataSource;
@@ -40,19 +42,19 @@ public class DataConfig {
 
     @Bean("readDataSource")
     @ConfigurationProperties("spring.datasource.read")
-    public DataSource readDataSource() {
-        return DataSourceBuilder.create().build();
+    public HikariDataSource readDataSource() {
+        return DataSourceBuilder.create().type(HikariDataSource.class).build();
     }
 
     @Bean("writeDataSource")
     @ConfigurationProperties("spring.datasource.write")
-    public DataSource writeDataSource() {
-        return DataSourceBuilder.create().build();
+    public HikariDataSource writeDataSource() {
+        return DataSourceBuilder.create().type(HikariDataSource.class).build();
     }
 
     @Bean("routingDataSource")
-    public DataSource routingDataSource(@Qualifier("writeDataSource") DataSource writeDataSource, @Qualifier("readDataSource") DataSource readDataSource) {
-        List<DataSource> slaves = Collections.singletonList(readDataSource);
+    public DataSource routingDataSource(@Qualifier("writeDataSource") HikariDataSource writeDataSource, @Qualifier("readDataSource") HikariDataSource readDataSource) {
+        List<HikariDataSource> slaves = Collections.singletonList(readDataSource);
         return new RoutingDataSource(writeDataSource, slaves);
     }
 
