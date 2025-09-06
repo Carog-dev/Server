@@ -39,5 +39,7 @@ public class OilCostInfoResponse extends BaseResponse {
         setMemo(oilCostInfoEntity.getMemo());
         setDate(oilCostInfoEntity.getDate());
         setTime(oilCostInfoEntity.getTime());
+        setCreatedAt(oilCostInfoEntity.getCreatedAt());
+        setUpdatedAt(oilCostInfoEntity.getUpdatedAt());
     }
 }

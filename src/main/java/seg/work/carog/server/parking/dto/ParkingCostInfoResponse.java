@@ -29,5 +29,7 @@ public class ParkingCostInfoResponse extends BaseResponse {
         setMemo(parkingCostInfoEntity.getMemo());
         setDate(parkingCostInfoEntity.getDate());
         setTime(parkingCostInfoEntity.getTime());
+        setCreatedAt(parkingCostInfoEntity.getCreatedAt());
+        setUpdatedAt(parkingCostInfoEntity.getUpdatedAt());
     }
 }

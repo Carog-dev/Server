@@ -31,5 +31,7 @@ public class EtcCostInfoResponse extends BaseResponse {
         setMemo(etcCostInfoEntity.getMemo());
         setDate(etcCostInfoEntity.getDate());
         setTime(etcCostInfoEntity.getTime());
+        setCreatedAt(etcCostInfoEntity.getCreatedAt());
+        setUpdatedAt(etcCostInfoEntity.getUpdatedAt());
     }
 }

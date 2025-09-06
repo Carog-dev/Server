@@ -35,5 +35,7 @@ public class MaintenanceCostInfoResponse extends BaseResponse {
         setMemo(maintenanceCostInfoEntity.getMemo());
         setDate(maintenanceCostInfoEntity.getDate());
         setTime(maintenanceCostInfoEntity.getTime());
+        setCreatedAt(maintenanceCostInfoEntity.getCreatedAt());
+        setUpdatedAt(maintenanceCostInfoEntity.getUpdatedAt());
     }
 }

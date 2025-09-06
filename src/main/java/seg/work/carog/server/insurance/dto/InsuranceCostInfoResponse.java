@@ -33,5 +33,7 @@ public class InsuranceCostInfoResponse extends BaseResponse {
         setMemo(insuranceCostInfoEntity.getMemo());
         setDate(insuranceCostInfoEntity.getDate());
         setTime(insuranceCostInfoEntity.getTime());
+        setCreatedAt(insuranceCostInfoEntity.getCreatedAt());
+        setUpdatedAt(insuranceCostInfoEntity.getUpdatedAt());
     }
 }

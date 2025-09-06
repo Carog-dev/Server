@@ -35,5 +35,7 @@ public class AccidentCostInfoResponse extends BaseResponse {
         setMemo(accidentCostInfoEntity.getMemo());
         setDate(accidentCostInfoEntity.getDate());
         setTime(accidentCostInfoEntity.getTime());
+        setCreatedAt(accidentCostInfoEntity.getCreatedAt());
+        setUpdatedAt(accidentCostInfoEntity.getUpdatedAt());
     }
 }

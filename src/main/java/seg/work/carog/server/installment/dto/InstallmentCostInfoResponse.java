@@ -34,5 +34,7 @@ public class InstallmentCostInfoResponse extends BaseResponse {
         setMemo(installmentCostInfoEntity.getMemo());
         setDate(installmentCostInfoEntity.getDate());
         setTime(installmentCostInfoEntity.getTime());
+        setCreatedAt(installmentCostInfoEntity.getCreatedAt());
+        setUpdatedAt(installmentCostInfoEntity.getUpdatedAt());
     }
 }
