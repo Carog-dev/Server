@@ -80,6 +80,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             handleException(e, request, response, token);
         } finally {
             MDC.clear();
+            SecurityContextHolder.clearContext();
         }
     }
 
