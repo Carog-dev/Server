@@ -90,25 +90,6 @@ spring:
       max-file-size: 50MB
       max-request-size: 50MB
 
-  mail:
-    sender:
-      noreply: noreply@carog.com
-      notice: notice@carog.com
-    host: ENC(PNKlqQhq2Lhk8UDjYe1S+YzkvUY9YNSZLfWTh4jEo/bh5x12feK/u9d1a6q0AwvuGyBIwrvaUiseFDAG1kqxtVyILsKm0ckLfCTGPWEuQuo=)
-    port: ENC(nzn3GhbPixvIYW9S49/jb+HTzn0uWz02lfkaMUy5MRl434xsYmasQhsXwMZP0w6x)
-    username: ENC(H+/+mhnsA376SO83EJrwlmvG9Rit4k/20dVuo2eSCC2JZNkMIS5mBXWdvGtogv8AWBCLM3RMeCRsGOXqi4r/FUBvAUlpRlmDvyG48LWTmQ7DKtRxfZtRGMIxJMPmvzWrIZOAW/w/UrI9yKDr/QKqT3wgOxWXPR51E9R1eCgdFQjgLEbjg3iAODIYOtCfxXCbzmQyXTtCA2lqEq/V0IYUBrnt2oJpd/ykZuB+I9CIpydGRjCmEobV5EfGZxsgGZHt9bmhxUij4GYRok4xj1maFQ==)
-    password: ENC(nsE8wkY6EErpNYz8Us+3IgGSDxHDyHfNbFaPqYJ5O0jIwwYsg+y3zl9CAgflsSpwja60Yh5Onfw9cIYZe1tNmw==)
-    properties:
-      mail:
-        smtp:
-          auth: true
-          timeout: 5000
-          writetimeout: 5000
-          connectiontimeout: 5000
-          starttls:
-            enable: true
-            required: true
-
 kakao:
   client-id: ENC(wHkPf2B26YUhQBeRPvk2M+RMzGgwnc88rfo+CkgzpgOSI8xKwREWBFdY48J2x0hVaPKaZTdsJle0d9ceH7Qux0ba7+5bg9yRUKTXPQXGELM=)
   client-secret: ENC(8WP1oicNsu50O4EMIKdfs3wX4hbYpqBLcor0/Owi14QX6JTAskFNK3wo3QldDuWPpRiGzU+kRS8BVNk9lXRP+uo7k5y+j/lT0Tujpx3kgtI=)
@@ -127,7 +108,7 @@ jasypt:
 spring:
   config:
     activate:
-      on-profile: prd
+      on-profile: main
 
 kakao:
   redirect-uri: "https://carog-api.seoeungi.work/auth/login/kakao"
