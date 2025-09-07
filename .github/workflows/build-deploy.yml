@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - dev
-      - main
+#      - main
 
 env:
   CONTAINER_USER_NAME: ${{ github.actor }}
