@@ -39,8 +39,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/login/kakao").permitAll()
                         .requestMatchers("/api/public").permitAll()
-                        .requestMatchers("/actuator/**").permitAll()
                         .requestMatchers("/error").permitAll()
+                        .requestMatchers("/actuator/health").permitAll()
+                        .requestMatchers("/actuator/prometheus").permitAll()
                         .requestMatchers("/admin").hasAnyAuthority(UserRole.ADMIN.name())
                         .anyRequest().authenticated()
                 )
