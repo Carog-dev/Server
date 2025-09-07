@@ -63,7 +63,7 @@ public class CarInfoService {
         Optional<CarInfoEntity> optionalCarInfoOldRepresentEntity = carInfoRepository.findByUserIdAndRepresentAndDeleteYn(tokenUserInfo.getId(), Constant.FLAG_TRUE, Constant.FLAG_N);
         optionalCarInfoOldRepresentEntity.ifPresent(carInfoEntity -> {
             carInfoEntity.updateRepresent(Constant.FLAG_FALSE);
-            carInfoRepository.save(carInfoEntity);
+            carInfoRepository.saveAndFlush(carInfoEntity);
         });
 
         newRepresentcarInfoEntity.updateRepresent(Constant.FLAG_TRUE);
