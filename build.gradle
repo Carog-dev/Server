@@ -81,7 +81,7 @@ jib {
 	}
 	to {
 		image = "ghcr.io/carog-dev/server"
-		tags = ["latest"]
+		tags = ["latest", System.getenv("PROFILE_ACTIVE")]
 		auth {
 			// intellij Sync Gradle Changes 동작 시 앞에 ""를 추가하여 오류 해소
 			username = "" + System.getenv("CONTAINER_USER_NAME")

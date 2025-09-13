@@ -7,6 +7,7 @@ on:
 env:
   CONTAINER_USER_NAME: ${{ github.actor }}
   CONTAINER_PASSWORD: ${{ secrets.CONTAINER_TOKEN }}
+  PROFILE_ACTIVE: dev
   APP_PORT: 8030
 
 jobs:
