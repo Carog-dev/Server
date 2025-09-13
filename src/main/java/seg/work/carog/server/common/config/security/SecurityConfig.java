@@ -74,7 +74,7 @@ public class SecurityConfig {
 
         config.setAllowCredentials(true);
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        config.setAllowedOrigins(List.of("http://localhost:3003", "http://localhost:3005", "http://localhost:8030"));
+        config.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:3003", "http://localhost:5173", "https://carog.vercel.app"));
         config.setAllowedHeaders(List.of("*"));
         config.setExposedHeaders(List.of("*"));
         config.setMaxAge(3600L);
