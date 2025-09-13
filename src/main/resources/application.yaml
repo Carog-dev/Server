@@ -13,7 +13,7 @@ server:
 
 spring:
   application:
-    name: carog-server
+    name: carog-server-dev
   profiles:
     default: local
 
@@ -128,6 +128,8 @@ server:
   port: 8031
 
 spring:
+  application:
+    name: carog-server-main
   config:
     activate:
       on-profile: main
