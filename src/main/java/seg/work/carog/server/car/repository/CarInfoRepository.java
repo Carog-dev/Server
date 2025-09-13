@@ -12,6 +12,8 @@ public interface CarInfoRepository extends BaseRepository<CarInfoEntity> {
 
     Optional<List<CarInfoEntity>> findByUserIdAndDeleteYn(Long userId, String deleteYn);
 
+    Optional<List<CarInfoEntity>> findByUserIdAndDeleteYnOrderByRepresentDescCreatedAt(Long userId, String deleteYn);
+
     Optional<CarInfoEntity> findByUserIdAndIdAndDeleteYn(Long userId, Long id, String deleteYn);
 
     Optional<CarInfoEntity> findByUserIdAndIdAndRepresentAndDeleteYn(@NotNull Long userId, Long id, Boolean represent, String deleteYn);

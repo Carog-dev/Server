@@ -33,7 +33,7 @@ public class CarInfoService {
     }
 
     public List<CarInfoResponse> getListCarInfo(TokenUserInfo tokenUserInfo) {
-        Optional<List<CarInfoEntity>> optionalCarInfoEntityList = carInfoRepository.findByUserIdAndDeleteYn(tokenUserInfo.getId(), Constant.FLAG_N);
+        Optional<List<CarInfoEntity>> optionalCarInfoEntityList = carInfoRepository.findByUserIdAndDeleteYnOrderByRepresentDescCreatedAt(tokenUserInfo.getId(), Constant.FLAG_N);
         return optionalCarInfoEntityList.map(carInfoEntityList -> carInfoEntityList.stream().map(CarInfoResponse::new).toList()).orElse(Collections.emptyList());
     }
 

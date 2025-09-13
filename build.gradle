@@ -133,6 +133,6 @@ jib {
 				"-Djwt.secret=" + System.getenv("JWT_SECRET"),
 				"-Djasypt.encryptor.password=" + System.getenv("JASYPT_ENCRYPTOR_PASSWORD")
 		)
-		ports = ["8030"]
+		ports = [System.getenv("APP_PORT")]
 	}
 }

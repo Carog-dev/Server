@@ -2,12 +2,12 @@ name: Build Spring Boot with Jib And Deploy
 on:
   push:
     branches:
-      - dev
-#      - main
+      - main
 
 env:
   CONTAINER_USER_NAME: ${{ github.actor }}
   CONTAINER_PASSWORD: ${{ secrets.CONTAINER_TOKEN }}
+  APP_PORT: 8031
 
 jobs:
   build:
@@ -56,4 +56,4 @@ jobs:
 
     steps:
       - name: Deploy Docker Container
-        run: cd && ./carog-start.sh
+        run: cd && ./main-carog-start.sh

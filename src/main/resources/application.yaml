@@ -125,10 +125,54 @@ management:
         enabled: true
 
 ---
+server:
+  port: 8031
+
 spring:
   config:
     activate:
       on-profile: main
 
+  datasource:
+    read:
+      jdbc-url: ENC(X08PwdyyhbtmP5V96XiLbwnlR4VSMeklD4fPhc8aK7/Jq/hVXGpDATyNLPvSvfdN/cKbm6djKrBdOZa+kBVZmOqoCUTl9mablcGKB2c8j8jTX3NsbSYQa1Y4cmldXMX8KnEjkG9DZOT+tgHpzDb0UXQf421Yun8FgxnwzKQZF7Fvsz24IVDTbHJvQv16ADXv)
+      username: ENC(pOGY7e4zRv0hfeAMu0sCoTnLQZMKR/TNLtJnrVl3NbuzlKCneWvPggb119g6ks+5)
+      password: ENC(uCUtr5UYROen4+VV5QI0RF1FFXHvDqa0xP7CU+GMK2Erh4JgKUIxewAY7ztnzXFP)
+      minimum-idle: 10
+      maximum-pool-size: 20
+      connection-test-query: SELECT 1
+      pool-name: READ-POOL-CAROG
+      driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+      read-only: true
+      auto-commit: true
+    write:
+      jdbc-url: ENC(ih+bdM2dPu9tBJyynnVHi2Nl90729lYn3Axfh8jQdCoSwBmHDMlyf/dq410vcx7MpnUQBkqtnE+dRN8Fssjg3JYnNEubO7X/iU/gXo1F8jRzz+gXggLbseSu/3ybUZLURwNO2MIc6b+Pqv46rKjASPCpsDXDtvswzdsi6UcQsi6ThnuFvFPvLYsZzXWcTG6x)
+      username: ENC(NsEI/XRQMYjBIDHE3WM1oYfQ9r+EXLlqVxbbd/TbL4drKQuXTzMw6JHm0GF8+UmP)
+      password: ENC(NULQEEDA5oDxp9o1vUSieZ/8Otyg8OZNF7L52qH5QJ4O1yRWrwNWDZtf4g3VgQm6)
+      minimum-idle: 10
+      maximum-pool-size: 20
+      connection-test-query: SELECT 1
+      pool-name: WRITE-POOL-CAROG
+      driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+
+  data:
+    redis:
+      username: ENC(9XrDO0kwCMev4fQvpeVOJGtMIbKkocXdbE6CSPXuhzCT32412cUCyeFGTZ/di0KD)
+      password: ENC(2wBsZ7PAn2+STECpEh/1F3DaN7aaST+XoAZdh3i5Z50I0qUoMaEmq/mLOwozHX+V)
+      database: ENC(mfmd9sqDBGQSbuoSIfUt+1UQNPTkAZ4JqFA9WVFOd7blWSGOZs1pcCQeRuB6qtDf)
+      lettuce:
+        pool:
+          min-idle: 3
+          max-idle: 10
+          max-active: 10
+      sentinel:
+        master: ENC(cp84VgZuMRjbpp9flLagS3oKxSqq4Q3CcjPmz2S89P0cunkxM+GsnfSVR0T1EE2Z)
+        nodes:
+          - ENC(IqWsQVFA1GXv7jiEuhAJaQiTrdAsZGv9BLmQ2LqN+blDfj/mjkohaQz10YOsKQPDEpJBzmzWU4GYTj82hd8zxg==)
+          - ENC(IKHydiCUeg7t2gQUq0kNsNuvbelQiy0L3feQ/ZhgSP/xMXmB5PsPrJI919NvQRrrIBscc8NyoJE07GXJFabLew==)
+          - ENC(zaI5wc/LgkZ/QBSLEuVHUx74CSLWoGpoGMmfVa70unSEuoTogiNr/kZKqV6KdEe8r3eSJdML0VHPiIDK0bTZIw==)
+        username: ENC(g+vpUf5elK2zYc+XB9p+Ux3dlicZXESpCCtIjgmdO7W1X6N+EKZmOKlZ5cNwNA00)
+        password: ENC(R2JCOAPbVAhDuAcRtQA6a/dFdg4XevAuCDRUEFQJtvAJxw75S/Ky8KMGbN5Z4l9B)
+
 kakao:
-  redirect-uri: "https://carog-api.seoeungi.work/auth/login/kakao"
+  redirect-uri: "http://localhost:3000/auth/login/kakao"
