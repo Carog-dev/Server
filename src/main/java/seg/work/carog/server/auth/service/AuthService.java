@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import seg.work.carog.server.auth.dto.KakaoLoginRequest;
 import seg.work.carog.server.auth.dto.KakaoUserInfo;
 import seg.work.carog.server.auth.dto.LoginResponse;
 import seg.work.carog.server.auth.dto.TokenUserInfo;
@@ -31,10 +32,10 @@ public class AuthService {
     private final JwtUtil jwtUtil;
 
     @Transactional
-    public LoginResponse loginWithKakao(String authorizationCode) {
+    public LoginResponse loginWithKakao(KakaoLoginRequest request) {
         try {
             // 1. 카카오로부터 액세스 토큰 획득
-            String accessToken = kakaoService.getAccessToken(authorizationCode);
+            String accessToken = kakaoService.getAccessToken(request);
 
             // 2. 액세스 토큰으로 사용자 정보 조회
             KakaoUserInfo kakaoUserInfo = kakaoService.getUserInfo(accessToken);

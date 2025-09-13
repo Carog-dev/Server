@@ -7,4 +7,7 @@ import lombok.Data;
 public class KakaoLoginRequest {
     @NotBlank(message = "Authorization code is required")
     private String code;
+
+    @NotBlank(message = "Redirect url is required")
+    private String redirectUri;
 }

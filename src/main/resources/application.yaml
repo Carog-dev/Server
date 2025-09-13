@@ -93,7 +93,6 @@ spring:
 kakao:
   client-id: ENC(wHkPf2B26YUhQBeRPvk2M+RMzGgwnc88rfo+CkgzpgOSI8xKwREWBFdY48J2x0hVaPKaZTdsJle0d9ceH7Qux0ba7+5bg9yRUKTXPQXGELM=)
   client-secret: ENC(8WP1oicNsu50O4EMIKdfs3wX4hbYpqBLcor0/Owi14QX6JTAskFNK3wo3QldDuWPpRiGzU+kRS8BVNk9lXRP+uo7k5y+j/lT0Tujpx3kgtI=)
-  redirect-uri: "http://localhost:3003/auth/login/kakao"
 
 logging:
   config: classpath:/logback/spring-logback.xml
@@ -173,6 +172,3 @@ spring:
           - ENC(zaI5wc/LgkZ/QBSLEuVHUx74CSLWoGpoGMmfVa70unSEuoTogiNr/kZKqV6KdEe8r3eSJdML0VHPiIDK0bTZIw==)
         username: ENC(g+vpUf5elK2zYc+XB9p+Ux3dlicZXESpCCtIjgmdO7W1X6N+EKZmOKlZ5cNwNA00)
         password: ENC(R2JCOAPbVAhDuAcRtQA6a/dFdg4XevAuCDRUEFQJtvAJxw75S/Ky8KMGbN5Z4l9B)
-
-kakao:
-  redirect-uri: "http://localhost:3000/auth/login/kakao"

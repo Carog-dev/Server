@@ -7,6 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
+import seg.work.carog.server.auth.dto.KakaoLoginRequest;
 import seg.work.carog.server.auth.dto.KakaoTokenResponse;
 import seg.work.carog.server.auth.dto.KakaoUserInfo;
 import seg.work.carog.server.common.constant.Message;
@@ -25,13 +26,10 @@ public class KakaoService {
     @Value("${kakao.client-secret}")
     private String clientSecret;
 
-    @Value("${kakao.redirect-uri}")
-    private String redirectUri;
-
     private static final String KAKAO_TOKEN_URL = "https://kauth.kakao.com/oauth/token";
     private static final String KAKAO_USER_INFO_URL = "https://kapi.kakao.com/v2/user/me";
 
-    public String getAccessToken(String authorizationCode) {
+    public String getAccessToken(KakaoLoginRequest request) {
         try {
             KakaoTokenResponse response = webClient.post()
                     .uri(KAKAO_TOKEN_URL)
@@ -39,8 +37,8 @@ public class KakaoService {
                     .body(BodyInserters.fromFormData("grant_type", "authorization_code")
                         .with("client_id", clientId)
                         .with("client_secret", clientSecret)
-                        .with("redirect_uri", redirectUri)
-                        .with("code", authorizationCode))
+                        .with("redirect_uri", request.getRedirectUri())
+                        .with("code", request.getCode()))
                     .retrieve()
                     .bodyToMono(KakaoTokenResponse.class)
                     .block();
