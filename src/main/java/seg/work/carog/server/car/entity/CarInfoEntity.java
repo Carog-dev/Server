@@ -36,6 +36,10 @@ public class CarInfoEntity extends BaseEntity {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @ColumnDefault("(gen_random_uuid())")
+    @Column(name = "key")
+    private String key;
+
     @NotNull
     @Column(name = "user_id", nullable = false)
     private Long userId;
