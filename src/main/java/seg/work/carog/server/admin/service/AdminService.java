@@ -14,7 +14,6 @@ import seg.work.carog.server.user.repository.UserRepository;
 
 @Slf4j
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class AdminService {
 

@@ -23,7 +23,6 @@ import seg.work.carog.server.insurance.repository.InsuranceCostInfoRepository;
 
 @Slf4j
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class InsuranceCostInfoService {
 

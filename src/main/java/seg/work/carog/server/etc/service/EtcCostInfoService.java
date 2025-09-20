@@ -23,7 +23,6 @@ import seg.work.carog.server.etc.repository.EtcCostInfoRepository;
 
 @Slf4j
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class EtcCostInfoService {
 

@@ -23,7 +23,6 @@ import seg.work.carog.server.oil.repository.OilCostInfoRepository;
 
 @Slf4j
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class OilCostInfoService {
 

@@ -6,7 +6,6 @@ import seg.work.carog.server.common.constant.Constant;
 import seg.work.carog.server.common.util.RedisUtil;
 
 @Service
-@Transactional(readOnly = true)
 public class BlacklistTokenService {
 
     @Transactional

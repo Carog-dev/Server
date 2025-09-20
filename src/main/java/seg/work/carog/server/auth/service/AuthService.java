@@ -21,7 +21,6 @@ import seg.work.carog.server.user.repository.UserRepository;
 
 @Slf4j
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class AuthService {
 
@@ -34,13 +33,8 @@ public class AuthService {
     @Transactional
     public LoginResponse loginWithKakao(KakaoLoginRequest request) {
         try {
-            // 1. 카카오로부터 액세스 토큰 획득
-            String accessToken = kakaoService.getAccessToken(request);
+            KakaoUserInfo kakaoUserInfo = this.getKakaoUserInfo(request);
 
-            // 2. 액세스 토큰으로 사용자 정보 조회
-            KakaoUserInfo kakaoUserInfo = kakaoService.getUserInfo(accessToken);
-
-            // 3. 사용자 정보로 회원가입 또는 로그인 처리
             UserEntity userEntity = findOrCreateUser(kakaoUserInfo);
 
             // 4. JWT 토큰 생성
@@ -77,11 +71,21 @@ public class AuthService {
         }
     }
 
+    private KakaoUserInfo getKakaoUserInfo(KakaoLoginRequest request) {
+        // 1. 카카오로부터 액세스 토큰 획득
+        String accessToken = kakaoService.getAccessToken(request);
+
+        // 2. 액세스 토큰으로 사용자 정보 조회
+        return kakaoService.getUserInfo(accessToken);
+    }
+
     private UserEntity findOrCreateUser(KakaoUserInfo kakaoUserInfo) {
+        // 3. 사용자 정보로 회원가입 또는 로그인 처리
         return userRepository.findByKakaoIdAndDeleteYn(kakaoUserInfo.getId().toString(), Constant.FLAG_N).orElseGet(() -> createNewUser(kakaoUserInfo));
     }
 
-    private UserEntity createNewUser(KakaoUserInfo kakaoUserInfo) {
+    @Transactional
+    public UserEntity createNewUser(KakaoUserInfo kakaoUserInfo) {
         String email = extractEmail(kakaoUserInfo);
         String nickname = extractNickname(kakaoUserInfo);
         String profileImageUrl = extractProfileImageUrl(kakaoUserInfo);

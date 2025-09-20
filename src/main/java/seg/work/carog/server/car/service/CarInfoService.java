@@ -20,7 +20,6 @@ import seg.work.carog.server.common.exception.BaseException;
 
 @Slf4j
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class CarInfoService {
 

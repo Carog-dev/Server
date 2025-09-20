@@ -23,7 +23,6 @@ import seg.work.carog.server.parking.repository.ParkingCostInfoRepository;
 
 @Slf4j
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class ParkingCostInfoService {
 

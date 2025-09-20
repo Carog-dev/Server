@@ -23,7 +23,6 @@ import seg.work.carog.server.maintenance.repository.MaintenanceCostInfoRepositor
 
 @Slf4j
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class MaintenanceCostInfoService {
 

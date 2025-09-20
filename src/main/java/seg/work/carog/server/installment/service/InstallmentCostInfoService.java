@@ -23,7 +23,6 @@ import seg.work.carog.server.installment.repository.InstallmentCostInfoRepositor
 
 @Slf4j
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class InstallmentCostInfoService {
 
