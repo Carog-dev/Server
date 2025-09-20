@@ -88,7 +88,7 @@ public class BaseExceptionHandler {
         return new ResponseEntity<>(BaseApiResponse.error(statusInfo), statusInfo.getHttpStatus());
     }
 
-    @ExceptionHandler(NoResourceFoundException.class) // Note: NoHandlerFoundException is an older alternative
+    @ExceptionHandler(NoResourceFoundException.class)
     public ResponseEntity<BaseApiResponse<Map<String, String>>> noResourceFoundException(NoResourceFoundException ex) {
         log.error("Resource not found: {}", ex.getMessage());
         Message statusInfo = Message.NOT_EXISTS_REQUEST;
