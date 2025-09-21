@@ -18,11 +18,11 @@ public class UserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        return userRepository.findByEmailAndDeleteYn(username, Constant.FLAG_N).orElseThrow(() -> new BaseException(Message.USER_NOT_FOUND));
+        return userRepository.findByEmailAndDeleteYn(username, Constant.FLAG_N).orElseThrow(() -> new BaseException(Message.AUTH_USER_NOT_FOUND));
     }
 
     public UserEntity loadUserInfoBySubject(String subject) {
-        return userRepository.findByKeyAndDeleteYn(subject, Constant.FLAG_N).orElseThrow(() -> new BaseException(Message.USER_NOT_FOUND));
+        return userRepository.findByKeyAndDeleteYn(subject, Constant.FLAG_N).orElseThrow(() -> new BaseException(Message.AUTH_USER_NOT_FOUND));
     }
 
     public UserEntity loadUserInfoByKey(String userKey) {

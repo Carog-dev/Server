@@ -113,7 +113,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                 response.getWriter().write(ObjectUtil.convertObjectToString(baseApiResponse));
             } else {
-                Object data = null;
                 Message message;
 
                 if (e instanceof ExpiredJwtException) {
@@ -127,7 +126,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
 
                 response.setStatus(message.getHttpStatus().value());
-                response.getWriter().write(ObjectUtil.convertObjectToString(BaseApiResponse.error(message, data)));
+                response.getWriter().write(ObjectUtil.convertObjectToString(BaseApiResponse.error(message, null)));
             }
         } catch (IOException ioe) {
             log.error("Error while sending JWT Token", ioe);

@@ -47,6 +47,7 @@ public enum Message {
     LOGIN_FAIL("EU0003", "로그인에 실패하였습니다. 다시 로그인해주세요.", HttpStatus.UNAUTHORIZED),
     INVALID_TOKEN("EU0004", "신뢰할 수 없는 정보입니다.", HttpStatus.FORBIDDEN),
     UNSUPPORTED_TOKEN("EU0005", "변조된 로그인 정보입니다. 다시 로그인해주세요.", HttpStatus.FORBIDDEN),
+    AUTH_USER_NOT_FOUND("EU0006", "사용자를 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
 
     // SNS
     KAKAO_ACCESS_TOKEN_ERROR("EK0001", "카카오 로그인에 실패하였습니다.", HttpStatus.INTERNAL_SERVER_ERROR),

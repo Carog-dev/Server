@@ -63,7 +63,7 @@ public class JwtUtil {
                 tokenExpirationMillisecond = 1000 * 60 * 60 * 12;
                 redisExpirationHour = 12;
             }
-            default -> throw new BaseException(Message.USER_NOT_FOUND);
+            default -> throw new BaseException(Message.AUTH_USER_NOT_FOUND);
         }
 
         RedisUtil.setWithExpiryHour(userEntity.getKey(), userEntity.getId().toString(), redisExpirationHour);
@@ -113,14 +113,6 @@ public class JwtUtil {
 
     public String getUserKeyFromToken(String token) {
         return parserToken(token).getSubject();
-    }
-
-    public String getEmailFromToken(String token) {
-        return parserToken(token).get("email", String.class);
-    }
-
-    public String getRoleFromToken(String token) {
-        return parserToken(token).get("auth", String.class);
     }
 
     public String getTypeFromToken(String token) {
@@ -189,7 +181,7 @@ public class JwtUtil {
         String userKey = getUserKeyFromToken(refreshToken);
         UserEntity userEntity = userDetailService.loadUserInfoByKey(userKey);
         if (userEntity == null) {
-            throw new BaseException(Message.USER_NOT_FOUND);
+            throw new BaseException(Message.AUTH_USER_NOT_FOUND);
         }
 
         return generateToken(userEntity);

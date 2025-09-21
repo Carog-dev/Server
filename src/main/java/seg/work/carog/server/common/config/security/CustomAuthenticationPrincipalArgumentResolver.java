@@ -34,7 +34,7 @@ public class CustomAuthenticationPrincipalArgumentResolver implements HandlerMet
             if (RedisUtil.has(tokenUserInfo.getKey())) {
                 tokenUserInfo.setId(RedisUtil.getLongValue(tokenUserInfo.getKey()));
             } else {
-                throw new BaseException(Message.USER_NOT_FOUND);
+                throw new BaseException(Message.AUTH_USER_NOT_FOUND);
             }
             return tokenUserInfo;
         }
