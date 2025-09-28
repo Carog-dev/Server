@@ -25,7 +25,7 @@ public class AdminService {
     public void revokeToken(TokenUserInfo tokenUserInfo) {
         log.info("revokeToken By : {}", tokenUserInfo.getKey());
 
-        userRepository.findAllByDeleteYn(Constant.FLAG_N).ifPresent(users -> users.stream().filter(user -> user.getRole().equals(UserRole.USER)).forEach(user -> {
+        userRepository.findAllByDeleteYn(Constant.FLAG_N).ifPresent(users -> users.stream().filter(user -> user.getRole().equals(UserRole.ADMIN)).forEach(user -> {
             String accessToken = accessTokenService.getAccessToken(user.getKey());
             if (accessToken != null) {
                 blacklistTokenService.addTokenToBlacklist(accessToken);
