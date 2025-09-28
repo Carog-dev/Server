@@ -42,7 +42,7 @@ public class SecurityConfig {
                         .requestMatchers("/error").permitAll()
                         .requestMatchers("/actuator/health").permitAll()
                         .requestMatchers("/actuator/prometheus").permitAll()
-                        .requestMatchers("/admin").hasAnyAuthority(UserRole.ADMIN.name())
+                        .requestMatchers("/admin/**").hasAnyAuthority(UserRole.ADMIN.name())
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(config ->
