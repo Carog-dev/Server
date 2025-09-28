@@ -40,7 +40,7 @@ public class AdminService {
         log.info("user {} revokeToken By : {}", userKey, tokenUserInfo.getKey());
 
         userRepository.findByKeyAndDeleteYn(userKey, Constant.FLAG_N).ifPresent(user -> {
-            if (user.getRole().equals(UserRole.USER)) {
+            if (user.getRole().equals(UserRole.ADMIN)) {
                 String accessToken = accessTokenService.getAccessToken(user.getKey());
                 if (accessToken != null) {
                     blacklistTokenService.addTokenToBlacklist(accessToken);
