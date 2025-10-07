@@ -24,7 +24,6 @@ spring:
       password: ENC(ne9nINAgc9mDFfzNOe/2Nf1A6GsHv/tQq2jpdR3zaAfE2GzHHCm57WBYU+iB1dGA)
       minimum-idle: 10
       maximum-pool-size: 20
-      connection-test-query: SELECT 1
       pool-name: READ-POOL-CAROG
       driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
       read-only: true
@@ -35,7 +34,6 @@ spring:
       password: ENC(xznMVZdzHkUzTOQHE4btnqhICeCJTgKlkGLOgukyuDgrYkWN+Bd0toO5s3eb0Gpy)
       minimum-idle: 10
       maximum-pool-size: 20
-      connection-test-query: SELECT 1
       pool-name: WRITE-POOL-CAROG
       driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
 
@@ -141,7 +139,6 @@ spring:
       password: ENC(LnzKX1fuqr+OZ3WVcCa7n3PJIgbHZKssybpAtMqu3mQwvoQSiRwhL4gtb7GOjbW3)
       minimum-idle: 10
       maximum-pool-size: 20
-      connection-test-query: SELECT 1
       pool-name: READ-POOL-CAROG
       driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
       read-only: true
@@ -152,7 +149,6 @@ spring:
       password: ENC(kbLXCXCgKwDvUXgPxGbBOS12dM0fGh569Hy/etUxXACgIz4Ic6x4CtbYNmb18Rek)
       minimum-idle: 10
       maximum-pool-size: 20
-      connection-test-query: SELECT 1
       pool-name: WRITE-POOL-CAROG
       driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
 
