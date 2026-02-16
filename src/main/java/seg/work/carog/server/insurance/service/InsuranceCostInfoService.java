@@ -34,7 +34,8 @@ public class InsuranceCostInfoService {
     }
 
     private CarInfoEntity getRepresentCarInfo(TokenUserInfo tokenUserInfo) {
-        return carInfoRepository.findByUserIdAndRepresentAndDeleteYn(tokenUserInfo.getId(), Constant.FLAG_TRUE, Constant.FLAG_N).orElseThrow(() -> new BaseException(Message.NO_REPRESENT_CAR_INFO));
+        return carInfoRepository.findByUserIdAndRepresentAndDeleteYn(tokenUserInfo.getId(), Constant.FLAG_TRUE, Constant.FLAG_N)
+            .orElseThrow(() -> new BaseException(Message.NO_REPRESENT_CAR_INFO));
     }
 
     private CarInfoEntity getCarInfo(TokenUserInfo tokenUserInfo, Long carInfoId) {
@@ -44,8 +45,10 @@ public class InsuranceCostInfoService {
     public Slice<InsuranceCostInfoResponse> getInsuranceCostInfoList(TokenUserInfo tokenUserInfo, Long carInfoId, Pageable pageable) {
         CarInfoEntity carInfoEntity = this.getCarInfo(tokenUserInfo, carInfoId);
 
-        Optional<Slice<InsuranceCostInfoEntity>> optionalInsuranceCostInfoEntityList = insuranceCostInfoRepository.findByCarInfoIdAndDeleteYn(carInfoEntity.getId(), Constant.FLAG_N, pageable);
-        return optionalInsuranceCostInfoEntityList.map(insuranceCostInfoEntityList -> insuranceCostInfoEntityList.stream().map(InsuranceCostInfoResponse::new).toList()).<Slice<InsuranceCostInfoResponse>>map(PageImpl::new).orElse(new PageImpl<>(Collections.emptyList()));
+        Optional<Slice<InsuranceCostInfoEntity>> optionalInsuranceCostInfoEntityList = insuranceCostInfoRepository.findByCarInfoIdAndDeleteYn(carInfoEntity.getId(),
+            Constant.FLAG_N, pageable);
+        return optionalInsuranceCostInfoEntityList.map(insuranceCostInfoEntityList -> insuranceCostInfoEntityList.stream().map(InsuranceCostInfoResponse::new).toList())
+            .<Slice<InsuranceCostInfoResponse>>map(PageImpl::new).orElse(new PageImpl<>(Collections.emptyList()));
     }
 
     @Transactional
@@ -58,9 +61,19 @@ public class InsuranceCostInfoService {
 
     @Transactional
     public void updateInsuranceCostInfo(TokenUserInfo tokenUserInfo, InsuranceCostInfoUpdateRequest insuranceCostInfoUpdateRequest) {
-        InsuranceCostInfoEntity insuranceCostInfoEntity = insuranceCostInfoRepository.findById(insuranceCostInfoUpdateRequest.getId()).orElseThrow(() -> new BaseException(Message.NO_INSURANCE_COST_INFO));
+        InsuranceCostInfoEntity insuranceCostInfoEntity = insuranceCostInfoRepository.findById(insuranceCostInfoUpdateRequest.getId())
+            .orElseThrow(() -> new BaseException(Message.NO_INSURANCE_COST_INFO));
         insuranceCostInfoEntity.updateInsuranceCostInfo(insuranceCostInfoUpdateRequest);
         insuranceCostInfoRepository.save(insuranceCostInfoEntity);
     }
 
+    @Transactional
+    public void deleteInsuranceCostInfo(TokenUserInfo tokenUserInfo, Long carInfoId, Long insuranceCostInfoId) {
+        CarInfoEntity carInfoEntity = this.getCarInfo(tokenUserInfo, carInfoId);
+
+        InsuranceCostInfoEntity insuranceCostInfoEntity = insuranceCostInfoRepository.findByIdAndCarInfoId(insuranceCostInfoId, carInfoEntity.getId())
+            .orElseThrow(() -> new BaseException(Message.NO_INSURANCE_COST_INFO));
+        insuranceCostInfoEntity.delete();
+        insuranceCostInfoRepository.save(insuranceCostInfoEntity);
+    }
 }

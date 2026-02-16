@@ -34,7 +34,8 @@ public class AccidentCostInfoService {
     }
 
     private CarInfoEntity getRepresentCarInfo(TokenUserInfo tokenUserInfo) {
-        return carInfoRepository.findByUserIdAndRepresentAndDeleteYn(tokenUserInfo.getId(), Constant.FLAG_TRUE, Constant.FLAG_N).orElseThrow(() -> new BaseException(Message.NO_REPRESENT_CAR_INFO));
+        return carInfoRepository.findByUserIdAndRepresentAndDeleteYn(tokenUserInfo.getId(), Constant.FLAG_TRUE, Constant.FLAG_N)
+            .orElseThrow(() -> new BaseException(Message.NO_REPRESENT_CAR_INFO));
     }
 
     private CarInfoEntity getCarInfo(TokenUserInfo tokenUserInfo, Long carInfoId) {
@@ -44,8 +45,10 @@ public class AccidentCostInfoService {
     public Slice<AccidentCostInfoResponse> getAccidentCostInfoList(TokenUserInfo tokenUserInfo, Long carInfoId, Pageable pageable) {
         CarInfoEntity carInfoEntity = this.getCarInfo(tokenUserInfo, carInfoId);
 
-        Optional<Slice<AccidentCostInfoEntity>> optionalAccidentCostInfoEntityList = accidentCostInfoRepository.findByCarInfoIdAndDeleteYn(carInfoEntity.getId(), Constant.FLAG_N, pageable);
-        return optionalAccidentCostInfoEntityList.map(accidentCostInfoEntityList -> accidentCostInfoEntityList.stream().map(AccidentCostInfoResponse::new).toList()).<Slice<AccidentCostInfoResponse>>map(PageImpl::new).orElse(new PageImpl<>(Collections.emptyList()));
+        Optional<Slice<AccidentCostInfoEntity>> optionalAccidentCostInfoEntityList = accidentCostInfoRepository.findByCarInfoIdAndDeleteYn(carInfoEntity.getId(), Constant.FLAG_N,
+            pageable);
+        return optionalAccidentCostInfoEntityList.map(accidentCostInfoEntityList -> accidentCostInfoEntityList.stream().map(AccidentCostInfoResponse::new).toList())
+            .<Slice<AccidentCostInfoResponse>>map(PageImpl::new).orElse(new PageImpl<>(Collections.emptyList()));
     }
 
     @Transactional
@@ -58,8 +61,19 @@ public class AccidentCostInfoService {
 
     @Transactional
     public void updateAccidentCostInfo(TokenUserInfo tokenUserInfo, AccidentCostInfoUpdateRequest maintenanceCostInfoUpdateRequest) {
-        AccidentCostInfoEntity accidentCostInfoEntity = accidentCostInfoRepository.findById(maintenanceCostInfoUpdateRequest.getId()).orElseThrow(() -> new BaseException(Message.NO_ACCIDENT_COST_INFO));
+        AccidentCostInfoEntity accidentCostInfoEntity = accidentCostInfoRepository.findById(maintenanceCostInfoUpdateRequest.getId())
+            .orElseThrow(() -> new BaseException(Message.NO_ACCIDENT_COST_INFO));
         accidentCostInfoEntity.updateAccidentCostInfo(maintenanceCostInfoUpdateRequest);
+        accidentCostInfoRepository.save(accidentCostInfoEntity);
+    }
+
+    @Transactional
+    public void deleteAccidentCostInfo(TokenUserInfo tokenUserInfo, Long carInfoId, Long accidentCostInfoId) {
+        CarInfoEntity carInfoEntity = this.getCarInfo(tokenUserInfo, carInfoId);
+
+        AccidentCostInfoEntity accidentCostInfoEntity = accidentCostInfoRepository.findByIdAndCarInfoId(accidentCostInfoId, carInfoEntity.getId())
+            .orElseThrow(() -> new BaseException(Message.NO_ACCIDENT_COST_INFO));
+        accidentCostInfoEntity.delete();
         accidentCostInfoRepository.save(accidentCostInfoEntity);
     }
 }

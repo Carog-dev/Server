@@ -34,7 +34,8 @@ public class InstallmentCostInfoService {
     }
 
     private CarInfoEntity getRepresentCarInfo(TokenUserInfo tokenUserInfo) {
-        return carInfoRepository.findByUserIdAndRepresentAndDeleteYn(tokenUserInfo.getId(), Constant.FLAG_TRUE, Constant.FLAG_N).orElseThrow(() -> new BaseException(Message.NO_REPRESENT_CAR_INFO));
+        return carInfoRepository.findByUserIdAndRepresentAndDeleteYn(tokenUserInfo.getId(), Constant.FLAG_TRUE, Constant.FLAG_N)
+            .orElseThrow(() -> new BaseException(Message.NO_REPRESENT_CAR_INFO));
     }
 
     private CarInfoEntity getCarInfo(TokenUserInfo tokenUserInfo, Long carInfoId) {
@@ -44,8 +45,10 @@ public class InstallmentCostInfoService {
     public Slice<InstallmentCostInfoResponse> getInstallmentCostInfoList(TokenUserInfo tokenUserInfo, Long carInfoId, Pageable pageable) {
         CarInfoEntity carInfoEntity = this.getCarInfo(tokenUserInfo, carInfoId);
 
-        Optional<Slice<InstallmentCostInfoEntity>> optionalInstallmentCostInfoEntityList = installmentCostInfoRepository.findByCarInfoIdAndDeleteYn(carInfoEntity.getId(), Constant.FLAG_N, pageable);
-        return optionalInstallmentCostInfoEntityList.map(installmentCostInfoEntityList -> installmentCostInfoEntityList.stream().map(InstallmentCostInfoResponse::new).toList()).<Slice<InstallmentCostInfoResponse>>map(PageImpl::new).orElse(new PageImpl<>(Collections.emptyList()));
+        Optional<Slice<InstallmentCostInfoEntity>> optionalInstallmentCostInfoEntityList = installmentCostInfoRepository.findByCarInfoIdAndDeleteYn(carInfoEntity.getId(),
+            Constant.FLAG_N, pageable);
+        return optionalInstallmentCostInfoEntityList.map(installmentCostInfoEntityList -> installmentCostInfoEntityList.stream().map(InstallmentCostInfoResponse::new).toList())
+            .<Slice<InstallmentCostInfoResponse>>map(PageImpl::new).orElse(new PageImpl<>(Collections.emptyList()));
     }
 
     @Transactional
@@ -58,8 +61,19 @@ public class InstallmentCostInfoService {
 
     @Transactional
     public void updateInstallmentCostInfo(TokenUserInfo tokenUserInfo, InstallmentCostInfoUpdateRequest installmentCostInfoUpdateRequest) {
-        InstallmentCostInfoEntity installmentCostInfoEntity = installmentCostInfoRepository.findById(installmentCostInfoUpdateRequest.getId()).orElseThrow(() -> new BaseException(Message.NO_INSTALLMENT_COST_INFO));
+        InstallmentCostInfoEntity installmentCostInfoEntity = installmentCostInfoRepository.findById(installmentCostInfoUpdateRequest.getId())
+            .orElseThrow(() -> new BaseException(Message.NO_INSTALLMENT_COST_INFO));
         installmentCostInfoEntity.updateInstallmentCostInfo(installmentCostInfoUpdateRequest);
+        installmentCostInfoRepository.save(installmentCostInfoEntity);
+    }
+
+    @Transactional
+    public void deleteInstallmentCostInfo(TokenUserInfo tokenUserInfo, Long carInfoId, Long installmentCostInfoId) {
+        CarInfoEntity carInfoEntity = this.getCarInfo(tokenUserInfo, carInfoId);
+
+        InstallmentCostInfoEntity installmentCostInfoEntity = installmentCostInfoRepository.findByIdAndCarInfoId(installmentCostInfoId, carInfoEntity.getId())
+            .orElseThrow(() -> new BaseException(Message.NO_INSTALLMENT_COST_INFO));
+        installmentCostInfoEntity.delete();
         installmentCostInfoRepository.save(installmentCostInfoEntity);
     }
 }

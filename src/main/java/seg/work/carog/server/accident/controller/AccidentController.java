@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,4 +50,10 @@ public class AccidentController {
         return ResponseEntity.ok(BaseApiResponse.success());
     }
 
+    @DeleteMapping("/{carInfoId}/{accidentCostInfoId}")
+    public ResponseEntity<?> deleteAccidentCostInfo(TokenUserInfo tokenUserInfo, @PathVariable Long carInfoId, @PathVariable Long accidentCostInfoId) {
+        accidentCostInfoService.deleteAccidentCostInfo(tokenUserInfo, carInfoId, accidentCostInfoId);
+
+        return ResponseEntity.ok(BaseApiResponse.success());
+    }
 }

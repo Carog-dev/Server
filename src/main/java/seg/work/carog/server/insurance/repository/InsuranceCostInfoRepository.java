@@ -12,4 +12,6 @@ public interface InsuranceCostInfoRepository extends BaseRepository<InsuranceCos
     Optional<List<InsuranceCostInfoEntity>> findAllByCarInfoIdAndDeleteYn(Long carInfoId, String deleteYn);
 
     Optional<Slice<InsuranceCostInfoEntity>> findByCarInfoIdAndDeleteYn(Long carInfoId, String deleteYn, Pageable pageable);
+
+    Optional<InsuranceCostInfoEntity> findByIdAndCarInfoId(Long id, Long carInfoId);
 }

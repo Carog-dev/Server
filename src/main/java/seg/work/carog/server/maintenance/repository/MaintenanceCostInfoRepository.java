@@ -12,4 +12,6 @@ public interface MaintenanceCostInfoRepository extends BaseRepository<Maintenanc
     Optional<List<MaintenanceCostInfoEntity>> findAllByCarInfoIdAndDeleteYn(Long carInfoId, String deleteYn);
 
     Optional<Slice<MaintenanceCostInfoEntity>> findByCarInfoIdAndDeleteYn(Long carInfoId, String deleteYn, Pageable pageable);
+
+    Optional<MaintenanceCostInfoEntity> findByIdAndCarInfoId(Long id, Long carInfoId);
 }

@@ -12,4 +12,6 @@ public interface OilCostInfoRepository extends BaseRepository<OilCostInfoEntity>
     Optional<List<OilCostInfoEntity>> findAllByCarInfoIdAndDeleteYn(Long carInfoId, String deleteYn);
 
     Optional<Slice<OilCostInfoEntity>> findByCarInfoIdAndDeleteYn(Long carInfoId, String deleteYn, Pageable pageable);
+
+    Optional<OilCostInfoEntity> findByIdAndCarInfoId(Long id, Long carInfoId);
 }

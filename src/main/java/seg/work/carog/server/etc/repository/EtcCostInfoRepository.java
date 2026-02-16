@@ -12,4 +12,6 @@ public interface EtcCostInfoRepository extends BaseRepository<EtcCostInfoEntity>
     Optional<List<EtcCostInfoEntity>> findAllByCarInfoIdAndDeleteYn(Long carInfoId, String deleteYn);
 
     Optional<Slice<EtcCostInfoEntity>> findByCarInfoIdAndDeleteYn(Long carInfoId, String deleteYn, Pageable pageable);
+
+    Optional<EtcCostInfoEntity> findByIdAndCarInfoId(Long id, Long carInfoId);
 }

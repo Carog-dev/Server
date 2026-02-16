@@ -34,7 +34,8 @@ public class MaintenanceCostInfoService {
     }
 
     private CarInfoEntity getRepresentCarInfo(TokenUserInfo tokenUserInfo) {
-        return carInfoRepository.findByUserIdAndRepresentAndDeleteYn(tokenUserInfo.getId(), Constant.FLAG_TRUE, Constant.FLAG_N).orElseThrow(() -> new BaseException(Message.NO_REPRESENT_CAR_INFO));
+        return carInfoRepository.findByUserIdAndRepresentAndDeleteYn(tokenUserInfo.getId(), Constant.FLAG_TRUE, Constant.FLAG_N)
+            .orElseThrow(() -> new BaseException(Message.NO_REPRESENT_CAR_INFO));
     }
 
     private CarInfoEntity getCarInfo(TokenUserInfo tokenUserInfo, Long carInfoId) {
@@ -44,8 +45,10 @@ public class MaintenanceCostInfoService {
     public Slice<MaintenanceCostInfoResponse> getMaintenanceCostInfoList(TokenUserInfo tokenUserInfo, Long carInfoId, Pageable pageable) {
         CarInfoEntity carInfoEntity = this.getCarInfo(tokenUserInfo, carInfoId);
 
-        Optional<Slice<MaintenanceCostInfoEntity>> optionalMaintenanceCostInfoEntityList = maintenanceCostInfoRepository.findByCarInfoIdAndDeleteYn(carInfoEntity.getId(), Constant.FLAG_N, pageable);
-        return optionalMaintenanceCostInfoEntityList.map(maintenanceCostInfoEntityList -> maintenanceCostInfoEntityList.stream().map(MaintenanceCostInfoResponse::new).toList()).<Slice<MaintenanceCostInfoResponse>>map(PageImpl::new).orElse(new PageImpl<>(Collections.emptyList()));
+        Optional<Slice<MaintenanceCostInfoEntity>> optionalMaintenanceCostInfoEntityList = maintenanceCostInfoRepository.findByCarInfoIdAndDeleteYn(carInfoEntity.getId(),
+            Constant.FLAG_N, pageable);
+        return optionalMaintenanceCostInfoEntityList.map(maintenanceCostInfoEntityList -> maintenanceCostInfoEntityList.stream().map(MaintenanceCostInfoResponse::new).toList())
+            .<Slice<MaintenanceCostInfoResponse>>map(PageImpl::new).orElse(new PageImpl<>(Collections.emptyList()));
     }
 
     @Transactional
@@ -58,9 +61,19 @@ public class MaintenanceCostInfoService {
 
     @Transactional
     public void updateMaintenanceCostInfo(TokenUserInfo tokenUserInfo, MaintenanceCostInfoUpdateRequest maintenanceCostInfoUpdateRequest) {
-        MaintenanceCostInfoEntity maintenanceCostInfoEntity = maintenanceCostInfoRepository.findById(maintenanceCostInfoUpdateRequest.getId()).orElseThrow(() -> new BaseException(Message.NO_MAINTENANCE_COST_INFO));
+        MaintenanceCostInfoEntity maintenanceCostInfoEntity = maintenanceCostInfoRepository.findById(maintenanceCostInfoUpdateRequest.getId())
+            .orElseThrow(() -> new BaseException(Message.NO_MAINTENANCE_COST_INFO));
         maintenanceCostInfoEntity.updateMaintenanceCostInfo(maintenanceCostInfoUpdateRequest);
         maintenanceCostInfoRepository.save(maintenanceCostInfoEntity);
     }
 
+    @Transactional
+    public void deleteMaintenanceCostInfo(TokenUserInfo tokenUserInfo, Long carInfoId, Long maintenanceCostInfoId) {
+        CarInfoEntity carInfoEntity = this.getCarInfo(tokenUserInfo, carInfoId);
+
+        MaintenanceCostInfoEntity maintenanceCostInfoEntity = maintenanceCostInfoRepository.findByIdAndCarInfoId(maintenanceCostInfoId, carInfoEntity.getId())
+            .orElseThrow(() -> new BaseException(Message.NO_MAINTENANCE_COST_INFO));
+        maintenanceCostInfoEntity.delete();
+        maintenanceCostInfoRepository.save(maintenanceCostInfoEntity);
+    }
 }

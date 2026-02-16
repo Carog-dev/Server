@@ -12,4 +12,6 @@ public interface InstallmentCostInfoRepository extends BaseRepository<Installmen
     Optional<List<InstallmentCostInfoEntity>> findAllByCarInfoIdAndDeleteYn(Long carInfoId, String deleteYn);
 
     Optional<Slice<InstallmentCostInfoEntity>> findByCarInfoIdAndDeleteYn(Long carInfoId, String deleteYn, Pageable pageable);
+
+    Optional<InstallmentCostInfoEntity> findByIdAndCarInfoId(Long id, Long carInfoId);
 }

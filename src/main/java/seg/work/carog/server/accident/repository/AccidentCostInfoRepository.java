@@ -12,4 +12,6 @@ public interface AccidentCostInfoRepository extends BaseRepository<AccidentCostI
     Optional<List<AccidentCostInfoEntity>> findAllByCarInfoIdAndDeleteYn(Long carInfoId, String deleteYn);
 
     Optional<Slice<AccidentCostInfoEntity>> findByCarInfoIdAndDeleteYn(Long carInfoId, String deleteYn, Pageable pageable);
+
+    Optional<AccidentCostInfoEntity> findByIdAndCarInfoId(Long id, Long carInfoId);
 }

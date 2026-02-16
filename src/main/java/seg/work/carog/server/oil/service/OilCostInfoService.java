@@ -34,7 +34,8 @@ public class OilCostInfoService {
     }
 
     private CarInfoEntity getRepresentCarInfo(TokenUserInfo tokenUserInfo) {
-        return carInfoRepository.findByUserIdAndRepresentAndDeleteYn(tokenUserInfo.getId(), Constant.FLAG_TRUE, Constant.FLAG_N).orElseThrow(() -> new BaseException(Message.NO_REPRESENT_CAR_INFO));
+        return carInfoRepository.findByUserIdAndRepresentAndDeleteYn(tokenUserInfo.getId(), Constant.FLAG_TRUE, Constant.FLAG_N)
+            .orElseThrow(() -> new BaseException(Message.NO_REPRESENT_CAR_INFO));
     }
 
     private CarInfoEntity getCarInfo(TokenUserInfo tokenUserInfo, Long carInfoId) {
@@ -45,7 +46,8 @@ public class OilCostInfoService {
         CarInfoEntity carInfoEntity = this.getCarInfo(tokenUserInfo, carInfoId);
 
         Optional<Slice<OilCostInfoEntity>> optionalOilCostInfoEntityList = oilCostInfoRepository.findByCarInfoIdAndDeleteYn(carInfoEntity.getId(), Constant.FLAG_N, pageable);
-        return optionalOilCostInfoEntityList.map(oilCostInfoEntityList -> oilCostInfoEntityList.stream().map(OilCostInfoResponse::new).toList()).<Slice<OilCostInfoResponse>>map(PageImpl::new).orElse(new PageImpl<>(Collections.emptyList()));
+        return optionalOilCostInfoEntityList.map(oilCostInfoEntityList -> oilCostInfoEntityList.stream().map(OilCostInfoResponse::new).toList())
+            .<Slice<OilCostInfoResponse>>map(PageImpl::new).orElse(new PageImpl<>(Collections.emptyList()));
     }
 
     @Transactional
@@ -63,4 +65,13 @@ public class OilCostInfoService {
         oilCostInfoRepository.save(oilCostInfoEntity);
     }
 
+    @Transactional
+    public void deleteOilCostInfo(TokenUserInfo tokenUserInfo, Long carInfoId, Long oilCostInfoId) {
+        CarInfoEntity carInfoEntity = this.getCarInfo(tokenUserInfo, carInfoId);
+
+        OilCostInfoEntity oilCostInfoEntity = oilCostInfoRepository.findByIdAndCarInfoId(oilCostInfoId, carInfoEntity.getId())
+            .orElseThrow(() -> new BaseException(Message.NO_OIL_COST_INFO));
+        oilCostInfoEntity.delete();
+        oilCostInfoRepository.save(oilCostInfoEntity);
+    }
 }

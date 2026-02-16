@@ -12,4 +12,6 @@ public interface ParkingCostInfoRepository extends BaseRepository<ParkingCostInf
     Optional<List<ParkingCostInfoEntity>> findAllByCarInfoIdAndDeleteYn(Long carInfoId, String deleteYn);
 
     Optional<Slice<ParkingCostInfoEntity>> findByCarInfoIdAndDeleteYn(Long carInfoId, String deleteYn, Pageable pageable);
+
+    Optional<ParkingCostInfoEntity> findByIdAndCarInfoId(Long id, Long parkingCostInfoId);
 }

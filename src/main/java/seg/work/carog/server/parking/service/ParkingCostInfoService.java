@@ -34,7 +34,8 @@ public class ParkingCostInfoService {
     }
 
     private CarInfoEntity getRepresentCarInfo(TokenUserInfo tokenUserInfo) {
-        return carInfoRepository.findByUserIdAndRepresentAndDeleteYn(tokenUserInfo.getId(), Constant.FLAG_TRUE, Constant.FLAG_N).orElseThrow(() -> new BaseException(Message.NO_REPRESENT_CAR_INFO));
+        return carInfoRepository.findByUserIdAndRepresentAndDeleteYn(tokenUserInfo.getId(), Constant.FLAG_TRUE, Constant.FLAG_N)
+            .orElseThrow(() -> new BaseException(Message.NO_REPRESENT_CAR_INFO));
     }
 
     private CarInfoEntity getCarInfo(TokenUserInfo tokenUserInfo, Long carInfoId) {
@@ -44,8 +45,10 @@ public class ParkingCostInfoService {
     public Slice<ParkingCostInfoResponse> getParkingCostInfoList(TokenUserInfo tokenUserInfo, Long carInfoId, Pageable pageable) {
         CarInfoEntity carInfoEntity = this.getCarInfo(tokenUserInfo, carInfoId);
 
-        Optional<Slice<ParkingCostInfoEntity>> optionalParkingCostInfoEntityList = parkingCostInfoRepository.findByCarInfoIdAndDeleteYn(carInfoEntity.getId(), Constant.FLAG_N, pageable);
-        return optionalParkingCostInfoEntityList.map(parkingCostInfoEntityList -> parkingCostInfoEntityList.stream().map(ParkingCostInfoResponse::new).toList()).<Slice<ParkingCostInfoResponse>>map(PageImpl::new).orElse(new PageImpl<>(Collections.emptyList()));
+        Optional<Slice<ParkingCostInfoEntity>> optionalParkingCostInfoEntityList = parkingCostInfoRepository.findByCarInfoIdAndDeleteYn(carInfoEntity.getId(), Constant.FLAG_N,
+            pageable);
+        return optionalParkingCostInfoEntityList.map(parkingCostInfoEntityList -> parkingCostInfoEntityList.stream().map(ParkingCostInfoResponse::new).toList())
+            .<Slice<ParkingCostInfoResponse>>map(PageImpl::new).orElse(new PageImpl<>(Collections.emptyList()));
     }
 
     @Transactional
@@ -58,9 +61,19 @@ public class ParkingCostInfoService {
 
     @Transactional
     public void updateParkingCostInfo(TokenUserInfo tokenUserInfo, ParkingCostInfoUpdateRequest parkingCostInfoUpdateRequest) {
-        ParkingCostInfoEntity parkingCostInfoEntity = parkingCostInfoRepository.findById(parkingCostInfoUpdateRequest.getId()).orElseThrow(() -> new BaseException(Message.NO_PARKING_COST_INFO));
+        ParkingCostInfoEntity parkingCostInfoEntity = parkingCostInfoRepository.findById(parkingCostInfoUpdateRequest.getId())
+            .orElseThrow(() -> new BaseException(Message.NO_PARKING_COST_INFO));
         parkingCostInfoEntity.updateParkingCostInfo(parkingCostInfoUpdateRequest);
         parkingCostInfoRepository.save(parkingCostInfoEntity);
     }
 
+    @Transactional
+    public void deleteParkingCostInfo(TokenUserInfo tokenUserInfo, Long carInfoId, Long parkingCostInfoId) {
+        CarInfoEntity carInfoEntity = this.getCarInfo(tokenUserInfo, carInfoId);
+
+        ParkingCostInfoEntity parkingCostInfoEntity = parkingCostInfoRepository.findByIdAndCarInfoId(parkingCostInfoId, carInfoEntity.getId())
+            .orElseThrow(() -> new BaseException(Message.NO_PARKING_COST_INFO));
+        parkingCostInfoEntity.delete();
+        parkingCostInfoRepository.save(parkingCostInfoEntity);
+    }
 }

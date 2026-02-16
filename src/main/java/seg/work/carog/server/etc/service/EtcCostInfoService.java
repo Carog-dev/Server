@@ -34,7 +34,8 @@ public class EtcCostInfoService {
     }
 
     private CarInfoEntity getRepresentCarInfo(TokenUserInfo tokenUserInfo) {
-        return carInfoRepository.findByUserIdAndRepresentAndDeleteYn(tokenUserInfo.getId(), Constant.FLAG_TRUE, Constant.FLAG_N).orElseThrow(() -> new BaseException(Message.NO_REPRESENT_CAR_INFO));
+        return carInfoRepository.findByUserIdAndRepresentAndDeleteYn(tokenUserInfo.getId(), Constant.FLAG_TRUE, Constant.FLAG_N)
+            .orElseThrow(() -> new BaseException(Message.NO_REPRESENT_CAR_INFO));
     }
 
     private CarInfoEntity getCarInfo(TokenUserInfo tokenUserInfo, Long carInfoId) {
@@ -45,7 +46,8 @@ public class EtcCostInfoService {
         CarInfoEntity carInfoEntity = this.getCarInfo(tokenUserInfo, carInfoId);
 
         Optional<Slice<EtcCostInfoEntity>> optionalEtcCostInfoEntityList = etcCostInfoRepository.findByCarInfoIdAndDeleteYn(carInfoEntity.getId(), Constant.FLAG_N, pageable);
-        return optionalEtcCostInfoEntityList.map(etcCostInfoEntityList -> etcCostInfoEntityList.stream().map(EtcCostInfoResponse::new).toList()).<Slice<EtcCostInfoResponse>>map(PageImpl::new).orElse(new PageImpl<>(Collections.emptyList()));
+        return optionalEtcCostInfoEntityList.map(etcCostInfoEntityList -> etcCostInfoEntityList.stream().map(EtcCostInfoResponse::new).toList())
+            .<Slice<EtcCostInfoResponse>>map(PageImpl::new).orElse(new PageImpl<>(Collections.emptyList()));
     }
 
     @Transactional
@@ -63,4 +65,13 @@ public class EtcCostInfoService {
         etcCostInfoRepository.save(etcCostInfoEntity);
     }
 
+    @Transactional
+    public void deleteEtcCostInfo(TokenUserInfo tokenUserInfo, Long carInfoId, Long etcCostInfoId) {
+        CarInfoEntity carInfoEntity = this.getCarInfo(tokenUserInfo, carInfoId);
+
+        EtcCostInfoEntity etcCostInfoEntity = etcCostInfoRepository.findByIdAndCarInfoId(etcCostInfoId, carInfoEntity.getId())
+            .orElseThrow(() -> new BaseException(Message.NO_ETC_COST_INFO));
+        etcCostInfoEntity.delete();
+        etcCostInfoRepository.save(etcCostInfoEntity);
+    }
 }

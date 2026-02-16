@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,6 +46,13 @@ public class InstallmentCostInfoController {
     @PutMapping
     public ResponseEntity<?> updateInstallmentCostInfo(TokenUserInfo tokenUserInfo, @Validated @RequestBody InstallmentCostInfoUpdateRequest installmentCostInfoUpdateRequest) {
         installmentCostInfoService.updateInstallmentCostInfo(tokenUserInfo, installmentCostInfoUpdateRequest);
+
+        return ResponseEntity.ok(BaseApiResponse.success());
+    }
+
+    @DeleteMapping("/{carInfoId}/{installmentCostInfoId}")
+    public ResponseEntity<?> deleteInstallmentCostInfo(TokenUserInfo tokenUserInfo, @PathVariable Long carInfoId, @PathVariable Long installmentCostInfoId) {
+        installmentCostInfoService.deleteInstallmentCostInfo(tokenUserInfo, carInfoId, installmentCostInfoId);
 
         return ResponseEntity.ok(BaseApiResponse.success());
     }
