@@ -1,5 +1,5 @@
 server:
-  port: 8030
+  port: 8031
   error:
     whitelabel:
       enabled: false
@@ -13,27 +13,27 @@ server:
 
 spring:
   application:
-    name: carog-server-dev
+    name: carog-server
   profiles:
     default: local
 
   datasource:
     read:
-      jdbc-url: ENC(sMbfGK2RL8dAo2pwU7v56uqcDkM9had3wZd3+zCIlTufgYoRbpzYFVueAjtMPYN2jqGaYCh5WXQFa4ZdqL0gKIHJ7CNfP3KkpzZRMkvErWZUCWVdnw9oWUtYWXjQl7u0qfRwgp7e+Cku6/RNHoE2wZfRCwHc23KBgFpxDpQ320bmApP7Da+tLwPKNJcU60xf)
-      username: ENC(uuPoEVcDHvoTxd7qBpoIHIXBEWgUCQg3878ev4YXSEWw7hRECLR6pSnCJS7Y/8qu)
-      password: ENC(ne9nINAgc9mDFfzNOe/2Nf1A6GsHv/tQq2jpdR3zaAfE2GzHHCm57WBYU+iB1dGA)
-      minimum-idle: 10
-      maximum-pool-size: 20
+      jdbc-url: ENC(3/pqDxW8E6Tslk9b8JGgV677PgJasc6zik7ZhIfQgjPiLkAbyarpGhxILbuE8U8TcANz1wTmPdXhEIauEn7RCmt9fvEk55t0TBnG4V44+lESoAMDZQ6UJKZA8M8bexXYBqPtwPScYvZIK6vr+54l9UQR74GWNk9iWMCdy9R3JCv853f9fX8KOyfv/iNhaPQ3)
+      username: ENC(gEQztSYVeNp5irJThBP4RrUNKdKFuIR+/D0g+d2mfNJ94y/kkyytua9QSPlLCMcc)
+      password: ENC(XGHNHomfOgQd5F8qTNuDwRC6jPKGhtxUS41NNlW1hq5yrX5JESye9fe4qF/BaqXf)
+      minimum-idle: 5
+      maximum-pool-size: 10
       pool-name: READ-POOL-CAROG
       driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
       read-only: true
       auto-commit: true
     write:
-      jdbc-url: ENC(uz+WJfTus04DGQWVe9OUgRO9guxZweKt4UiNNIZRquXJ6KDNmWMOP/sDF8zOfApPOX/Mdv22HjZobNhO7QRbsOl8dg9eNACyXxSzx9x5a2u++xXvBpo18tYYWiP/LW4jMSneQ0JaZ7W11CXOMZMnbo6fBUSfJ/jXPeP5nXGrycH3yOP3dZqlWLi4MOunO7LC)
-      username: ENC(ACCQdErF62VaD5A7RmUiNIQzzxJ6xkYvA3hm+1Pd8CTZDhcwwHTf1K89XZQfrALM)
-      password: ENC(xznMVZdzHkUzTOQHE4btnqhICeCJTgKlkGLOgukyuDgrYkWN+Bd0toO5s3eb0Gpy)
-      minimum-idle: 10
-      maximum-pool-size: 20
+      jdbc-url: ENC(P9hNTKq7MpKB1SCd8qRDeoHfrF/yyPx1P8uLuDLZtoIuTdpsfLUhXhyRrIa7eopQZ1G4y4B4zP/9Cc7tsJH+dy0s/Ac5a84LSMHHVRSukbqxtY6Tba4vyFtcJ7m9w6PUa5HpD49TJpUyGkP5RAk4z7eWuR1s+yQWdCeNnzrPrYGQyN/m2Ikq/6wSH9MiCwmx)
+      username: ENC(hovbLIgUb4eS8aojTsjrFFpBfQ4rwaFxQ12vgxFAwD8xUpVYphUsYRjkxJogO4R/)
+      password: ENC(a+HCoJREPzdFGH9JbSNJRj9sc8cIKoT3fg5j7I75bjnu+3WNHwcK3leq+oJSnuvy)
+      minimum-idle: 5
+      maximum-pool-size: 10
       pool-name: WRITE-POOL-CAROG
       driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
 
@@ -61,22 +61,22 @@ spring:
         one-indexed-parameters: true
 
     redis:
-      username: ENC(cUuSBmHF4eC8YjrDP5u7se7vmzhsMvFo8eaKsYM0XuGUjB3rYcSGIGnmg8PEISyI)
-      password: ENC(dZT8JDqbqwc0aQlA7Pa7/5CwKZohAMDJRMRfVMnEJcQi5K8CElRSdWIZMjddSS0a)
-      database: ENC(pyypJMM/Di7nsy5mVtlonydTCGu2CZeY/wl1fB0qCteyYb6Mkn3nHTla+7LXyCGw)
+      username: ENC(JbgnxWFB2P4gTkfLQkBghRBc+cWCTQPdvnfI2Oc1DMEJMUXrJwUi6S3RgKzNxsag)
+      password: ENC(9jaRsFPFOY0kr6JmqrKKrZ7YlJpkyj56orpaUGpUr3//vgLcZhAal63TY766+/i9)
+      database: ENC(qil8EBsALcr7OFzJsgdFR/tMI4+siIKMi2tDYY4f6H5ujDr6oWcvBnEv3aMH5j+V)
       lettuce:
         pool:
           min-idle: 3
           max-idle: 10
           max-active: 10
       sentinel:
-        master: ENC(/ol2UBIfIB8SKJYrS3A5Wid+h0hDPYSAn2muZmIsoiM0gNhmrn/AM/SOst5vm93d)
+        master: ENC(p/OFG+RzIco5y9PKBJpCHU9eb65XDlVsfqndeWMfvlh9kaatWwXtkBCAso7ZsGbb)
         nodes:
-          - ENC(wuIUq1upQJEEq1OCEvS8cTDFj8WSyYOWUHdU4IKV5kCjoKjRw3UX6WTLCzj+elGjRtjAD049EoJPGsxnzpXp9w==)
-          - ENC(9hizQRma8UAz7v4rimTVte6K12ThyJV8zu9mWVVSSLvOWio5tpoCk+zgyYazoW9ayD1C7akRvdSWEOxUStnZ0Q==)
-          - ENC(bngFrF8P+TrO7s4Gf4ZV4GSR8KG/+9KePjUjFkngO6oTyPpCqoQ/MKz7XeEkwKT3PioIxwue7FqsFtsI4h4gGw==)
-        username: ENC(XpoDYbpyFUmZyIuth3r15TQUMMj7EIhfhxl3E6Kk1bQvCesuxBKzchfsDoTECzLC)
-        password: ENC(PE31aPuguNwB4+5kZDmXJvrymdoPoskAb7MnaFuFD62svhFlQkTDVNMadmPxA1p9)
+          - ENC(e9+rFWfloqnAn+mCqq04mdHgN0bbn/RGtoutBAHtf5Hmq9GsciENPbdk4CAFb+Cb0c2P7v9h/qOKe04S/id9VA==)
+          - ENC(j3QIpVfXTh6kseAqTkTqbj6hfnLP5gDvxzLMrdka0JvlnCf1gRsJ0dux0/0uD1RyCnMxokDHOvjjWl4VvBI2tg==)
+          - ENC(htsta8Vme9ikw+1AT0hki07NoD4pWAgidlePqW6Q0YLTHKIAI2alANa4Uee/eOYDsoEeDz3T0YqLM5rg6QVIOw==)
+        username: ENC(smAbCpAHZyKC6RJGAyoFkma0/p+YWTKVTL0v6Ff1yxcWkgLRPDouHeAB0Pjt1INZ)
+        password: ENC(l/RupNzQ1yVxbSyr1r6/IyLR1Gs/2po87TRQfP3uGpyY4qP2QVAD4IndJO5uo3z6)
 
   output:
     ansi:
@@ -89,8 +89,8 @@ spring:
       max-request-size: 50MB
 
 kakao:
-  client-id: ENC(LrLdpTOmUeHERYnvZZwndumW2E9sCows4jl29nm5+dd/9PzZpKHZrm5qmbQNCPFGVO2WSY9EU9DS0JyXoBH4T9mLmgBdHxpXiBfffUyJYcY=)
-  client-secret: ENC(F8uhACOvV7OQMUkWz8RkiIUcQwF2JhuUfXTcbfMfbcpy8EWfWad4pKf0lIP9Inv/EgMXpbpXb6iiNM0c1Ql9t+kZ6ZpgVHKr9lZuJRof2lA=)
+  client-id: ENC(TmYtXjdZybZd1ik9ipv+AyMlmuosasSxxqcSHX8E4RNvGjzoEbKCh2Cd70J6dJc/Y7MRiCxHE8qIjHc59bVIbPQz2yP0RxY+ij12Rnz6KP4=)
+  client-secret: ENC(KdDfEtjCGql7QqnIEbEisC7TTgmPlgJ7oV0h3i+yyhlT/oY3yQP4CA4sC8vCblNXzETu2zS/Dro0qxBtn4D/SqumkyTB5kl0QBfOH9v116c=)
 
 logging:
   config: classpath:/logback/spring-logback.xml
@@ -120,53 +120,3 @@ management:
     metrics:
       export:
         enabled: true
-
----
-server:
-  port: 8031
-
-spring:
-  application:
-    name: carog-server-main
-  config:
-    activate:
-      on-profile: main
-
-  datasource:
-    read:
-      jdbc-url: ENC(0Oj+MX9iDMjEY9F/BW444gHHjOuYBKmbV8X+hQY4OLEHvmjhCfE2gGlN+L+nAqTVHNMnYMg02+5jafDWk1oHO40Z1y8ynRpXakSqODnr3E2ev56Oro4ll/7QXnfEl9Eq7TIlqoQ2ZFctVlEnDP1Tdsod+lGsXNp2zEejfno0JAt2ZVwIFJ81r0joykuXfMbF)
-      username: ENC(ZLOZJH/HNroRjSzAsIOjER3attrzUmAphUs8MAWcdoex0m7SUpwBmi5thRT01wGh)
-      password: ENC(LnzKX1fuqr+OZ3WVcCa7n3PJIgbHZKssybpAtMqu3mQwvoQSiRwhL4gtb7GOjbW3)
-      minimum-idle: 10
-      maximum-pool-size: 20
-      pool-name: READ-POOL-CAROG
-      driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-      read-only: true
-      auto-commit: true
-    write:
-      jdbc-url: ENC(3o4YRYpiVK89Z4+M2is1JO6ngxDgCy4uvAYp2MaDOL9XdmEDg57l7Yy5L1+ZGQwN+wD0vyTJhfvXxmopJ/c7ORGNtbYx61/ZtzKGTKNE53ACRJWqBmyXDSo/ZhYPQ4l5zvdx8j8MI0o8E4VO9LyMnNitg9XNDZSHO7W308PBKPTO+XCPGJVoeQT6RpxVMYtW)
-      username: ENC(9wurkBc7f5eWkjk7KhK3p9INuJmLqfg6ckaFawgw+5anYWfvAJrf7sUMVwNOj85Y)
-      password: ENC(kbLXCXCgKwDvUXgPxGbBOS12dM0fGh569Hy/etUxXACgIz4Ic6x4CtbYNmb18Rek)
-      minimum-idle: 10
-      maximum-pool-size: 20
-      pool-name: WRITE-POOL-CAROG
-      driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-
-  data:
-    redis:
-      username: ENC(XElSZDaFQX5gR04RXX7UJx1bXII/Jgk6IUGiPZRfwGkAQzB2oql65UlsgOsBep6L)
-      password: ENC(EgAe1QICfehxxTMVTaVU6L8EjixWJKBkvp3SWvjr0+IK/E29sKxGdVh4fQ9s3Xy/)
-      database: ENC(fS0pXmiqC2sx7zYkt/nRd9oZJdWMHvjAQK39UAjXBY0XumjwolS2idcJCT/EU02H)
-      lettuce:
-        pool:
-          min-idle: 3
-          max-idle: 10
-          max-active: 10
-      sentinel:
-        master: ENC(3/9IoNslll9yv7zqQ8OH7QC+j0f/CtHpFyrKkcM/g/mnTSdfPEoHkK8DLi70jDl/)
-        nodes:
-          - ENC(EUIMb2kzs3qgkl0zzeGb600vTGAoGGpDdZanrTJkFbuObfhGAvgEoEZ6SIJyMvLqzyrRQtF8fRafrqqQ68Ls9Q==)
-          - ENC(l3hLWKzcSFvaiTwumaPilwEZY77ixLeafd8Z34yehf+fGYDfX/R5HMSY+/8B+GvZsSHAOdZwJVEvxwW+hirFRA==)
-          - ENC(4u3ehgrvtX0Rj9jQkTvXSv/pwjNX5xqIsdXVFeQp/AgcPRP5Va+CtMxA+tEifEaa7VadLGQobMrAdu4UPu8D5g==)
-        username: ENC(cAlCcDp5ZXcPJ67gzzXu1HbPeNCh2t2KNYq4re1vSLGXFJR/Oe1I+87jOafb31up)
-        password: ENC(zL1rNrUYb+oojMwL8DplF4yFUMMWlQ965l9rCF5+0lJGOjWTMWqdD8WsCONZN9+Y)
