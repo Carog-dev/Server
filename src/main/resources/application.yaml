@@ -19,9 +19,9 @@ spring:
 
   datasource:
     read:
-      jdbc-url: ENC(3/pqDxW8E6Tslk9b8JGgV677PgJasc6zik7ZhIfQgjPiLkAbyarpGhxILbuE8U8TcANz1wTmPdXhEIauEn7RCmt9fvEk55t0TBnG4V44+lESoAMDZQ6UJKZA8M8bexXYBqPtwPScYvZIK6vr+54l9UQR74GWNk9iWMCdy9R3JCv853f9fX8KOyfv/iNhaPQ3)
-      username: ENC(gEQztSYVeNp5irJThBP4RrUNKdKFuIR+/D0g+d2mfNJ94y/kkyytua9QSPlLCMcc)
-      password: ENC(XGHNHomfOgQd5F8qTNuDwRC6jPKGhtxUS41NNlW1hq5yrX5JESye9fe4qF/BaqXf)
+      jdbc-url: ENC(9F5d20uw+kWKdcT8UbpLeqGVZuq5XOwzR1Yy6aW9ofn9BXt77zUq5XL1hYtS78qa55tCL0E4kwuYuzVCAf9ciJsBv+69hB3Sz++23X2VRhd7BcD70OLx5QhuBeFOCS8XenRYNW+eDgBvdL0FJ4f5Va1jEZRP+QQJzM//IdpIEgFOvSjpgbd7q1ZX2KcHquha)
+      username: ENC(MAIODXlR14CXMY36bWwbpbs/G30g+L6qxAd+d5wIBkNqYfWadv8HFGG154sRd8eP)
+      password: ENC(qMQKH8sPuOb6hA/4znTLs24xptNJ9yCunJ3xHir60Vtq2z4eCeghI6zip0dUH8Vo)
       minimum-idle: 5
       maximum-pool-size: 10
       pool-name: READ-POOL-CAROG
@@ -29,9 +29,9 @@ spring:
       read-only: true
       auto-commit: true
     write:
-      jdbc-url: ENC(P9hNTKq7MpKB1SCd8qRDeoHfrF/yyPx1P8uLuDLZtoIuTdpsfLUhXhyRrIa7eopQZ1G4y4B4zP/9Cc7tsJH+dy0s/Ac5a84LSMHHVRSukbqxtY6Tba4vyFtcJ7m9w6PUa5HpD49TJpUyGkP5RAk4z7eWuR1s+yQWdCeNnzrPrYGQyN/m2Ikq/6wSH9MiCwmx)
-      username: ENC(hovbLIgUb4eS8aojTsjrFFpBfQ4rwaFxQ12vgxFAwD8xUpVYphUsYRjkxJogO4R/)
-      password: ENC(a+HCoJREPzdFGH9JbSNJRj9sc8cIKoT3fg5j7I75bjnu+3WNHwcK3leq+oJSnuvy)
+      jdbc-url: ENC(wNpcwyV9NAJZ2gShGObKe6cmOSnnHasikufeve9Jx3PSfDh5nkhQl8s5XND1g/FZvMaNcYjdG6Qkrtw60hCVfcNvuew5zAufDIOymNxNGLJ7zEQTW+YLO7p0t5p1r/oD8Eb9pQYox4yCSVyyeFnzXG0XYC/nubxxivZnRrSIiGbbReJBXbBDdgBhcH0ZhI/a)
+      username: ENC(5qGdm3FMJhIpS3NpM3q2vWJvohpev5S3HAedFeTpSfVKOsZxhqlbWNlmHLzkuFGA)
+      password: ENC(D9rPVMWGzxFBKewaTkjVrWKvaZYsbLcBqsI9AMSCG6Z2pLU5rZJkQnUQwdjTYK6l)
       minimum-idle: 5
       maximum-pool-size: 10
       pool-name: WRITE-POOL-CAROG
@@ -61,22 +61,20 @@ spring:
         one-indexed-parameters: true
 
     redis:
-      username: ENC(JbgnxWFB2P4gTkfLQkBghRBc+cWCTQPdvnfI2Oc1DMEJMUXrJwUi6S3RgKzNxsag)
-      password: ENC(9jaRsFPFOY0kr6JmqrKKrZ7YlJpkyj56orpaUGpUr3//vgLcZhAal63TY766+/i9)
-      database: ENC(qil8EBsALcr7OFzJsgdFR/tMI4+siIKMi2tDYY4f6H5ujDr6oWcvBnEv3aMH5j+V)
+      password: ENC(M6Otamnhj2EHPmva6+/t7GWJmWgXlem6Xf7UiQpiJiDgN7IQM6t21gzfsfVq2ZE6)
+      database: ENC(fIHSh2t81hjbpgg7CLoybmiV80N9unssEmVdtKp8Pkuk+culzFtnEVC18HdyOj4I)
       lettuce:
         pool:
           min-idle: 3
           max-idle: 10
           max-active: 10
       sentinel:
-        master: ENC(p/OFG+RzIco5y9PKBJpCHU9eb65XDlVsfqndeWMfvlh9kaatWwXtkBCAso7ZsGbb)
+        master: ENC(dY4uQSaRCtuwHJx0+LrM01SrlFZLdoFo5kiseyQHcG9tchQkRgMpmtqq2z8BfA4g)
         nodes:
-          - ENC(e9+rFWfloqnAn+mCqq04mdHgN0bbn/RGtoutBAHtf5Hmq9GsciENPbdk4CAFb+Cb0c2P7v9h/qOKe04S/id9VA==)
-          - ENC(j3QIpVfXTh6kseAqTkTqbj6hfnLP5gDvxzLMrdka0JvlnCf1gRsJ0dux0/0uD1RyCnMxokDHOvjjWl4VvBI2tg==)
-          - ENC(htsta8Vme9ikw+1AT0hki07NoD4pWAgidlePqW6Q0YLTHKIAI2alANa4Uee/eOYDsoEeDz3T0YqLM5rg6QVIOw==)
-        username: ENC(smAbCpAHZyKC6RJGAyoFkma0/p+YWTKVTL0v6Ff1yxcWkgLRPDouHeAB0Pjt1INZ)
-        password: ENC(l/RupNzQ1yVxbSyr1r6/IyLR1Gs/2po87TRQfP3uGpyY4qP2QVAD4IndJO5uo3z6)
+          - ENC(HCA5wJKc4fH2HID51w09sK/JDziNqGUA4ftwW1SrouUOCe2rl32IuIP2SYKJG+e8VnYqnFJkCbVZyu/EwxADuA==)
+          - ENC(P9BeRdbKzBva2JvuYMwXmqGm72PSDHIjg+j+uCHEDHPgTYWd+6uwAuUj/7TtKk1/TN/uyd+2mtkaG00DDbmo4Q==)
+          - ENC(caHG8PhAtS5kHfXZ07L3mHtABacwdltx9SATsRUSwcJYPpWaREcW6YzrcB/uL+fPsX6ZSPtyzCI6eVto9J+/Zw==)
+        password: ENC(TBcSM9XXHsBrs6UWTRJrAi7noJ3xtr110cWC2KKAixkMbPrO/3faQBjZdyl5IW1f)
 
   output:
     ansi:
@@ -89,8 +87,8 @@ spring:
       max-request-size: 50MB
 
 kakao:
-  client-id: ENC(TmYtXjdZybZd1ik9ipv+AyMlmuosasSxxqcSHX8E4RNvGjzoEbKCh2Cd70J6dJc/Y7MRiCxHE8qIjHc59bVIbPQz2yP0RxY+ij12Rnz6KP4=)
-  client-secret: ENC(KdDfEtjCGql7QqnIEbEisC7TTgmPlgJ7oV0h3i+yyhlT/oY3yQP4CA4sC8vCblNXzETu2zS/Dro0qxBtn4D/SqumkyTB5kl0QBfOH9v116c=)
+  client-id: ENC(uEWoLMtpGcJ+hUNi4TjLI7RhElv87QY18FLBL4szs7U6h0VIRgtN07cG3aHiJww9WXF24ih9YeMbHSBw0asP2aKi64RJhhuMZoVQVPFrp7E=)
+  client-secret: ENC(eh+Qbyuc40ROq2coiUV33FskKRbpOZNpqjxyZY0cfQBCWI86bw88D8ghSBGIMWQK42bOggeeVISBF0ImyibDnO2/A6zn6RptPGpbQYFwwgM=)
 
 logging:
   config: classpath:/logback/spring-logback.xml
