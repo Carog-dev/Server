@@ -93,11 +93,11 @@ jib {
 				// 컨테이너 환경 지원
 				"-XX:+UseContainerSupport",
 				// JVM 사용 최대 메모리 비율
-				"-XX:MaxRAMPercentage=50.0",
+				"-XX:MaxRAMPercentage=20.0",
 				// JVM 초기 메모리 비율
-				"-XX:InitialRAMPercentage=30.0",
+				"-XX:InitialRAMPercentage=20.0",
 				// JVM 최소 메모리 비율
-				"-XX:MinRAMPercentage=30.0",
+				"-XX:MinRAMPercentage=20.0",
 				// JVM 메모리를 미리 할당
 				"-XX:+AlwaysPreTouch",
 
