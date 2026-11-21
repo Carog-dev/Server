@@ -118,3 +118,15 @@ management:
     metrics:
       export:
         enabled: true
+
+---
+
+server:
+  port: 8080
+
+spring:
+  application:
+    name: carog
+  config:
+    activate:
+      on-profile: main
