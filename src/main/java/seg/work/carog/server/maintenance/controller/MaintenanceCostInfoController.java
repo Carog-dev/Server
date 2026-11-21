@@ -1,7 +1,6 @@
 package seg.work.carog.server.maintenance.controller;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +20,6 @@ import seg.work.carog.server.maintenance.dto.MaintenanceCostInfoSaveRequest;
 import seg.work.carog.server.maintenance.dto.MaintenanceCostInfoUpdateRequest;
 import seg.work.carog.server.maintenance.service.MaintenanceCostInfoService;
 
-@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/maintenance")

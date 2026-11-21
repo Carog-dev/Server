@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import seg.work.carog.server.async.service.AsyncService;
@@ -18,7 +17,6 @@ import seg.work.carog.server.common.constant.Constant;
 import seg.work.carog.server.common.constant.Message;
 import seg.work.carog.server.common.exception.BaseException;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CarInfoService {

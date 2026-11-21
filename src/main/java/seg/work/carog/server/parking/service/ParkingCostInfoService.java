@@ -3,7 +3,6 @@ package seg.work.carog.server.parking.service;
 import java.util.Collections;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -21,7 +20,6 @@ import seg.work.carog.server.parking.dto.ParkingCostInfoUpdateRequest;
 import seg.work.carog.server.parking.entity.ParkingCostInfoEntity;
 import seg.work.carog.server.parking.repository.ParkingCostInfoRepository;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ParkingCostInfoService {

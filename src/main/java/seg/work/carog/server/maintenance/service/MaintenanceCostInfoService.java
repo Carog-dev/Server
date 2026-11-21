@@ -3,7 +3,6 @@ package seg.work.carog.server.maintenance.service;
 import java.util.Collections;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -21,7 +20,6 @@ import seg.work.carog.server.maintenance.dto.MaintenanceCostInfoUpdateRequest;
 import seg.work.carog.server.maintenance.entity.MaintenanceCostInfoEntity;
 import seg.work.carog.server.maintenance.repository.MaintenanceCostInfoRepository;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class MaintenanceCostInfoService {

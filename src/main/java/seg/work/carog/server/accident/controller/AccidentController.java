@@ -1,7 +1,6 @@
 package seg.work.carog.server.accident.controller;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +20,6 @@ import seg.work.carog.server.accident.service.AccidentCostInfoService;
 import seg.work.carog.server.auth.dto.TokenUserInfo;
 import seg.work.carog.server.common.dto.BaseApiResponse;
 
-@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/accident")

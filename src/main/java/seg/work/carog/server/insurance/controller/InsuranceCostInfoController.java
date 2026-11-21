@@ -1,7 +1,6 @@
 package seg.work.carog.server.insurance.controller;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +20,6 @@ import seg.work.carog.server.insurance.dto.InsuranceCostInfoSaveRequest;
 import seg.work.carog.server.insurance.dto.InsuranceCostInfoUpdateRequest;
 import seg.work.carog.server.insurance.service.InsuranceCostInfoService;
 
-@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/insurance")

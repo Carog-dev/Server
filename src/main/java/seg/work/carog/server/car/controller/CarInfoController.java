@@ -2,7 +2,6 @@ package seg.work.carog.server.car.controller;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,7 +19,6 @@ import seg.work.carog.server.car.dto.CarInfoUpdateRequest;
 import seg.work.carog.server.car.service.CarInfoService;
 import seg.work.carog.server.common.dto.BaseApiResponse;
 
-@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/car")

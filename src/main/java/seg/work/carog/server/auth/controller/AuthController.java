@@ -1,7 +1,6 @@
 package seg.work.carog.server.auth.controller;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +13,6 @@ import seg.work.carog.server.auth.dto.TokenUserInfo;
 import seg.work.carog.server.auth.service.AuthService;
 import seg.work.carog.server.common.dto.BaseApiResponse;
 
-@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth")

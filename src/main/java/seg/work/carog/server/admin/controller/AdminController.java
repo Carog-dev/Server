@@ -1,7 +1,6 @@
 package seg.work.carog.server.admin.controller;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,7 +10,6 @@ import seg.work.carog.server.admin.service.AdminService;
 import seg.work.carog.server.auth.dto.TokenUserInfo;
 import seg.work.carog.server.common.dto.BaseApiResponse;
 
-@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/admin")
