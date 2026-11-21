@@ -19,9 +19,9 @@ public class TokenUserInfo {
 
     public static TokenUserInfo toDto(UserEntity userEntity, String accessToken) {
         return TokenUserInfo.builder()
-                .key(userEntity.getKey())
-                .email(userEntity.getEmail())
-                .accessToken(accessToken)
-                .build();
+            .key(userEntity.getKey())
+            .email(userEntity.getEmail())
+            .accessToken(accessToken)
+            .build();
     }
 }

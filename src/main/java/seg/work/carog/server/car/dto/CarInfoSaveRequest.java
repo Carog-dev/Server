@@ -26,10 +26,10 @@ public class CarInfoSaveRequest {
 
     public CarInfoEntity toEntity(Long userId) {
         return CarInfoEntity.builder()
-                .userId(userId)
-                .name(this.name)
-                .number(this.number)
-                .represent(Constant.FLAG_FALSE)
-                .build();
+            .userId(userId)
+            .name(this.name)
+            .number(this.number)
+            .represent(Constant.FLAG_FALSE)
+            .build();
     }
 }

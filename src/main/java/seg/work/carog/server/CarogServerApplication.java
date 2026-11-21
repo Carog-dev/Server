@@ -12,8 +12,8 @@ import org.springframework.data.web.config.EnableSpringDataWebSupport;
 @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO)
 public class CarogServerApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(CarogServerApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(CarogServerApplication.class, args);
+    }
 
 }

@@ -69,14 +69,14 @@ public class JwtUtil {
         RedisUtil.setWithExpiryHour(userEntity.getKey(), userEntity.getId().toString(), redisExpirationHour);
 
         String accessToken = Jwts.builder()
-                .subject(userEntity.getKey())
-                .claim("type", "access")
-                .claim("email", userEntity.getEmail())
-                .claim("auth", userEntity.getRole().name())
-                .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + tokenExpirationMillisecond))
-                .signWith(secretKey)
-                .compact();
+            .subject(userEntity.getKey())
+            .claim("type", "access")
+            .claim("email", userEntity.getEmail())
+            .claim("auth", userEntity.getRole().name())
+            .issuedAt(new Date())
+            .expiration(new Date(System.currentTimeMillis() + tokenExpirationMillisecond))
+            .signWith(secretKey)
+            .compact();
 
         accessTokenService.addAccessToken(userEntity.getKey(), accessToken, redisExpirationHour);
 
@@ -93,9 +93,9 @@ public class JwtUtil {
         }
 
         Collection<GrantedAuthority> authorities = Arrays.stream(claims.get("auth").toString().split(","))
-                .filter(role -> !role.isEmpty())
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
+            .filter(role -> !role.isEmpty())
+            .map(SimpleGrantedAuthority::new)
+            .collect(Collectors.toList());
 
         UserEntity userEntity = userDetailService.loadUserInfoBySubject(claims.get("sub").toString());
         return new UsernamePasswordAuthenticationToken(TokenUserInfo.toDto(userEntity, accessToken), "", authorities);
@@ -105,10 +105,10 @@ public class JwtUtil {
         SecretKeySpec secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), Jwts.SIG.HS256.key().build().getAlgorithm());
 
         return Jwts.parser()
-                .verifyWith(secretKey)
-                .build()
-                .parseSignedClaims(token)
-                .getPayload();
+            .verifyWith(secretKey)
+            .build()
+            .parseSignedClaims(token)
+            .getPayload();
     }
 
     public String getUserKeyFromToken(String token) {
@@ -161,14 +161,14 @@ public class JwtUtil {
         long expirationMillisecond = 1000L * 60 * 60 * 24 * 30 * 6;
 
         return Jwts.builder()
-                .subject(userEntity.getKey())
-                .claim("type", "refresh")
-                .claim("email", userEntity.getEmail())
-                .claim("auth", userEntity.getRole().name())
-                .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + expirationMillisecond))
-                .signWith(secretKey)
-                .compact();
+            .subject(userEntity.getKey())
+            .claim("type", "refresh")
+            .claim("email", userEntity.getEmail())
+            .claim("auth", userEntity.getRole().name())
+            .issuedAt(new Date())
+            .expiration(new Date(System.currentTimeMillis() + expirationMillisecond))
+            .signWith(secretKey)
+            .compact();
     }
 
     public String refreshAccessToken(String refreshToken) {

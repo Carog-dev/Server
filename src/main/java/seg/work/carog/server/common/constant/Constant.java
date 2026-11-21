@@ -1,6 +1,7 @@
 package seg.work.carog.server.common.constant;
 
 public class Constant {
+
     public static final Long SYSTEM_USER = 0L;
 
     public static final String DEL_Y = "Y";

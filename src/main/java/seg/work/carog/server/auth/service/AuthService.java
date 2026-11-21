@@ -43,15 +43,15 @@ public class AuthService {
             refreshTokenService.addRefreshToken(jwtToken, refreshToken);
 
             return LoginResponse.builder()
-                    .token(jwtToken)
-                    .tokenType("Bearer")
-                    .expiresDate(jwtUtil.parserToken(jwtToken).getExpiration())
-                    .user(LoginResponse.UserInfo.builder()
-                            .email(userEntity.getEmail())
-                            .nickname(userEntity.getNickname())
-                            .profileImageUrl(userEntity.getProfileImageUrl())
-                            .build())
-                    .build();
+                .token(jwtToken)
+                .tokenType("Bearer")
+                .expiresDate(jwtUtil.parserToken(jwtToken).getExpiration())
+                .user(LoginResponse.UserInfo.builder()
+                    .email(userEntity.getEmail())
+                    .nickname(userEntity.getNickname())
+                    .profileImageUrl(userEntity.getProfileImageUrl())
+                    .build())
+                .build();
 
         } catch (Exception e) {
             log.error("ERROR : ", e);
@@ -91,12 +91,12 @@ public class AuthService {
         String profileImageUrl = extractProfileImageUrl(kakaoUserInfo);
 
         UserEntity newUserEntity = UserEntity.builder()
-                .kakaoId(kakaoUserInfo.getId().toString())
-                .email(email)
-                .nickname(nickname)
-                .profileImageUrl(profileImageUrl)
-                .role(UserRole.USER)
-                .build();
+            .kakaoId(kakaoUserInfo.getId().toString())
+            .email(email)
+            .nickname(nickname)
+            .profileImageUrl(profileImageUrl)
+            .role(UserRole.USER)
+            .build();
 
         return userRepository.save(newUserEntity);
     }
@@ -124,7 +124,8 @@ public class AuthService {
     }
 
     private String extractProfileImageUrl(KakaoUserInfo kakaoUserInfo) {
-        if (kakaoUserInfo.getKakaoAccount() != null && kakaoUserInfo.getKakaoAccount().getProfile() != null && kakaoUserInfo.getKakaoAccount().getProfile().getProfileImageUrl() != null) {
+        if (kakaoUserInfo.getKakaoAccount() != null && kakaoUserInfo.getKakaoAccount().getProfile() != null
+            && kakaoUserInfo.getKakaoAccount().getProfile().getProfileImageUrl() != null) {
             return kakaoUserInfo.getKakaoAccount().getProfile().getProfileImageUrl();
         }
 

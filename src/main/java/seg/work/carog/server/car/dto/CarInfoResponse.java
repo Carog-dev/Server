@@ -13,6 +13,7 @@ import seg.work.carog.server.car.entity.CarInfoEntity;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class CarInfoResponse {
+
     private Long id;
     private String name;
     private String number;

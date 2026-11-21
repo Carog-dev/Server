@@ -13,16 +13,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class LoginResponse {
+
     private String token;
     private String tokenType;
     private Date expiresDate;
     private UserInfo user;
-    
+
     @Data
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
     public static class UserInfo {
+
         private Long id;
         private String email;
         private String nickname;

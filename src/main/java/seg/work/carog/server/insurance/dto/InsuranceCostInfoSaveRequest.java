@@ -35,13 +35,13 @@ public class InsuranceCostInfoSaveRequest extends BaseSaveRequest {
 
     public InsuranceCostInfoEntity toEntity(Long carInfoId) {
         return InsuranceCostInfoEntity.builder()
-                .carInfoId(carInfoId)
-                .type(this.type)
-                .price(this.price)
-                .company(this.company)
-                .memo(getMemo())
-                .date(getDate())
-                .time(getTime())
-                .build();
+            .carInfoId(carInfoId)
+            .type(this.type)
+            .price(this.price)
+            .company(this.company)
+            .memo(getMemo())
+            .date(getDate())
+            .time(getTime())
+            .build();
     }
 }

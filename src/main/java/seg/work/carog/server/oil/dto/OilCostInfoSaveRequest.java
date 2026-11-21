@@ -46,16 +46,16 @@ public class OilCostInfoSaveRequest extends BaseSaveRequest {
 
     public OilCostInfoEntity toEntity(Long carInfoId) {
         return OilCostInfoEntity.builder()
-                .carInfoId(carInfoId)
-                .type(this.type)
-                .price(this.price)
-                .liter(this.liter)
-                .unit(this.unit)
-                .company(this.company)
-                .range(this.range)
-                .memo(getMemo())
-                .date(getDate())
-                .time(getTime())
-                .build();
+            .carInfoId(carInfoId)
+            .type(this.type)
+            .price(this.price)
+            .liter(this.liter)
+            .unit(this.unit)
+            .company(this.company)
+            .range(this.range)
+            .memo(getMemo())
+            .date(getDate())
+            .time(getTime())
+            .build();
     }
 }

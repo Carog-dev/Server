@@ -39,14 +39,14 @@ public class MaintenanceCostInfoSaveRequest extends BaseSaveRequest {
 
     public MaintenanceCostInfoEntity toEntity(Long carInfoId) {
         return MaintenanceCostInfoEntity.builder()
-                .carInfoId(carInfoId)
-                .item(this.item)
-                .price(this.price)
-                .mileage(this.mileage)
-                .company(this.company)
-                .memo(getMemo())
-                .date(getDate())
-                .time(getTime())
-                .build();
+            .carInfoId(carInfoId)
+            .item(this.item)
+            .price(this.price)
+            .mileage(this.mileage)
+            .company(this.company)
+            .memo(getMemo())
+            .date(getDate())
+            .time(getTime())
+            .build();
     }
 }

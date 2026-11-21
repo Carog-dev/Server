@@ -11,6 +11,7 @@ import seg.work.carog.server.user.entity.UserEntity;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserInfoResponse {
+
     private String email;
     private String nickname;
 

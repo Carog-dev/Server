@@ -14,6 +14,7 @@ import seg.work.carog.server.common.dto.BaseApiResponse;
 @RequiredArgsConstructor
 @RequestMapping("/admin")
 public class AdminController {
+
     private final AdminService adminService;
 
     @PostMapping("/revoke/token")

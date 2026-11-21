@@ -32,16 +32,16 @@ public class KakaoService {
     public String getAccessToken(KakaoLoginRequest request) {
         try {
             KakaoTokenResponse response = webClient.post()
-                    .uri(KAKAO_TOKEN_URL)
-                    .header(HttpHeaders.CONTENT_TYPE, "application/x-www-form-urlencoded;charset=utf-8")
-                    .body(BodyInserters.fromFormData("grant_type", "authorization_code")
-                        .with("client_id", clientId)
-                        .with("client_secret", clientSecret)
-                        .with("redirect_uri", request.getRedirectUri())
-                        .with("code", request.getCode()))
-                    .retrieve()
-                    .bodyToMono(KakaoTokenResponse.class)
-                    .block();
+                .uri(KAKAO_TOKEN_URL)
+                .header(HttpHeaders.CONTENT_TYPE, "application/x-www-form-urlencoded;charset=utf-8")
+                .body(BodyInserters.fromFormData("grant_type", "authorization_code")
+                    .with("client_id", clientId)
+                    .with("client_secret", clientSecret)
+                    .with("redirect_uri", request.getRedirectUri())
+                    .with("code", request.getCode()))
+                .retrieve()
+                .bodyToMono(KakaoTokenResponse.class)
+                .block();
 
             if (response != null) {
                 return response.getAccessToken();
@@ -58,11 +58,11 @@ public class KakaoService {
     public KakaoUserInfo getUserInfo(String accessToken) {
         try {
             return webClient.get()
-                    .uri(KAKAO_USER_INFO_URL)
-                    .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
-                    .retrieve()
-                    .bodyToMono(KakaoUserInfo.class)
-                    .block();
+                .uri(KAKAO_USER_INFO_URL)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
+                .retrieve()
+                .bodyToMono(KakaoUserInfo.class)
+                .block();
         } catch (Exception e) {
             log.error("Kakao 사용자 정보 조회 오류", e);
             throw new BaseException(Message.KAKAO_GET_USER_INFO);

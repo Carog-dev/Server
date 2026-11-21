@@ -67,11 +67,11 @@ public class BaseExceptionHandler {
 
         if (cause instanceof MismatchedInputException mie) {
             String fieldPath = mie.getPath().stream()
-                    .filter(Objects::nonNull)
-                    .map(ref -> ref.getFieldName() != null ? ref.getFieldName() : "")
-                    .filter(fieldName -> !fieldName.isEmpty())
-                    .reduce((s1, s2) -> s1 + "." + s2)
-                    .orElse("unknownField");
+                .filter(Objects::nonNull)
+                .map(ref -> ref.getFieldName() != null ? ref.getFieldName() : "")
+                .filter(fieldName -> !fieldName.isEmpty())
+                .reduce((s1, s2) -> s1 + "." + s2)
+                .orElse("unknownField");
             errors.put(fieldPath, "필수값입니다.");
         } else {
             errors.put("parsingError", "요청 본문 파싱에 실패했습니다.");

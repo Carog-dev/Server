@@ -36,13 +36,13 @@ public class InstallmentCostInfoSaveRequest extends BaseSaveRequest {
 
     public InstallmentCostInfoEntity toEntity(Long carInfoId) {
         return InstallmentCostInfoEntity.builder()
-                .carInfoId(carInfoId)
-                .price(this.price)
-                .monthly(this.monthly)
-                .round(this.round)
-                .memo(getMemo())
-                .date(getDate())
-                .time(getTime())
-                .build();
+            .carInfoId(carInfoId)
+            .price(this.price)
+            .monthly(this.monthly)
+            .round(this.round)
+            .memo(getMemo())
+            .date(getDate())
+            .time(getTime())
+            .build();
     }
 }

@@ -27,7 +27,7 @@ public class RedisConfig {
     @Bean("lettuceConnectionFactory")
     public LettuceConnectionFactory lettuceConnectionFactory() {
         RedisSentinelConfiguration sentinelConfig = new RedisSentinelConfiguration()
-                .master(redisConfigProperty.getSentinel().getMaster());
+            .master(redisConfigProperty.getSentinel().getMaster());
 
         List<String> nodes = redisConfigProperty.getSentinel().getNodes();
         for (String node : nodes) {

@@ -32,12 +32,12 @@ public class EtcCostInfoSaveRequest extends BaseSaveRequest {
 
     public EtcCostInfoEntity toEntity(Long carInfoId) {
         return EtcCostInfoEntity.builder()
-                .carInfoId(carInfoId)
-                .item(this.item)
-                .price(this.price)
-                .memo(getMemo())
-                .date(getDate())
-                .time(getTime())
-                .build();
+            .carInfoId(carInfoId)
+            .item(this.item)
+            .price(this.price)
+            .memo(getMemo())
+            .date(getDate())
+            .time(getTime())
+            .build();
     }
 }

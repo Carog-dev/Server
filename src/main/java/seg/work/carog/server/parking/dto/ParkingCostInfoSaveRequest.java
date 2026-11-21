@@ -28,11 +28,11 @@ public class ParkingCostInfoSaveRequest extends BaseSaveRequest {
 
     public ParkingCostInfoEntity toEntity(Long carInfoId) {
         return ParkingCostInfoEntity.builder()
-                .carInfoId(carInfoId)
-                .price(this.price)
-                .memo(getMemo())
-                .date(getDate())
-                .time(getTime())
-                .build();
+            .carInfoId(carInfoId)
+            .price(this.price)
+            .memo(getMemo())
+            .date(getDate())
+            .time(getTime())
+            .build();
     }
 }
