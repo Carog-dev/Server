@@ -5,7 +5,6 @@
     <springProperty scope="context" name="spring.profiles.active" source="spring.profiles.active"/>
 
     <include resource="logback/default/console.xml" />
-    <include resource="logback/default/file.xml" />
     <include resource="logback/default/logger.xml" />
 
     <springProfile name="local">
