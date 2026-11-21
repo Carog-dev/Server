@@ -120,19 +120,6 @@ management:
     metrics:
       export:
         enabled: true
-  health:
-    livenessstate:
-      enabled: true
-    readinessstate:
-      enabled: true
-    db:
-      enabled: false
-    redis:
-      enabled: false
-    mail:
-      enabled: false
-    diskSpace:
-      enabled: false
 
 ---
 
